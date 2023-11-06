@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class MazeGUI extends Application {
 
-    private static final int CELL_SIZE = 15;
+    private static final int CELL_SIZE = 10;
 
     @Override
     public void start(Stage primaryStage) {
