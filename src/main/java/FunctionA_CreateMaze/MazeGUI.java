@@ -7,7 +7,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-import java.util.List;
 
 public class MazeGUI extends Application {
 
