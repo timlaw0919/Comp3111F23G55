@@ -10,7 +10,7 @@ public class CSVOutput {
             for (Cell[] row : maze) {
                 StringBuilder sb = new StringBuilder();
                 for (Cell cell : row) {
-                    int value = (!cell.walls[0] || !cell.walls[1] || !cell.walls[2] || !cell.walls[3])? 0 : 1;
+                    int value = cell.value;
                     sb.append(value).append(",");
                 }
                 sb.deleteCharAt(sb.length() - 1); // Remove the trailing comma

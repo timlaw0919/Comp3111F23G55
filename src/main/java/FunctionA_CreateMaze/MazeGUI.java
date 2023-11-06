@@ -17,6 +17,12 @@ public class MazeGUI extends Application {
     public void start(Stage primaryStage) {
         // Load the maze data from the CSV file
         int[][] mazeData = MazeLoader.loadMazeFromCSV("maze_map.csv");
+        for (int i = 0; i < mazeData.length; i++) {
+            for (int j = 0; j < mazeData[i].length; j++) {
+                System.out.print(mazeData[i][j]);
+            }
+            System.out.println();
+        }
 
         // Create a GridPane to hold the maze cells
         GridPane gridPane = new GridPane();
@@ -29,8 +35,11 @@ public class MazeGUI extends Application {
                 // Set the color of the cell based on the value in the maze data
                 if (mazeData[i][j] == 1) {
                     cell.setFill(Color.GRAY); // Wall
-                } else {
+                }else if(mazeData[i][j] == 0){
                     cell.setFill(Color.WHITE); // Path
+                }
+                else {
+                    cell.setFill(Color.RED); // Starting/Ending Point
                 }
 
                 // Add the cell to the GridPane
