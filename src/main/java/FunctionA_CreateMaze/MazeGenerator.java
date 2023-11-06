@@ -8,13 +8,13 @@ import java.util.Stack;
 public class MazeGenerator {
     private int rows;               // number of rows in the maze
     private int cols;               // number of columns in the maze
-    private static int PATH = 0;
-    private static int BLOCK = 1;
-    private static int START = 2;
-    private static int END = 3;
+    private final static int PATH = 0;
+    private final static int BLOCK = 1;
+    private final static int START = 2;
+    private final static int END = 3;
     private Cell[][] maze;          // maze array
-    public Cell StartingPoint;
-    public Cell EndingPoint;
+    public Cell EntryPoint;
+    public Cell ExitPoint;
     Random random = new Random();
     private boolean foundEnd = false;
 
@@ -33,16 +33,16 @@ public class MazeGenerator {
                 maze[i][j] = new Cell(i, j, BLOCK);
             }
         }
-        StartingPoint = maze[random.nextInt(cols)][0];
-        StartingPoint.value = 2;
+        EntryPoint = maze[random.nextInt(cols)][0];
+        EntryPoint.value = 2;
     }
 
-    // Generate the maze using MST algorithm
+    // Generate the maze
     public void generateMaze() {
-        StartingPoint.visited = true;
+        EntryPoint.visited = true;
 
         Stack<Cell> stack = new Stack<>();
-        stack.push(StartingPoint);
+        stack.push(EntryPoint);
 
         while (!stack.isEmpty()) {
             Cell currentCell = stack.peek();
@@ -50,15 +50,15 @@ public class MazeGenerator {
 
             if (!neighbors.isEmpty()) {
                 Cell randomNeighbor = neighbors.get(random.nextInt(neighbors.size()));
-                removeWalls(currentCell, randomNeighbor);
                 randomNeighbor.visited = true;
-                if(!checkIfEndingPoint(randomNeighbor))
+                if(!checkIfExitPoint(randomNeighbor))
                     randomNeighbor.value = PATH;
                 stack.push(randomNeighbor);
             } else {
                 stack.pop();
             }
         }
+
     }
 
     private boolean checkValidNeighbors(Cell cell){
@@ -71,7 +71,7 @@ public class MazeGenerator {
             }
         }
 
-        return (numNeighboringZeros < 3) && !maze[cell.row][cell.col].visited && !pointOnEdge(cell);
+        return (numNeighboringZeros < 4) && !maze[cell.row][cell.col].visited && !pointOnEdge(cell);
     }
 
     // Get unvisited neighboring cells of a given cell
@@ -90,11 +90,11 @@ public class MazeGenerator {
             neighbors.add(maze[row][col + 1]);
         }
         // Check right neighbor can possbily be the ending point
-        else if (col < cols-1 && checkIfEndingPoint(maze[row][col + 1]) && !foundEnd) {
+        else if (col < cols-1 && checkIfExitPoint(maze[row][col + 1]) && !foundEnd) {
             endingPoint.add(maze[row][col + 1]);
             foundEnd = true;
-            EndingPoint = maze[row][col + 1];
-            EndingPoint.value = 3;
+            ExitPoint = maze[row][col + 1];
+            ExitPoint.value = 3;
             return endingPoint;
         }
         // Check bottom neighbor
@@ -109,25 +109,6 @@ public class MazeGenerator {
         return neighbors;
     }
 
-    // Remove walls between two neighboring cells
-    private void removeWalls(Cell current, Cell neighbor) {
-        int rowDiff = neighbor.row - current.row;
-        int colDiff = neighbor.col - current.col;
-
-        if (rowDiff == -1) {
-            current.walls[0] = false; // Remove top wall of current cell
-            neighbor.walls[2] = false; // Remove bottom wall of neighbor cell
-        } else if (colDiff == 1) {
-            current.walls[1] = false; // Remove right wall of current cell
-            neighbor.walls[3] = false; // Remove left wall of neighbor cell
-        } else if (rowDiff == 1) {
-            current.walls[2] = false; // Remove bottom wall of current cell
-            neighbor.walls[0] = false; // Remove top wall of neighbor cell
-        } else if (colDiff == -1) {
-            current.walls[3] = false; // Remove left wall of current cell
-            neighbor.walls[1] = false; // Remove right wall of neighbor cell
-        }
-    }
 
     public Cell[][] getMaze() {
         return maze;
@@ -146,10 +127,13 @@ public class MazeGenerator {
     }
 
     private Boolean checkIfStartingPoint(Cell cell){
-        return (StartingPoint.row==cell.row && StartingPoint.col==cell.col);
+        return (EntryPoint.row==cell.row && EntryPoint.col==cell.col);
     }
-    private Boolean checkIfEndingPoint(Cell cell){
-//        return (EndingPoint.row==cell.row && EndingPoint.col==cell.col);
-        return (cell.col==cols-1);
+    private Boolean checkIfExitPoint(Cell cell){
+        if(foundEnd)
+            return (ExitPoint.row==cell.row && ExitPoint.col==cell.col);
+        else
+            return (cell.col==cols-1);
+
     }
 }
