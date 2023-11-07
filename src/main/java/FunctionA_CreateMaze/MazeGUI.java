@@ -1,5 +1,6 @@
 package FunctionA_CreateMaze;
 
+import FunctionA_CreateMaze.constant.CellState;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
@@ -26,17 +27,17 @@ public class MazeGUI extends Application {
                 Rectangle cell = new Rectangle(CELL_SIZE, CELL_SIZE);
 
                 // Set the color of the cell based on the value in the maze data
-                if (mazeData[i][j] == 1) {
-                    cell.setFill(Color.GRAY); // Wall
+                if (mazeData[i][j] == CellState.BLOCK.ordinal()) {
+                    cell.setFill(Color.GRAY); // Block
                 }
-                else if(mazeData[i][j] == 0){
+                else if(mazeData[i][j] == CellState.PATH.ordinal()){
                     cell.setFill(Color.WHITE); // Path
                 }
-                else if(mazeData[i][j]==2){
-                    cell.setFill(Color.YELLOW); // Starting Point
+                else if(mazeData[i][j]==CellState.ENTRY.ordinal()){
+                    cell.setFill(Color.YELLOW); // Entry
                 }
-                else{
-                    cell.setFill(Color.LIGHTGREEN); //Ending Point
+                else if(mazeData[i][j]==CellState.EXIT.ordinal()){
+                    cell.setFill(Color.LIGHTGREEN); //Exit
                 }
 
                 // Add the cell to the GridPane
