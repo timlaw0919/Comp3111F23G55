@@ -7,4 +7,5 @@ module tomandjerryinmazegame.tomandjerryinmazegame {
 
     opens tomandjerryinmazegame.tomandjerryinmazegame to javafx.fxml;
     exports FunctionA_CreateMaze;
+    exports FunctionB_ShortestPath to javafx.graphics;
 }
