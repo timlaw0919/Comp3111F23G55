@@ -25,6 +25,27 @@ public class MazeGenerator {
         initializeMaze();
     }
 
+    private void EntryPointGenerator(){
+        int randomNumber = random.nextInt(100);
+        if(randomNumber%4==0){
+            // Set EntryPoint at left edge
+            EntryPoint = maze[random.nextInt(rows)][0];
+            EntryPoint.value = CellState.ENTRY;
+        } else if (randomNumber%4==1) {
+            // Set EntryPoint at right edge
+            EntryPoint = maze[random.nextInt(rows)][cols-1];
+            EntryPoint.value = CellState.ENTRY;
+        } else if (randomNumber%4==2){
+            // Set EntryPoint at top edge
+            EntryPoint = maze[0][random.nextInt(cols)];
+            EntryPoint.value = CellState.ENTRY;
+        }else{
+            // Set EntryPoint at bottom edge
+            EntryPoint = maze[rows-1][random.nextInt(cols)];
+            EntryPoint.value = CellState.ENTRY;
+        }
+    }
+
     // Initialize the maze grid with cells
     private void initializeMaze() {
         for (int i = 0; i < rows; i++) {
@@ -32,9 +53,8 @@ public class MazeGenerator {
                 maze[i][j] = new Cell(i, j, CellState.BLOCK);
             }
         }
-        // Get the EntryPoint at column[0]
-        EntryPoint = maze[random.nextInt(cols)][0];
-        EntryPoint.value = CellState.ENTRY;
+        // Get the Random EntryPoint
+        EntryPointGenerator();
     }
 
     // Generate the maze
@@ -71,7 +91,7 @@ public class MazeGenerator {
             }
         }
 
-        return (numNeighboringZeros < 4) && !maze[cell.row][cell.col].visited && !cellOnEdge(cell);
+        return (numNeighboringZeros < 4) && !maze[cell.row][cell.col].visited && !cellOnEdge(cell) && !checkIfEntryPoint(cell);
     }
 
     // Get unvisited neighboring cells of a given cell
@@ -84,6 +104,16 @@ public class MazeGenerator {
         if (row > 0 && checkValidNeighbors(maze[row - 1][col])) {
             neighbors.add(maze[row - 1][col]);
         }
+        // Check top neighbor can possibly be the Exit point
+        else if (row > 0 && checkIfExitPoint(maze[row - 1][col]) && !foundEnd) {
+            List<Cell> endingPoint = new ArrayList<>();
+            endingPoint.add(maze[row - 1][col]);
+            foundEnd = true;
+            ExitPoint = maze[row - 1][col];
+            ExitPoint.value = CellState.EXIT;
+            return endingPoint;
+        }
+
         // Check right neighbor
         if (col < cols - 1 && checkValidNeighbors(maze[row][col + 1])) {
             neighbors.add(maze[row][col + 1]);
@@ -98,13 +128,33 @@ public class MazeGenerator {
             ExitPoint.value = CellState.EXIT;
             return endingPoint;
         }
+
         // Check bottom neighbor
         if (row < rows - 1 && checkValidNeighbors(maze[row + 1][col])) {
             neighbors.add(maze[row + 1][col]);
         }
+        // Check bottom neighbor can possibly be the Exit point
+        else if (row < rows - 1 && checkIfExitPoint(maze[row + 1][col]) && !foundEnd) {
+            List<Cell> endingPoint = new ArrayList<>();
+            endingPoint.add(maze[row + 1][col]);
+            foundEnd = true;
+            ExitPoint = maze[row + 1][col];
+            ExitPoint.value = CellState.EXIT;
+            return endingPoint;
+        }
+
         // Check left neighbor
         if (col > 0 && checkValidNeighbors(maze[row][col - 1])) {
             neighbors.add(maze[row][col - 1]);
+        }
+        // Check left neighbor can possibly be the Exit point
+        else if (col > 0 && checkIfExitPoint(maze[row][col - 1]) && !foundEnd) {
+            List<Cell> endingPoint = new ArrayList<>();
+            endingPoint.add(maze[row][col - 1]);
+            foundEnd = true;
+            ExitPoint = maze[row][col - 1];
+            ExitPoint.value = CellState.EXIT;
+            return endingPoint;
         }
 
         return neighbors;
@@ -123,11 +173,21 @@ public class MazeGenerator {
         return (cell.row == 0 || cell.col == 0 || cell.row == rows-1 || cell.col == cols-1);
     }
 
+    private Boolean checkIfEntryPoint(Cell cell){
+        return (EntryPoint.equals(cell));
+    }
+
     private Boolean checkIfExitPoint(Cell cell){
         if(foundEnd)
-            return (ExitPoint.row==cell.row && ExitPoint.col==cell.col);
+            return (ExitPoint.equals(cell));
         else
-            return (cell.col==cols-1);
+            return (cell.row==rows-1 || cell.row==0 || cell.col==cols-1 || cell.col==0) && CellOnOppositeEdge(EntryPoint,cell);
+
+    }
+
+    private Boolean CellOnOppositeEdge(Cell cell_1, Cell cell_2){
+        return ((cell_1.row==0 && cell_2.row==rows-1) || (cell_1.col==0 && cell_2.col==cols-1) ||
+                (cell_1.row==rows-1 && cell_2.row==0) || (cell_1.col==cols-1 && cell_2.col==0));
 
     }
 }

@@ -28,11 +28,15 @@ public class MazeGUI extends Application {
                 // Set the color of the cell based on the value in the maze data
                 if (mazeData[i][j] == 1) {
                     cell.setFill(Color.GRAY); // Wall
-                }else if(mazeData[i][j] == 0){
+                }
+                else if(mazeData[i][j] == 0){
                     cell.setFill(Color.WHITE); // Path
                 }
-                else {
-                    cell.setFill(Color.RED); // Starting/Ending Point
+                else if(mazeData[i][j]==2){
+                    cell.setFill(Color.YELLOW); // Starting Point
+                }
+                else{
+                    cell.setFill(Color.LIGHTGREEN); //Ending Point
                 }
 
                 // Add the cell to the GridPane
