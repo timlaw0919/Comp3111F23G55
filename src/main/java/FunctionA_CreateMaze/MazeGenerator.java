@@ -161,10 +161,6 @@ public class MazeGenerator {
     }
 
 
-    public Cell[][] getMaze() {
-        return maze;
-    }
-
     private Boolean cellOnGrid(int row, int col) {
         return row >= 0 && col >= 0 && row < rows && col < cols;
     }
@@ -189,5 +185,17 @@ public class MazeGenerator {
         return ((cell_1.row==0 && cell_2.row==rows-1) || (cell_1.col==0 && cell_2.col==cols-1) ||
                 (cell_1.row==rows-1 && cell_2.row==0) || (cell_1.col==cols-1 && cell_2.col==0));
 
+    }
+
+    public Cell[][] getMaze() {
+        return maze;
+    }
+
+    public Cell getEntryPoint() {
+        return EntryPoint;
+    }
+
+    public Cell getExitPoint() {
+        return ExitPoint;
     }
 }
