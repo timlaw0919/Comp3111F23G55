@@ -13,9 +13,11 @@ public class CheckEndGame {
     public boolean isEndGame(){
         if (player.getLocation()[0] == ExitPoint[0] && player.getLocation()[1] == ExitPoint[1]) {
             player.setGame_state(true);
+            System.out.println("Player Wins!");
         }
         else if (player.getLocation()[0] == pc.getLocation()[0] && player.getLocation()[1] == pc.getLocation()[1]) {
             pc.setGame_state(true);
+            System.out.println("Computer Wins!");
         }
         return (player.getGame_state() && !pc.getGame_state()) ||
                 (!player.getGame_state() && pc.getGame_state());
