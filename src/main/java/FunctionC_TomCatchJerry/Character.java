@@ -1,8 +1,6 @@
 package FunctionC_TomCatchJerry;
 
-import java.util.Arrays;
-
-import static FunctionC_TomCatchJerry.Game.*;
+import static FunctionC_TomCatchJerry.GameMain.*;
 
 public class Character {
 
@@ -55,14 +53,14 @@ public class Character {
             }
         }
         direction = 0;
-        obj1.changeJerryLocation(location);
+        shortestPath.changeJerryLocation(location);
     }
     public void MoveWithShortestPath(){
-        int[] loc = obj1.tomNextMovement();
+        int[] loc = shortestPath.tomNextMovement();
         if (IsPath(loc[0],loc[1])) {
             lastPos = toIndex(location);;
             location = loc;
-            obj1.changeTomLocation(location);
+            shortestPath.changeTomLocation(location);
         }
     }
     public boolean IsWithinBoundary(int coordinate){

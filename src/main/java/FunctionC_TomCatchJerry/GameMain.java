@@ -8,7 +8,17 @@ import FunctionB_ShortestPath.AStarAlgorithm;
 import static FunctionA_CreateMaze.CSVOutput.outputCSVFile;
 
 
-public class Game {
+public class GameMain {
+    public static final int[][] maze = newMaze();       // Maze
+    public static Character Tom = new Character();      // Computer
+    public static Character Jerry = new Character();    // Player
+    public static AStarAlgorithm shortestPath = new AStarAlgorithm(Tom.getLocation(), Jerry.getLocation());    // Algorithm for finding shortest Path
+
+    public static void main(String[] args) {
+
+        GameMazeGUI.makeGUI(args);
+    }
+
     public static int[][] newMaze(){
         int rows = 30; // Number of rows in the maze
         int cols = 30; // Number of columns in the maze
@@ -21,15 +31,5 @@ public class Game {
         Cell[][] Maze = mazeGenerator.getMaze();
         outputCSVFile(Maze, "maze_map.csv");
         return MazeLoader.loadMazeFromCSV("maze_map.csv");
-    }
-    public static final int[][] maze = newMaze();
-    public static Character Tom = new Character(); // Computer
-    public static Character Jerry = new Character(); // Player
-    public static AStarAlgorithm obj1 = new AStarAlgorithm(Tom.getLocation(), Jerry.getLocation());
-
-
-    public static void main(String[] args) {
-
-        GameMazeGUI.makeGUI(args);
     }
 }

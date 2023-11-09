@@ -12,17 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static FunctionC_TomCatchJerry.Character.toIndex;
-import static FunctionC_TomCatchJerry.Game.*;
+import static FunctionC_TomCatchJerry.GameMain.*;
 import static java.lang.Thread.sleep;
 
 
 public class GameMazeGUI extends Application {
 
     private static final int CELL_SIZE = 10;
-    private int entryindex = 0;
-    private int exitindex = 0;
+    private int entryIndex = 0;
+    private int exitIndex = 0;
     GridPane gridPane = new GridPane();
     List<Rectangle> cells = new ArrayList<>();
+
     public void SetGridPane() {
         // Populate the GridPane with rectangles representing the maze cells
         for (int i = 0; i < maze.length; i++) {
@@ -37,26 +38,27 @@ public class GameMazeGUI extends Application {
                 } else if (maze[i][j] == CellState.ENTRY.ordinal()) {
                     cell.setFill(Color.YELLOW); // Entry
                     Jerry.setLocation(i, j);
-                    entryindex = i*30 + j;
+                    entryIndex = i*30 + j;
                 } else if (maze[i][j] == CellState.EXIT.ordinal()) {
                     cell.setFill(Color.LIGHTGREEN); //Exit
                     Tom.setLocation(i, j);
-                    exitindex = i*30 + j;
+                    exitIndex = i*30 + j;
                 }
                 // Add the cell to the GridPane
                 gridPane.add(cell, j, i);
                 cells.add(cell);
             }
         }
-        Tom.setSpeed(500);
+        Tom.setSpeed(300);
         Jerry.setSpeed(100);
     }
+
     public void updatedGridPane(Character c, Color color) {
         if (cells.get(c.getLastPos()).getFill() == Color.GRAY);
-        else if (c.getLastPos() == entryindex){
+        else if (c.getLastPos() == entryIndex){
             cells.get(c.getLastPos()).setFill(Color.YELLOW);
         }
-        else if (c.getLastPos() == exitindex){
+        else if (c.getLastPos() == exitIndex){
             cells.get(c.getLastPos()).setFill(Color.LIGHTGREEN);
         }
         else {
@@ -73,7 +75,7 @@ public class GameMazeGUI extends Application {
         // Create the scene and set it on the stage
         Scene scene = new Scene(gridPane);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Maze GUI");
+        primaryStage.setTitle("Tom n Jerry In Maze");
         primaryStage.show();
         KeyBoardListener JerryMove = new KeyBoardListener(Jerry);
         scene.setOnKeyPressed(JerryMove::keyPressed);
@@ -96,8 +98,8 @@ public class GameMazeGUI extends Application {
         Player.start();
         Computer.start();
 
-
     }
+
     private void pauser(Character character){
         try {
             sleep(character.getSpeed());
@@ -105,15 +107,7 @@ public class GameMazeGUI extends Application {
             e.printStackTrace();
         }
     }
-    public void startGameLoop(){
-        Jerry.move();
-        updatedGridPane(Jerry,Color.YELLOWGREEN);
-        pauser(Jerry);
-        Tom.MoveWithShortestPath();
-        updatedGridPane(Tom,Color.BLUEVIOLET);
-        pauser(Tom);
 
-    }
     private void PlayerMove(){
         Jerry.move();
         updatedGridPane(Jerry, Color.YELLOWGREEN);

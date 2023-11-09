@@ -1,5 +1,6 @@
 package FunctionC_TomCatchJerry;
 
+import FunctionC_TomCatchJerry.constant.DirectionState;
 import javafx.scene.input.KeyEvent;
 
 import java.awt.event.KeyAdapter;
@@ -14,22 +15,22 @@ public class KeyBoardListener extends KeyAdapter{
     public void keyPressed(KeyEvent e){
         switch(e.getCode()){
             case W:	// Upward
-                player.setDirection(1);
+                player.setDirection(DirectionState.UPWARD.ordinal());
                 break;
             case A:	// Left
-                player.setDirection(3);
+                player.setDirection(DirectionState.LEFT.ordinal());
                 break;
 
             case S: 	// Downward
-                player.setDirection(2);
+                player.setDirection(DirectionState.DOWNWARD.ordinal());
                 break;
 
             case D:	// Right
-                player.setDirection(4);
+                player.setDirection(DirectionState.RIGHT.ordinal());
                 break;
 
             default:
-                player.setDirection(0);
+                player.setDirection(DirectionState.UNMOVE.ordinal());
                 break;
         }
     }
