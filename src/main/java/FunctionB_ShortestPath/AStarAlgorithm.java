@@ -92,8 +92,8 @@ public class AStarAlgorithm {
     }
 
     // Return Tom's next movement by int[]
-    int[] tomNextMovement(){
+    public int[] tomNextMovement(){
         List<int[]> path = pathGeneratorByAStar();
-        return path.get(path.size() - 2);
+        return path.get(path.size() - 2); //Test
     }
 }
