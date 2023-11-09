@@ -26,24 +26,31 @@ public class MazeGenerator {
     }
 
     private void EntryPointGenerator(){
-        int randomNumber = random.nextInt(100);
-        if(randomNumber%4==0){
-            // Set EntryPoint at left edge
-            EntryPoint = maze[random.nextInt(rows)][0];
-            EntryPoint.value = CellState.ENTRY;
-        } else if (randomNumber%4==1) {
-            // Set EntryPoint at right edge
-            EntryPoint = maze[random.nextInt(rows)][cols-1];
-            EntryPoint.value = CellState.ENTRY;
-        } else if (randomNumber%4==2){
-            // Set EntryPoint at top edge
-            EntryPoint = maze[0][random.nextInt(cols)];
-            EntryPoint.value = CellState.ENTRY;
-        }else{
-            // Set EntryPoint at bottom edge
-            EntryPoint = maze[rows-1][random.nextInt(cols)];
-            EntryPoint.value = CellState.ENTRY;
-        }
+        do {
+            int randomNumber = random.nextInt(100);
+            if (randomNumber % 4 == 0) {
+                // Set EntryPoint at left edge
+                EntryPoint = maze[random.nextInt(rows)][0];
+                EntryPoint.value = CellState.ENTRY;
+            } else if (randomNumber % 4 == 1) {
+                // Set EntryPoint at right edge
+                EntryPoint = maze[random.nextInt(rows)][cols - 1];
+                EntryPoint.value = CellState.ENTRY;
+            } else if (randomNumber % 4 == 2) {
+                // Set EntryPoint at top edge
+                EntryPoint = maze[0][random.nextInt(cols)];
+                EntryPoint.value = CellState.ENTRY;
+            } else {
+                // Set EntryPoint at bottom edge
+                EntryPoint = maze[rows - 1][random.nextInt(cols)];
+                EntryPoint.value = CellState.ENTRY;
+            }
+
+            if(cellOnCorner(EntryPoint)){
+                EntryPoint.value = CellState.BLOCK;
+            }
+
+        }while(cellOnCorner(EntryPoint));
     }
 
     // Initialize the maze grid with cells
@@ -167,6 +174,11 @@ public class MazeGenerator {
 
     private Boolean cellOnEdge(Cell cell){
         return (cell.row == 0 || cell.col == 0 || cell.row == rows-1 || cell.col == cols-1);
+    }
+
+    private Boolean cellOnCorner(Cell cell){
+        return ((cell.row==0 && cell.col==0) || (cell.row==0 && cell.col==cols-1) ||
+                (cell.row==rows-1 && cell.col==0) || (cell.row==rows-1 && cell.col==cols-1));
     }
 
     private Boolean checkIfEntryPoint(Cell cell){
