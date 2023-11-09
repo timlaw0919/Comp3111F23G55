@@ -15,6 +15,10 @@ public class AStarAlgorithm {
         this.jerryLocation = jerryLocation;
     }
 
+    public int[] getTomLocation(){
+        return this.tomLocation;
+    }
+
     public void changeTomLocation(int[] tomLocation){
         this.tomLocation = tomLocation;
     }
@@ -94,6 +98,22 @@ public class AStarAlgorithm {
     // Return Tom's next movement by int[]
     public int[] tomNextMovement(){
         List<int[]> path = pathGeneratorByAStar();
-        return path.get(path.size() - 2); //Test
+
+        // At least having one path between Tom and Jerry
+        if (path.size() >= 2){
+            return path.get(path.size() - 2);
+        }
+
+        // No path between Tom and Jerry
+        else {
+            List<Node> neighbor = findNeighbor(new Node(getTomLocation(), null, 0, 0));
+            // Some movable cell near Tom
+            if (neighbor.size() > 0){
+                return neighbor.get(0).getCurrentPosition();
+            }
+            // Tom is surrounded by barrier
+            else
+                return getTomLocation();
+        }
     }
 }
