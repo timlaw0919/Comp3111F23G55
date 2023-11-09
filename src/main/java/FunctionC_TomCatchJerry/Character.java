@@ -1,17 +1,20 @@
 package FunctionC_TomCatchJerry;
 
+import FunctionC_TomCatchJerry.constant.DirectionState;
+
 import static FunctionC_TomCatchJerry.GameMain.*;
+import static FunctionC_TomCatchJerry.constant.DirectionState.*;
 
 public class Character {
 
-    private int direction;
+    private DirectionState direction;
     private int lastPos;
     private int[] location;
     private boolean Game_state;
     private int speed;
 
     public Character() {
-        direction = 0;
+        direction = UNMOVE;
         location = new int[]{0, 0};
         Game_state = false;
         speed = 50;
@@ -20,31 +23,31 @@ public class Character {
     public void move(){
 
         switch (direction) {
-            case 0 -> {
+            case UNMOVE -> {
                 return;
             }
-            case 1 -> {
+            case UPWARD -> {
                 if (IsWithinBoundary(location[0] - 1)
                         && IsPath(location[0]-1, location[1])) {
                     lastPos = toIndex(location);
                     location[0] -= 1;
                 }
             }
-            case 2 -> {
+            case DOWNWARD -> {
                 if (IsWithinBoundary(location[0] + 1)
                         && IsPath(location[0]+1, location[1])) {
                     lastPos = toIndex(location);
                     location[0] += 1;
                 }
             }
-            case 3 -> {
+            case LEFT -> {
                 if (IsWithinBoundary(location[1] - 1)
                         && IsPath(location[0], location[1]-1)) {
                     lastPos = toIndex(location);
                     location[1] -= 1;
                 }
             }
-            case 4 -> {
+            case RIGHT -> {
                 if (IsWithinBoundary(location[1] + 1)
                         && IsPath(location[0], location[1]+1)) {
                     lastPos = toIndex(location);
@@ -52,7 +55,7 @@ public class Character {
                 }
             }
         }
-        direction = 0;
+        direction = UNMOVE;
         shortestPath.changeJerryLocation(location);
     }
     public void MoveWithShortestPath(){
@@ -66,19 +69,21 @@ public class Character {
     public boolean IsWithinBoundary(int coordinate){
         return coordinate >= 0 && coordinate < 30;
     }
+
     public boolean IsPath(int x, int y){
         return maze[x][y] != 1;
     }
+
     public void setLocation(int x, int y){
         location[0] = x;
         location[1] = y;
     }
 
-    public void setDirection(int direction){
+    public void setDirection(DirectionState direction){
         this.direction = direction;
     }
 
-    public int getDirection(){
+    public DirectionState getDirection(){
         return direction;
     }
 

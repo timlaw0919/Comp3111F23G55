@@ -14,23 +14,23 @@ public class KeyBoardListener extends KeyAdapter{
 
     public void keyPressed(KeyEvent e){
         switch(e.getCode()){
-            case W:	// Upward
-                player.setDirection(DirectionState.UPWARD.ordinal());
+            case W:	    // Upward
+                player.setDirection(DirectionState.UPWARD);
                 break;
-            case A:	// Left
-                player.setDirection(DirectionState.LEFT.ordinal());
+            case A:	    // Left
+                player.setDirection(DirectionState.LEFT);
                 break;
 
             case S: 	// Downward
-                player.setDirection(DirectionState.DOWNWARD.ordinal());
+                player.setDirection(DirectionState.DOWNWARD);
                 break;
 
-            case D:	// Right
-                player.setDirection(DirectionState.RIGHT.ordinal());
+            case D: 	// Right
+                player.setDirection(DirectionState.RIGHT);
                 break;
 
             default:
-                player.setDirection(DirectionState.UNMOVE.ordinal());
+                player.setDirection(DirectionState.UNMOVE);
                 break;
         }
     }
