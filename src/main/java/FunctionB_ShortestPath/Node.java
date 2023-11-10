@@ -17,15 +17,6 @@ public class Node {
         this.totalCost = (this.forwardCost + this.backwardCost);
     }
 
-    //Check the new nodes and expanded nodes are equal or not
-    public boolean equals (List<Node> others){
-        for (Node other : others){
-            if (this.getCurrentPosition()[0] == other.getCurrentPosition()[0] && this.getCurrentPosition()[1] == other.getCurrentPosition()[1])
-                return true;
-        }
-        return false;
-    }
-
     public int getTotalCost() {
         return totalCost;
     }
