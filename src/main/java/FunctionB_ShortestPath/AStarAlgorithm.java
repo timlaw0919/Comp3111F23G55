@@ -45,7 +45,7 @@ public class AStarAlgorithm {
 
     public boolean checkValidNode(List<Node> expandedNode, List<Node> frontier, int[] temp){
         if (!checkExplored(expandedNode, temp) && !checkExplored(frontier, temp) && temp[0] >= 0 && temp[0] < this.maze.length
-                && temp[1] >= 0 && temp[1] < this.maze.length && this.maze[temp[0]][temp[1]] != 1){
+                && temp[1] >= 0 && temp[1] < this.maze[0].length && this.maze[temp[0]][temp[1]] != 1){
             return true;
         }
         return false;
