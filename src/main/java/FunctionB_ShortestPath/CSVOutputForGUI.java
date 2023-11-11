@@ -9,9 +9,9 @@ public class CSVOutputForGUI {
     public static void outputCSVFile(List<int[]> path, String filename) {
         int[][] maze = MazeLoader.loadMazeFromCSV("maze_map.csv");
         try (FileWriter writer = new FileWriter(filename)) {
-            for (int i = 0; i < 30 ; i++) {
+            for (int i = 0; i < maze.length ; i++) {
                 StringBuilder sb = new StringBuilder();
-                for (int j = 0; j < 30; j++) {
+                for (int j = 0; j < maze[0].length; j++) {
                     int value = 0;
                     boolean check = false;
                     for(int[] node : path){

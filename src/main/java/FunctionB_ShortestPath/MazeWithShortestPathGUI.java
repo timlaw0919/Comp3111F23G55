@@ -31,11 +31,13 @@ public class MazeWithShortestPathGUI extends Application {
                     cell.setFill(Color.WHITE); // Path
                 }
                 else if (mazeData[i][j] == 4) {
-                    cell.setFill((Color.LIGHTGREEN));
+                    cell.setFill((Color.LIGHTBLUE));
                 }
-                else {
-                    cell.setFill(Color.RED); // Starting/Ending Point
+                else if (mazeData[i][j] == 2){
+                    cell.setFill(Color.YELLOW); // Starting/Ending Point
                 }
+                else
+                    cell.setFill(Color.LIGHTGREEN);
 
                 // Add the cell to the GridPane
                 gridPane.add(cell, j, i);
