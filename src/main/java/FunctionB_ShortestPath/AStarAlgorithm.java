@@ -15,6 +15,10 @@ public class AStarAlgorithm {
         this.jerryLocation = jerryLocation;
     }
 
+    public int[] getTomLocation(){
+        return this.tomLocation;
+    }
+
     public void changeTomLocation(int[] tomLocation){
         this.tomLocation = tomLocation;
     }
@@ -28,15 +32,36 @@ public class AStarAlgorithm {
         return (Math.abs(currentLocation[0] - this.jerryLocation[0]) + Math.abs(currentLocation[1] - this.jerryLocation[1]));
     }
 
+    public boolean checkExplored (List<Node> listOfNode, int[] temp){
+        if (!listOfNode.isEmpty()){
+            for (Node node : listOfNode){
+                if (node.getCurrentPosition()[0] == temp[0] && node.getCurrentPosition()[1] == temp[1]){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean checkValidNode(List<Node> expandedNode, List<Node> frontier, int[] temp){
+        if (!checkExplored(expandedNode, temp) && !checkExplored(frontier, temp) && temp[0] >= 0 && temp[0] < this.maze.length
+                && temp[1] >= 0 && temp[1] < this.maze[0].length && this.maze[temp[0]][temp[1]] != 1){
+            return true;
+        }
+        return false;
+    }
+
     //Find current node's neighbor
-    public List<Node> findNeighbor(Node currentNode){
+    public List<Node> findNeighbor(Node currentNode, List<Node> expandedNode, List<Node> frontier){
         List<Node> neighbor = new ArrayList<>();
         int[][] fourDirection = {{0,1}, {1,0}, {0,-1}, {-1,0}};
         for (int[] direction : fourDirection){
             int[] temp = Arrays.copyOf(currentNode.getCurrentPosition(), currentNode.getCurrentPosition().length);
             temp[0] += direction[0];
             temp[1] += direction[1];
-            neighbor.add(new Node(temp, currentNode, calculateDistance(temp), currentNode.getBackwardCost() + 1));
+            if (checkValidNode(expandedNode, frontier, temp)){
+                neighbor.add(new Node(temp, currentNode, calculateDistance(temp), currentNode.getBackwardCost() + 1));
+            }
         }
         return neighbor;
     }
@@ -77,16 +102,7 @@ public class AStarAlgorithm {
             }
 
             // Find the valid neighbor of current node + add into frontier
-            for (Node neighbor : findNeighbor(current)){
-                int[] neighborCurrentLocation = neighbor.getCurrentPosition();
-                if (!neighbor.equals(expandedNode) && !neighbor.equals(frontier)
-                        && neighborCurrentLocation[0] >= 0 && neighborCurrentLocation[0] < 30  && neighborCurrentLocation[1] >= 0
-                        && neighborCurrentLocation[1] < 30 && ((maze[neighborCurrentLocation[0]][neighborCurrentLocation[1]] == 0)
-                        || maze[neighborCurrentLocation[0]][neighborCurrentLocation[1]] == 2
-                        || maze[neighborCurrentLocation[0]][neighborCurrentLocation[1]] == 3)){
-                    frontier.add(neighbor);
-                }
-            }
+            frontier.addAll(findNeighbor(current, expandedNode, frontier));
         }
         return path;
     }
@@ -94,6 +110,24 @@ public class AStarAlgorithm {
     // Return Tom's next movement by int[]
     public int[] tomNextMovement(){
         List<int[]> path = pathGeneratorByAStar();
-        return path.get(path.size() - 2);
+
+        // At least having one path between Tom and Jerry
+        if (path.size() >= 2){
+            return path.get(path.size() - 2);
+        }
+
+        // No path between Tom and Jerry
+        else {
+            List<Node> temp = new ArrayList<>();
+            List<Node> neighbor = findNeighbor(new Node(getTomLocation(), null, 0, 0), temp, temp);
+            // Some movable cell near Tom
+            if (!neighbor.isEmpty()) {
+                return neighbor.get(0).getCurrentPosition();
+            }
+            // Tom is surrounded by barrier
+            else {
+                return getTomLocation();
+            }
+        }
     }
 }
