@@ -1,13 +1,27 @@
 package FunctionC_TomCatchJerry;
 
+import FunctionA_CreateMaze.Cell;
 import FunctionA_CreateMaze.constant.CellState;
 import javafx.application.Application;
-import javafx.scene.Scene;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,33 +97,74 @@ public class GameMazeGUI extends Application {
     public void start(Stage primaryStage) {
 
         SetGridPane();
-
         // Create the scene and set it on the stage
-        Scene scene = new Scene(gridPane);
+        StackPane stackPane = new StackPane();
+        Label TomWin = new Label("You Are Caught by Tom!");
+        Label JerryWin = new Label("Successfully Escape!");
+        TomWin.setStyle("-fx-font-size: 24; -fx-font-weight: bold;");
+        JerryWin.setStyle("-fx-font-size: 24; -fx-font-weight: bold;");
+
+
+        Button reT = new Button("Restart");
+        Button reJ = new Button("Restart");
+        VBox T_Win = new VBox(20,TomWin,reT);
+        VBox J_Win = new VBox(20,JerryWin,reJ);
+        T_Win.setAlignment(Pos.CENTER);
+        J_Win.setAlignment(Pos.CENTER);
+
+        T_Win.setVisible(false);
+        J_Win.setVisible(false);
+        stackPane.getChildren().addAll(gridPane,T_Win,J_Win);
+
+        Scene scene = new Scene(stackPane);
+        KeyBoardListener JerryMove = new KeyBoardListener(Jerry);
+        CheckEndGame endGame = new CheckEndGame(Tom, Jerry);
+        // Create a thread for Jerry and Tom respectively to make them run simultaneously
+        Runnable startGame = () -> {
+            Thread Player = new Thread(() -> {
+                while (!endGame.isEndGame()){
+                    PlayerMove();
+                }
+                if (Jerry.getGame_state())  J_Win.setVisible(true);
+            });
+
+            Thread Computer = new Thread(() -> {
+                while (!endGame.isEndGame()){
+                    ComputerMove();
+                }
+                if (Tom.getGame_state()) T_Win.setVisible(true);
+            });
+            Player.start();
+//        Computer starts moving when player starts to play
+            scene.setOnKeyPressed(keyEvent -> {
+                JerryMove.keyPressed(keyEvent);
+                if (Computer.getState() == Thread.State.NEW) Computer.start();
+            });
+        };
+        startGame.run();
+        EventHandler handler = event -> {
+            T_Win.setVisible(false);
+            J_Win.setVisible(false);
+
+            Jerry.reset(entryIndex/maze.length,entryIndex%maze.length);
+            Tom.reset(exitIndex/maze.length,exitIndex%maze.length);
+            updatedGridPane(Jerry, Color.YELLOWGREEN);
+            updatedGridPane(Tom, Color.BLUEVIOLET);
+            startGame.run();
+        };
+        reT.setOnAction(handler);
+        reJ.setOnAction(handler);
+
+
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("Tom n Jerry In Maze");
         primaryStage.show();
-        KeyBoardListener JerryMove = new KeyBoardListener(Jerry);
-        scene.setOnKeyPressed(JerryMove::keyPressed);
-        CheckEndGame endGame = new CheckEndGame(Tom, Jerry);
-        // Create a thread for Jerry and Tom respectively to make them run simultaneously
-        Thread Player = new Thread(() -> {
-            while (true){
-                PlayerMove();
-                if (endGame.isEndGame()) while (true) pauser(Jerry); // Stop the movement of Jerry when the game is ended
-            }
-        });
-        Thread Computer = new Thread(() -> {
-            while (true){
-                ComputerMove();
-                if (endGame.isEndGame()) while (true) pauser(Jerry); // Stop the movement of Tom when the game is ended
-            }
-        });
-        // Start the thread
-        Player.start();
-        Computer.start();
+
 
     }
+
+
 
     /**
      * Set the speed for the corresponding character

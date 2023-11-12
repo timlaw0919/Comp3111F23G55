@@ -143,6 +143,13 @@ public class Character {
         this.speed = speed;
     }
 
+    public void reset(int row, int col){
+        lastPos = toIndex(location);
+        location[0] = row;
+        location[1] = col;
+        direction = UNMOVE;
+        Game_state = false;
+    }
 
 }
 
