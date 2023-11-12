@@ -19,6 +19,10 @@ public class GameMain {
         GameMazeGUI.makeGUI(args);
     }
 
+    /**
+     * Generate a new maze before the game starts
+     * @return The maze which is newly generated
+     */
     public static int[][] newMaze(){
         int rows = 30; // Number of rows in the maze
         int cols = 30; // Number of columns in the maze

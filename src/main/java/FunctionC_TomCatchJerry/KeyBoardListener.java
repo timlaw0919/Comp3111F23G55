@@ -12,6 +12,10 @@ public class KeyBoardListener extends KeyAdapter{
         this.player = player;
     }
 
+    /**
+     * Turns the inputs from the keyboard to direction of the moving object
+     * @param e The input received from the keyboard
+     */
     public void keyPressed(KeyEvent e){
         switch(e.getCode()){
             case W:	    // Upward
