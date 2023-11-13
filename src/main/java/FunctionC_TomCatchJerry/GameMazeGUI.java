@@ -64,8 +64,8 @@ public class GameMazeGUI extends Application {
         }
         updatedGridPane(Tom,TomTom);
         updatedGridPane(Jerry,JerryJerry);
-        Tom.setSpeed(200);  // Set the speed of Tom
-        Jerry.setSpeed(100);    // Set the speed of Jerry
+//        Tom.setSpeed(200);  // Set the speed of Tom
+//        Jerry.setSpeed(100);    // Set the speed of Jerry
     }
 
     /**

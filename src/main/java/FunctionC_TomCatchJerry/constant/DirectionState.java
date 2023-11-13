@@ -8,3 +8,4 @@ public enum DirectionState {
     RIGHT       // 4
 
 }
+
