@@ -92,7 +92,6 @@ public class MainGUI extends Application {
         start.setOnAction(actionEvent -> {
             mazeSize = mazeLength.getValue();
             maze = newMaze();
-            System.out.println(Speed.getValue().value);
             Tom.setSpeed(Speed.getValue().value + 120);
             Jerry.setSpeed(Speed.getValue().value +120);
             shortestPath = new AStarAlgorithm(Tom.getLocation(), Jerry.getLocation());
