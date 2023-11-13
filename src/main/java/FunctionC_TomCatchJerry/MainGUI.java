@@ -23,7 +23,7 @@ import static FunctionC_TomCatchJerry.GameMazeGUI.*;
 public class MainGUI extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Image jerry = new Image("file:Jerry.png");
+        Image jerry = new Image("file:CatchesJerry.png");
         ImageView jerry_view = new ImageView(jerry);
         jerry_view.setFitHeight(146);
         jerry_view.setFitWidth(238);
@@ -33,17 +33,20 @@ public class MainGUI extends Application {
         Button start = new Button("Start");
         start.setLayoutX(129);
         start.setLayoutY(208);
-        Spinner<Integer> mazeLength = new Spinner<>(30,60,30,5);
+        Label sizeOfMaze = new Label("Size of Maze:");
+        sizeOfMaze.setLayoutX(65);
+        sizeOfMaze.setLayoutY(128);
+        Spinner<Integer> mazeLength = new Spinner<>(30,50,30,5);
 
-        mazeLength.setLayoutX(132);
-        mazeLength.setLayoutY(136);
-
+        mazeLength.setLayoutX(140);
+        mazeLength.setLayoutY(125);
+        mazeLength.setPrefWidth(80);
         Label title = new Label("Tom and Jerry");
         title.setLayoutX(63);
         title.setLayoutY(36);
         title.setFont(new Font("Bauhaus 93",27.0));
         Pane pane = new Pane();
-        pane.getChildren().addAll(jerry_view,start,mazeLength,title);
+        pane.getChildren().addAll(jerry_view,start,mazeLength,title,sizeOfMaze);
 
         start.setOnAction(actionEvent -> {
             mazeSize = mazeLength.getValue();

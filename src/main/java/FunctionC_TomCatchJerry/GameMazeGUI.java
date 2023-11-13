@@ -45,7 +45,7 @@ public class GameMazeGUI extends Application {
     // HAHA
                 // Set the color of the cell based on the value in the maze data
                 if (maze[i][j] == CellState.BLOCK.ordinal()) {
-                    cell.setFill(Color.web("#C08129")); // Block
+                    cell.setFill(Color.web("#C0C0C0")); // Block
                 } else if (maze[i][j] == CellState.PATH.ordinal()) {
                     cell.setFill(Color.WHITE); // Path
                 } else if (maze[i][j] == CellState.ENTRY.ordinal()) {
@@ -62,6 +62,8 @@ public class GameMazeGUI extends Application {
                 cells.add(cell);    // Store the color of the cell accordingly
             }
         }
+        updatedGridPane(Tom,TomTom);
+        updatedGridPane(Jerry,JerryJerry);
         Tom.setSpeed(200);  // Set the speed of Tom
         Jerry.setSpeed(100);    // Set the speed of Jerry
     }
@@ -72,12 +74,12 @@ public class GameMazeGUI extends Application {
      * @param imagePattern The color which represents the corresponding character on the maze
      */
     public void updatedGridPane(Character c, ImagePattern imagePattern) {
-        if (cells.get(c.getLastPos()).getFill() == Color.GRAY); // Avoid refilling the BLOCK
+        if (cells.get(c.getLastPos()).getFill() == Color.web("#C0C0C0") || c.getLastPos() == 0); // Avoid refilling the BLOCK
         else if (c.getLastPos() == entryIndex){     // Always keep the entry point being YELLOW
-            cells.get(c.getLastPos()).setFill(Color.YELLOW);
+            cells.get(c.getLastPos()).setFill(Color.web("#F1CD85"));
         }
         else if (c.getLastPos() == exitIndex){      // Always keep the exit point being LIGHT GREEN
-            cells.get(c.getLastPos()).setFill(Color.LIGHTGREEN);
+            cells.get(c.getLastPos()).setFill(Color.web("#808990"));
         }
         else {      // Repaint the path to WHITE when character leaves
             cells.get(c.getLastPos()).setFill(Color.WHITE);
@@ -91,8 +93,11 @@ public class GameMazeGUI extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
+//        String musicFile = "path/to/music.mp3"; // Provide the path to your audio file
 
         SetGridPane();
+        updatedGridPane(Jerry, JerryJerry);
+        updatedGridPane(Tom, TomTom);
         // Create the scene and set it on the stage
         StackPane stackPane = new StackPane();
         Label TomWin = new Label("You Are Caught by Tom!");
@@ -132,7 +137,7 @@ public class GameMazeGUI extends Application {
             });
             Player.start();
 //        Computer starts moving when player starts to play
-            scene.setOnKeyPressed(keyEvent -> {
+            scene.setOnKeyPressed(keyEvent -> {;
                 JerryMove.keyPressed(keyEvent);
                 if (Computer.getState() == Thread.State.NEW) Computer.start();
             });
