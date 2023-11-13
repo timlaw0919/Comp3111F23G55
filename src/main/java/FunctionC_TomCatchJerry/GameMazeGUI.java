@@ -16,6 +16,10 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javax.sound.sampled.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,8 +68,8 @@ public class GameMazeGUI extends Application {
         }
         updatedGridPane(Tom,TomTom);
         updatedGridPane(Jerry,JerryJerry);
-//        Tom.setSpeed(200);  // Set the speed of Tom
-//        Jerry.setSpeed(100);    // Set the speed of Jerry
+        Tom.setSpeed(180);  // Set the speed of Tom
+        Jerry.setSpeed(200);    // Set the speed of Jerry
     }
 
     /**
@@ -93,7 +97,12 @@ public class GameMazeGUI extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-//        String musicFile = "path/to/music.mp3"; // Provide the path to your audio file
+        String musicFilePath = "TomAndJerryBackgroundMusic.mp3";
+        Media media = new Media(new File(musicFilePath).toURI().toString());
+
+        // Create a MediaPlayer with the Media object
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
 
         SetGridPane();
         updatedGridPane(Jerry, JerryJerry);
