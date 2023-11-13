@@ -51,8 +51,16 @@ public class MainGUI extends Application {
         Label sizeOfMaze = new Label("Size of Maze:");
         sizeOfMaze.setLayoutX(65);
         sizeOfMaze.setLayoutY(128);
-        Spinner<Integer> mazeLength = new Spinner<>(30,50,30,5);
 
+        Button info = new Button("?");
+        info.setAlignment(javafx.geometry.Pos.CENTER);
+        info.setLayoutX(261.0);
+        info.setLayoutY(23.0);
+        info.setMnemonicParsing(false);
+        Font font = new Font("Berlin Sans FB Demi Bold", 13.0);
+        info.setFont(font);
+
+        Spinner<Integer> mazeLength = new Spinner<>(30,50,30,5);
         mazeLength.setLayoutX(140);
         mazeLength.setLayoutY(125);
         mazeLength.setPrefWidth(80);
@@ -70,8 +78,16 @@ public class MainGUI extends Application {
         movingSpeed.setLayoutX(55);
         movingSpeed.setLayoutY(162);
         Pane pane = new Pane();
-        pane.getChildren().addAll(jerry_view,tom_view,start,mazeLength,title,sizeOfMaze,Speed,movingSpeed);
+        pane.getChildren().addAll(jerry_view,tom_view,start,mazeLength,title,sizeOfMaze,Speed,movingSpeed,info);
 
+        info.setOnAction(actionEvent -> {
+            InfoGUI infoGUI = new InfoGUI();
+            try {
+                infoGUI.start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         start.setOnAction(actionEvent -> {
             mazeSize = mazeLength.getValue();
