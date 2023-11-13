@@ -1,11 +1,13 @@
 package FunctionC_TomCatchJerry;
 
+import FunctionB_ShortestPath.AStarAlgorithm;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Spinner;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -19,10 +21,8 @@ import java.io.IOException;
 
 import static FunctionC_TomCatchJerry.GameMazeGUI.*;
 public class MainGUI extends Application {
-    private static final String BACKGROUND_IMAGE_URL = "https://themepack.me/i/c/749x467/media/g/221/tom-jerry-theme-7.jpg";
     @Override
     public void start(Stage stage) throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(MainGUI.class.getResource("start.fxml"));
         Image jerry = new Image("file:Jerry.png");
         ImageView jerry_view = new ImageView(jerry);
         jerry_view.setFitHeight(146);
@@ -33,13 +33,11 @@ public class MainGUI extends Application {
         Button start = new Button("Start");
         start.setLayoutX(129);
         start.setLayoutY(208);
+        Spinner<Integer> mazeLength = new Spinner<>(30,60,30,5);
 
-        Slider mazeLength = new Slider();
-        mazeLength.setMin(30);
-        mazeLength.setMax(60);
-        mazeLength.setBlockIncrement(10);
         mazeLength.setLayoutX(132);
         mazeLength.setLayoutY(136);
+
         Label title = new Label("Tom and Jerry");
         title.setLayoutX(63);
         title.setLayoutY(36);
@@ -47,14 +45,10 @@ public class MainGUI extends Application {
         Pane pane = new Pane();
         pane.getChildren().addAll(jerry_view,start,mazeLength,title);
 
-//        mazeLength.setOnDragDone(dragEvent -> {
-//            dragEvent.getPickResult().getIntersectedDistance();
-//
-//        });
-//        Button start = new Button("Start");
         start.setOnAction(actionEvent -> {
-            int mazeSize = (int)mazeLength.getValue();
-            maze = newMaze(mazeSize);
+            mazeSize = mazeLength.getValue();
+            maze = newMaze();
+            shortestPath = new AStarAlgorithm(Tom.getLocation(), Jerry.getLocation());
             GameMazeGUI gameMazeGUI = new GameMazeGUI();
             gameMazeGUI.start(stage);
         });

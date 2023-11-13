@@ -89,7 +89,7 @@ public class Character {
      * @return true when the index is valid in maze
      */
     public boolean IsWithinBoundary(int coordinate){
-        return coordinate >= 0 && coordinate < 30;
+        return coordinate >= 0 && coordinate < maze.length;
     }
 
     /**
@@ -124,7 +124,7 @@ public class Character {
     }
 
     public static int toIndex(int[] location){
-        return 30*location[0]+location[1];
+        return maze.length*location[0]+location[1];
     }
 
     public void setGame_state(boolean game_state) {
