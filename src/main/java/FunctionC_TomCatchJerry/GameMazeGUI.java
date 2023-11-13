@@ -37,6 +37,7 @@ public class GameMazeGUI extends Application {
     List<Rectangle> cells = new ArrayList<>();
     ImagePattern TomTom = new ImagePattern(new Image("file:tom.png"));
     ImagePattern JerryJerry = new ImagePattern(new Image("file:Jerry.png"));
+    ImagePattern block = new ImagePattern(new Image("file:block.jpg"));
 
     /**
      * Set up the scene of the maze and the spawn point of Jerry and Tom
@@ -49,7 +50,7 @@ public class GameMazeGUI extends Application {
     // HAHA
                 // Set the color of the cell based on the value in the maze data
                 if (maze[i][j] == CellState.BLOCK.ordinal()) {
-                    cell.setFill(Color.web("#C0C0C0")); // Block
+                    cell.setFill(block); // Block
                 } else if (maze[i][j] == CellState.PATH.ordinal()) {
                     cell.setFill(Color.WHITE); // Path
                 } else if (maze[i][j] == CellState.ENTRY.ordinal()) {
