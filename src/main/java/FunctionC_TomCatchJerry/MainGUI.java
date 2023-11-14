@@ -103,4 +103,7 @@ public class MainGUI extends Application {
         stage.setScene(startPage);
         stage.show();
     }
+    public static void gameStart(String[] args) {
+        launch(args);
+    }
 }
