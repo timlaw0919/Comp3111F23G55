@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import static FunctionC_TomCatchJerry.GameMazeGUI.*;
 public class MainGUI extends Application {
     enum Speed {
-        FAST(80),
-        MODERATE(100),
-        SLOW(120);
+        FAST(150),
+        MODERATE(200),
+        SLOW(250);
         ;
         public final int value;
         Speed(int i) {
@@ -60,7 +60,7 @@ public class MainGUI extends Application {
         Font font = new Font("Berlin Sans FB Demi Bold", 13.0);
         info.setFont(font);
 
-        Spinner<Integer> mazeLength = new Spinner<>(30,50,30,5);
+        Spinner<Integer> mazeLength = new Spinner<>(20,40,30,5);
         mazeLength.setLayoutX(140);
         mazeLength.setLayoutY(125);
         mazeLength.setPrefWidth(80);
@@ -92,8 +92,8 @@ public class MainGUI extends Application {
         start.setOnAction(actionEvent -> {
             mazeSize = mazeLength.getValue();
             maze = newMaze();
-            Tom.setSpeed(Speed.getValue().value + 120);
-            Jerry.setSpeed(Speed.getValue().value +120);
+            Tom.setSpeed(Speed.getValue().value-20);
+            Jerry.setSpeed(Speed.getValue().value);
             shortestPath = new AStarAlgorithm(Tom.getLocation(), Jerry.getLocation());
             GameMazeGUI gameMazeGUI = new GameMazeGUI();
             gameMazeGUI.start(stage);

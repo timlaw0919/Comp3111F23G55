@@ -50,7 +50,7 @@ public class GameMazeGUI extends Application {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
                 Rectangle cell = new Rectangle(CELL_SIZE, CELL_SIZE);
-                // HAHA
+
                 // Set the color of the cell based on the value in the maze data
                 if (maze[i][j] == CellState.BLOCK.ordinal()) {
                     cell.setFill(block); // Block
@@ -72,8 +72,8 @@ public class GameMazeGUI extends Application {
         }
         updatedGridPane(Tom,TomTom);
         updatedGridPane(Jerry,JerryJerry);
-        Tom.setSpeed(180);  // Set the speed of Tom
-        Jerry.setSpeed(200);    // Set the speed of Jerry
+//        Tom.setSpeed(200);  // Set the speed of Tom
+//        Jerry.setSpeed(200);    // Set the speed of Jerry
     }
 
     /**
@@ -82,7 +82,7 @@ public class GameMazeGUI extends Application {
      * @param imagePattern The color which represents the corresponding character on the maze
      */
     public void updatedGridPane(Character c, ImagePattern imagePattern) {
-        if (cells.get(c.getLastPos()).getFill() == Color.web("#C0C0C0") || c.getLastPos() == 0); // Avoid refilling the BLOCK
+        if (cells.get(c.getLastPos()).getFill() == block || c.getLastPos() == 0); // Avoid refilling the BLOCK
         else if (c.getLastPos() == entryIndex){     // Always keep the entry point being YELLOW
             cells.get(c.getLastPos()).setFill(Color.web("#F1CD85"));
         }
@@ -132,7 +132,7 @@ public class GameMazeGUI extends Application {
 
         Pane pane = new Pane();
         Button home = new Button("Home");
-        home.setLayoutX(410);
+        home.setLayoutX(CELL_SIZE*(mazeSize-3));
         home.setLayoutY(0);
         stackPane.setLayoutY(30);
         pane.getChildren().addAll(stackPane,home);
@@ -150,6 +150,11 @@ public class GameMazeGUI extends Application {
             });
 
             Thread Computer = new Thread(() -> {
+                try {
+                    sleep(1500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 while (!endGame.isEndGame()){
                     ComputerMove();
                 }
@@ -187,8 +192,10 @@ public class GameMazeGUI extends Application {
                     throw new RuntimeException(e);
                 }
 //                Stage currentStage = (Stage) home.getScene().getWindow();
-                Jerry.reset(entryIndex/maze.length,entryIndex%maze.length);
-                Tom.reset(exitIndex/maze.length,exitIndex%maze.length);
+//                Jerry.reset(entryIndex/maze.length,entryIndex%maze.length);
+//                Tom.reset(exitIndex/maze.length,exitIndex%maze.length);
+                Tom = new Character();
+                Jerry = new Character();
 //                currentStage.close();
 
                 primaryStage.close();
@@ -243,9 +250,10 @@ public class GameMazeGUI extends Application {
      * 3. Control the speed of the movement of Tom
      */
     private void ComputerMove(){
+        pauser(Tom);
         Tom.MoveWithShortestPath();
         updatedGridPane(Tom, TomTom);
-        pauser(Tom);
+
     }
 
     public static void makeGUI(String[] args) {
