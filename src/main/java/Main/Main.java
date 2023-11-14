@@ -1,5 +1,6 @@
 package Main;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import FunctionA_CreateMaze.Cell;
@@ -7,11 +8,14 @@ import FunctionA_CreateMaze.MazeGUI;
 import FunctionA_CreateMaze.MazeGenerator;
 import FunctionA_CreateMaze.MazeLoader;
 import static FunctionA_CreateMaze.CSVOutput.outputCSVFile;
+import static java.lang.Thread.sleep;
+
 import FunctionB_ShortestPath.AStarAlgorithm;
 import FunctionB_ShortestPath.CSVOutput;
 import FunctionB_ShortestPath.CSVOutputForGUI;
 import FunctionB_ShortestPath.MazeWithShortestPathGUI;
 import FunctionC_TomCatchJerry.GameMain;
+import FunctionC_TomCatchJerry.MainGUI;
 
 public class Main{
     public static void main(String[] args) {
@@ -28,7 +32,16 @@ public class Main{
             System.out.println("Press 3 to test Function C - Play the game");
             System.out.print("Enter your choice: ");
 
-            choice = scanner.nextInt(); // Get the user's choice
+
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter Number 1/2/3");
+                scanner.nextLine();
+                System.out.print("Enter your choice: ");
+                choice = scanner.nextInt();
+            }
+            // Get the user's choice
 
             switch (choice){
                 case 1: // Test Function A
@@ -63,7 +76,7 @@ public class Main{
                     CSVOutput.outputCSVFile(aStarObject.pathGeneratorByAStar(), "path_coordinates.csv");
                     System.exit(0);
                 case 3: // Test Function C
-                    GameMain.main(args);
+                    MainGUI.gameStart(args);
                     System.exit(0);
                 default:
                     System.out.println("Invalid choice.");
