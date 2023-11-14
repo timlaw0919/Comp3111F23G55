@@ -7,14 +7,18 @@ import static FunctionC_TomCatchJerry.constant.DirectionState.*;
 
 public class Character {
 
-    private DirectionState direction;   // Moving direction
+//    private DirectionState direction;   // Moving direction
+    public int newCol;
+    public int newRow;
     private int lastPos;                // Previous Location (index)
-    private int[] location;             // Current location (Coordinates)
+    public int[] location;             // Current location (Coordinates)
     private boolean Game_state;         // Current Game state
     private int speed;                  // Speed of the moving character
 
     public Character() {
-        direction = UNMOVE;
+//        direction = UNMOVE;
+        newRow = 0;
+        newCol = 0;
         location = new int[]{0, 0};
         Game_state = false;
         speed = 50;
@@ -28,43 +32,53 @@ public class Character {
      * 3. Reset the direction to 0 for ensuring that no movement exists when no input is received
      * 4. Update the new location to the algorithm for calculating the newest shortest path
      */
+//    public void move(){
+//
+//        switch (direction) {
+//            case UNMOVE -> {
+//                return;
+//            }
+//            case UPWARD -> {
+//                if (IsWithinBoundary(location[0] - 1)
+//                        && IsPath(location[0]-1, location[1])) {
+//                    lastPos = toIndex(location);
+//                    location[0] -= 1;
+//                }
+//            }
+//            case DOWNWARD -> {
+//                if (IsWithinBoundary(location[0] + 1)
+//                        && IsPath(location[0]+1, location[1])) {
+//                    lastPos = toIndex(location);
+//                    location[0] += 1;
+//                }
+//            }
+//            case LEFT -> {
+//                if (IsWithinBoundary(location[1] - 1)
+//                        && IsPath(location[0], location[1]-1)) {
+//                    lastPos = toIndex(location);
+//                    location[1] -= 1;
+//                }
+//            }
+//            case RIGHT -> {
+//                if (IsWithinBoundary(location[1] + 1)
+//                        && IsPath(location[0], location[1]+1)) {
+//                    lastPos = toIndex(location);
+//                    location[1] += 1;
+//                }
+//            }
+//        }
+//        direction = UNMOVE;     // Reset the direction when there is no input received
+//        shortestPath.changeJerryLocation(location);     // Update Jerry's location to find the newest shortest path
+//    }
     public void move(){
-
-        switch (direction) {
-            case UNMOVE -> {
-                return;
-            }
-            case UPWARD -> {
-                if (IsWithinBoundary(location[0] - 1)
-                        && IsPath(location[0]-1, location[1])) {
-                    lastPos = toIndex(location);
-                    location[0] -= 1;
-                }
-            }
-            case DOWNWARD -> {
-                if (IsWithinBoundary(location[0] + 1)
-                        && IsPath(location[0]+1, location[1])) {
-                    lastPos = toIndex(location);
-                    location[0] += 1;
-                }
-            }
-            case LEFT -> {
-                if (IsWithinBoundary(location[1] - 1)
-                        && IsPath(location[0], location[1]-1)) {
-                    lastPos = toIndex(location);
-                    location[1] -= 1;
-                }
-            }
-            case RIGHT -> {
-                if (IsWithinBoundary(location[1] + 1)
-                        && IsPath(location[0], location[1]+1)) {
-                    lastPos = toIndex(location);
-                    location[1] += 1;
-                }
-            }
+        if (IsWithinBoundary(location[0]+newRow)
+                && IsWithinBoundary(location[1]+newCol)
+                && IsPath(location[0]+newRow,location[1]+newCol)){
+            lastPos = toIndex(location);
+            location[0] += newRow;
+            location[1] += newCol;
+            shortestPath.changeJerryLocation(location);
         }
-        direction = UNMOVE;     // Reset the direction when there is no input received
-        shortestPath.changeJerryLocation(location);     // Update Jerry's location to find the newest shortest path
     }
 
     /**
@@ -94,12 +108,12 @@ public class Character {
 
     /**
      * Check whether the new location is valid for the object to move
-     * @param x The x-coordinate of the new location
-     * @param y The y-coordinate of the new location
+     * @param row The x-coordinate of the new location
+     * @param col The y-coordinate of the new location
      * @return true if the location is not a BLOCK
      */
-    public boolean IsPath(int x, int y){
-        return maze[x][y] != 1;
+    public boolean IsPath(int row, int col){
+        return maze[row][col] != 1;
     }
 
     public void setLocation(int x, int y){
@@ -107,13 +121,13 @@ public class Character {
         location[1] = y;
     }
 
-    public void setDirection(DirectionState direction){
-        this.direction = direction;
-    }
-
-    public DirectionState getDirection(){
-        return direction;
-    }
+//    public void setDirection(DirectionState direction){
+//        this.direction = direction;
+//    }
+//
+//    public DirectionState getDirection(){
+//        return direction;
+//    }
 
     public int[] getLocation() {
         return location;
@@ -147,7 +161,9 @@ public class Character {
         lastPos = toIndex(location);
         location[0] = row;
         location[1] = col;
-        direction = UNMOVE;
+        newRow = 0;
+        newCol = 0;
+//        direction = UNMOVE;
         Game_state = false;
     }
 

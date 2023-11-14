@@ -19,22 +19,30 @@ public class KeyBoardListener extends KeyAdapter{
     public void keyPressed(KeyEvent e){
         switch(e.getCode()){
             case W:	    // Upward
-                player.setDirection(DirectionState.UPWARD);
+//                player.setDirection(DirectionState.UPWARD);
+                player.newCol = 0; //player.location[1];
+                player.newRow = -1; //player.location[0]-1;
                 break;
             case A:	    // Left
-                player.setDirection(DirectionState.LEFT);
+//                player.setDirection(DirectionState.LEFT);
+                player.newCol = -1;
+                player.newRow = 0;
                 break;
 
             case S: 	// Downward
-                player.setDirection(DirectionState.DOWNWARD);
+//                player.setDirection(DirectionState.DOWNWARD);
+                player.newCol = 0;
+                player.newRow = 1;
                 break;
 
             case D: 	// Right
-                player.setDirection(DirectionState.RIGHT);
+//                player.setDirection(DirectionState.RIGHT);
+                player.newCol = 1;
+                player.newRow = 0;
                 break;
 
             default:
-                player.setDirection(DirectionState.UNMOVE);
+//                player.setDirection(DirectionState.UNMOVE);
                 break;
         }
     }
