@@ -1,6 +1,7 @@
 package FunctionC_TomCatchJerry;
 
 import FunctionA_CreateMaze.constant.CellState;
+import FunctionB_ShortestPath.AStarAlgorithm;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -179,11 +180,18 @@ public class GameMazeGUI extends Application {
             @Override
             public void handle(ActionEvent event) {
                 mediaPlayer.stop();
-                Stage currentStage = (Stage) home.getScene().getWindow();
+                Tom.setGame_state(true);
+                try {
+                    sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+//                Stage currentStage = (Stage) home.getScene().getWindow();
                 Jerry.reset(entryIndex/maze.length,entryIndex%maze.length);
                 Tom.reset(exitIndex/maze.length,exitIndex%maze.length);
-                currentStage.close();
+//                currentStage.close();
 
+                primaryStage.close();
                 MainGUI mainGUI = new MainGUI();
                 Stage mainStage = new Stage();
                 try {
