@@ -1,7 +1,9 @@
 package FunctionC_TomCatchJerry;
 
 import FunctionA_CreateMaze.constant.CellState;
+import FunctionB_ShortestPath.AStarAlgorithm;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -47,7 +50,7 @@ public class GameMazeGUI extends Application {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
                 Rectangle cell = new Rectangle(CELL_SIZE, CELL_SIZE);
-    // HAHA
+                // HAHA
                 // Set the color of the cell based on the value in the maze data
                 if (maze[i][j] == CellState.BLOCK.ordinal()) {
                     cell.setFill(block); // Block
@@ -127,7 +130,14 @@ public class GameMazeGUI extends Application {
         J_Win.setVisible(false);
         stackPane.getChildren().addAll(gridPane,T_Win,J_Win);
 
-        Scene scene = new Scene(stackPane);
+        Pane pane = new Pane();
+        Button home = new Button("Home");
+        home.setLayoutX(410);
+        home.setLayoutY(0);
+        stackPane.setLayoutY(30);
+        pane.getChildren().addAll(stackPane,home);
+
+        Scene scene = new Scene(pane);
         KeyBoardListener JerryMove = new KeyBoardListener(Jerry);
         CheckEndGame endGame = new CheckEndGame(Tom, Jerry);
         // Create a thread for Jerry and Tom respectively to make them run simultaneously
@@ -166,6 +176,31 @@ public class GameMazeGUI extends Application {
         reT.setOnAction(handler);
         reJ.setOnAction(handler);
 
+        home.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                mediaPlayer.stop();
+                Tom.setGame_state(true);
+                try {
+                    sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+//                Stage currentStage = (Stage) home.getScene().getWindow();
+                Jerry.reset(entryIndex/maze.length,entryIndex%maze.length);
+                Tom.reset(exitIndex/maze.length,exitIndex%maze.length);
+//                currentStage.close();
+
+                primaryStage.close();
+                MainGUI mainGUI = new MainGUI();
+                Stage mainStage = new Stage();
+                try {
+                    mainGUI.start(mainStage);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
 
         primaryStage.setScene(scene);

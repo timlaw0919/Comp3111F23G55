@@ -22,7 +22,7 @@ public class MazeGenerator {
         this.rows = rows;
         this.cols = cols;
         this.maze = new Cell[rows][cols];
-        initializeMaze();
+//        initializeMaze();
     }
 
     private void EntryPointGenerator(){
@@ -66,6 +66,7 @@ public class MazeGenerator {
 
     // Generate the maze
     public void generateMaze() {
+        initializeMaze();
         EntryPoint.visited = true;
 
         Stack<Cell> stack = new Stack<>();
