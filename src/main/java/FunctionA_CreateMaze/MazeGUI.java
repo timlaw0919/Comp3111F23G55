@@ -1,9 +1,12 @@
 package FunctionA_CreateMaze;
 
 import FunctionA_CreateMaze.constant.CellState;
+import Main.BigMainGUI;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -45,14 +48,25 @@ public class MazeGUI extends Application {
             }
         }
 
+        Pane pane = new Pane();
+        Button backTestingMenuButton = new Button("Back to Testing Menu");
+        backTestingMenuButton.setLayoutX(CELL_SIZE * (mazeData.length ) + 10);
+        backTestingMenuButton.setLayoutY(125);
+        pane.getChildren().addAll(gridPane, backTestingMenuButton);
+
+        backTestingMenuButton.setOnAction(actionEvent -> {
+            BigMainGUI bigMainGUI = new BigMainGUI();
+            try {
+                bigMainGUI.start(primaryStage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         // Create the scene and set it on the stage
-        Scene scene = new Scene(gridPane);
+        Scene scene = new Scene(pane);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Maze GUI");
         primaryStage.show();
-    }
-
-    public static void makeGUI(String[] args) {
-        launch(args);
     }
 }
