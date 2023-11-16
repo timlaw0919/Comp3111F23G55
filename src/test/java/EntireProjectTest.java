@@ -1,7 +1,9 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import FunctionA_CreateMaze.*;
 import FunctionB_ShortestPath.*;
+import FunctionC_TomCatchJerry.*;
 
 class EntireProjectTest {
     // Big Main GUI
