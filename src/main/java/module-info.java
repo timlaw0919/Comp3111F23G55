@@ -11,4 +11,5 @@ module tomandjerryinmazegame.tomandjerryinmazegame {
     exports FunctionA_CreateMaze;
     exports FunctionB_ShortestPath to javafx.graphics;
     exports FunctionC_TomCatchJerry;
+    exports Main;
 }

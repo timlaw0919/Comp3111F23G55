@@ -12,8 +12,10 @@ public class CSVOutput {
     public static void outputCSVFile(List<int[]> path, String filename) {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write("Shortest Path");
+            writer.write("Shortest Path (Read the coordinate line by line)");
             writer.newLine();
+            writer.write("Start-> ");
+            writer.write(",");
             int j = 0;
             for (int k = path.size() - 1; k >= 0; k--) {
                 int[] array = path.get(k);
@@ -25,9 +27,11 @@ public class CSVOutput {
                 writer.write(',');
                 if ((j + 1) % 10 == 0){
                     writer.newLine();
+                    writer.write(",");
                 }
                 j++;
             }
+            writer.write(" -> End");
         } catch (IOException e) {
             e.printStackTrace();
         }
