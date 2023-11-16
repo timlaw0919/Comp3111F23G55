@@ -5,8 +5,8 @@ import FunctionA_CreateMaze.MazeLoader;
 import java.util.*;
 
 public class AStarAlgorithm {
-    private int[] tomLocation;
-    private int[] jerryLocation;
+    public int[] tomLocation;
+    public int[] jerryLocation;
     private final int[][] maze = MazeLoader.loadMazeFromCSV("maze_map.csv");
 
     // Constructor
@@ -15,21 +15,15 @@ public class AStarAlgorithm {
         this.jerryLocation = jerryLocation;
     }
 
-    public int[] getTomLocation(){
-        return this.tomLocation;
-    }
-
-    public void changeTomLocation(int[] tomLocation){
-        this.tomLocation = tomLocation;
-    }
-
-    public void changeJerryLocation(int[] jerryLocation){
-        this.jerryLocation = jerryLocation;
-    }
-
-    // Manhattan Distance Calculation
-    public int calculateDistance(int[] currentLocation){
-        return (Math.abs(currentLocation[0] - this.jerryLocation[0]) + Math.abs(currentLocation[1] - this.jerryLocation[1]));
+    public int[] changeLocation(int[] location, int who){
+        if (who == 0){
+            this.tomLocation = location;
+            return this.tomLocation;
+        }
+        else{
+            this.jerryLocation = location;
+            return this.jerryLocation;
+        }
     }
 
     public boolean checkExplored (List<Node> listOfNode, int[] temp){
@@ -60,7 +54,7 @@ public class AStarAlgorithm {
             temp[0] += direction[0];
             temp[1] += direction[1];
             if (checkValidNode(expandedNode, frontier, temp)){
-                neighbor.add(new Node(temp, currentNode, calculateDistance(temp), currentNode.getBackwardCost() + 1));
+                neighbor.add(new Node(temp, currentNode, (Math.abs(temp[0] - this.jerryLocation[0]) + Math.abs(temp[1] - this.jerryLocation[1])), currentNode.getBackwardCost() + 1));
             }
         }
         return neighbor;
@@ -72,7 +66,7 @@ public class AStarAlgorithm {
         List<Node> expandedNode = new ArrayList<>(); // The nodes that are expanded (Only if the node is first time expands, then it may be the shortest path)
         List<Node> frontier = new ArrayList<>(); // The potential candidates for expansion
 
-        Node tomNode = new Node(tomLocation, null, calculateDistance(tomLocation), 0);
+        Node tomNode = new Node(tomLocation, null, (Math.abs(tomLocation[0] - this.jerryLocation[0]) + Math.abs(tomLocation[1] - this.jerryLocation[1])), 0);
         frontier.add(tomNode);
 
         while (!(frontier.isEmpty())){
@@ -118,14 +112,14 @@ public class AStarAlgorithm {
         // No path between Tom and Jerry
         else {
             List<Node> temp = new ArrayList<>();
-            List<Node> neighbor = findNeighbor(new Node(getTomLocation(), null, 0, 0), temp, temp);
+            List<Node> neighbor = findNeighbor(new Node(this.tomLocation, null, 0, 0), temp, temp);
             // Some movable cell near Tom
             if (!neighbor.isEmpty()) {
                 return neighbor.get(0).getCurrentPosition();
             }
             // Tom is surrounded by barrier
             else {
-                return getTomLocation();
+                return this.tomLocation;
             }
         }
     }
