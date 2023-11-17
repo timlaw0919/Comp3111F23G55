@@ -1,7 +1,6 @@
 package FunctionC_TomCatchJerry;
 
 import FunctionA_CreateMaze.constant.CellState;
-import FunctionB_ShortestPath.AStarAlgorithm;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,15 +13,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javax.sound.sampled.*;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,11 +57,13 @@ public class GameMazeGUI extends Application {
                     cell.setFill(Color.WHITE); // Path
                 } else if (maze[i][j] == CellState.ENTRY.ordinal()) {
                     cell.setFill(Color.web("#F1CD85")); // Entry
-                    Jerry.setLocation(i, j);    // Set the spawn point of Jerry
+                    Jerry.location[0] = i;
+                    Jerry.location[1] = j;    // Set the spawn point of Jerry
                     entryIndex = i*maze.length + j; // Store the index of the entry point
                 } else if (maze[i][j] == CellState.EXIT.ordinal()) {
                     cell.setFill(Color.web("#808990")); //Exit
-                    Tom.setLocation(i, j);  // Set the spawn point of Tom
+                    Tom.location[0] = i;
+                    Tom.location[1] = j;  // Set the spawn point of Tom
                     exitIndex = i*maze.length + j;  // Store the index of the exit point
                 }
                 // Add the cell to the GridPane
@@ -79,25 +80,25 @@ public class GameMazeGUI extends Application {
     /**
      * Update the appearance of the maze to show the object movement
      * @param c The character moving on the maze
-     * @param imagePattern The color which represents the corresponding character on the maze
+     * @param imagePattern The image which represents the corresponding character on the maze
      */
     public void updatedGridPane(Character c, ImagePattern imagePattern) {
-        if (cells.get(c.getLastPos()).getFill() == block || c.getLastPos() == 0); // Avoid refilling the BLOCK
-        else if (c.getLastPos() == entryIndex){     // Always keep the entry point being YELLOW
-            cells.get(c.getLastPos()).setFill(Color.web("#F1CD85"));
+        if (cells.get(c.lastPos).getFill() == block || c.lastPos == 0); // Avoid refilling the BLOCK
+        else if (c.lastPos == entryIndex){     // Always keep the entry point being YELLOW
+            cells.get(c.lastPos).setFill(Color.web("#F1CD85"));
         }
-        else if (c.getLastPos() == exitIndex){      // Always keep the exit point being LIGHT GREEN
-            cells.get(c.getLastPos()).setFill(Color.web("#808990"));
+        else if (c.lastPos == exitIndex){      // Always keep the exit point being LIGHT GREEN
+            cells.get(c.lastPos).setFill(Color.web("#808990"));
         }
         else {      // Repaint the path to WHITE when character leaves
-            cells.get(c.getLastPos()).setFill(Color.WHITE);
+            cells.get(c.lastPos).setFill(Color.WHITE);
         }
-        cells.get(toIndex(c.getLocation())).setFill(imagePattern);     // Paint the cell when the character positions on it
+        cells.get(toIndex(c.location)).setFill(imagePattern);     // Paint the cell when the character positions on it
     }
 
     /**
-     * Setup the ...
-     * @param primaryStage The designed ...
+     * Build up the GUI for the maze game
+     * @param primaryStage The stage shown on the screen
      */
     @Override
     public void start(Stage primaryStage) {
@@ -139,14 +140,20 @@ public class GameMazeGUI extends Application {
 
         Scene scene = new Scene(pane);
         KeyBoardListener JerryMove = new KeyBoardListener(Jerry);
-        CheckEndGame endGame = new CheckEndGame(Tom, Jerry);
+        CheckEndGame endGame = new CheckEndGame();
         // Create a thread for Jerry and Tom respectively to make them run simultaneously
         Runnable startGame = () -> {
             Thread Player = new Thread(() -> {
                 while (!endGame.isEndGame()){
-                    PlayerMove();
+                    Jerry.move();
+                    updatedGridPane(Jerry, JerryJerry);
+                    try {
+                        sleep(Jerry.speed);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-                if (Jerry.getGame_state())  J_Win.setVisible(true);
+                if (Jerry.Game_state)  J_Win.setVisible(true);
             });
 
             Thread Computer = new Thread(() -> {
@@ -156,9 +163,15 @@ public class GameMazeGUI extends Application {
                     throw new RuntimeException(e);
                 }
                 while (!endGame.isEndGame()){
-                    ComputerMove();
+                    Tom.MoveWithShortestPath();
+                    updatedGridPane(Tom, TomTom);
+                    try {
+                        sleep(Tom.speed);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-                if (Tom.getGame_state()) T_Win.setVisible(true);
+                if (Tom.Game_state) T_Win.setVisible(true);
             });
             Player.start();
 //        Computer starts moving when player starts to play
@@ -185,18 +198,15 @@ public class GameMazeGUI extends Application {
             @Override
             public void handle(ActionEvent event) {
                 mediaPlayer.stop();
-                Tom.setGame_state(true);
+                Tom.Game_state = true;
                 try {
                     sleep(500);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-//                Stage currentStage = (Stage) home.getScene().getWindow();
-//                Jerry.reset(entryIndex/maze.length,entryIndex%maze.length);
-//                Tom.reset(exitIndex/maze.length,exitIndex%maze.length);
+
                 Tom = new Character();
                 Jerry = new Character();
-//                currentStage.close();
 
                 primaryStage.close();
                 MainGUI mainGUI = new MainGUI();
@@ -215,49 +225,6 @@ public class GameMazeGUI extends Application {
         primaryStage.show();
 
 
-    }
-
-
-
-    /**
-     * Set the speed for the corresponding character
-     * @param character
-     */
-    private void pauser(Character character){
-        try {
-            sleep(character.getSpeed());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Player movement in the maze
-     * 1. Jerry moves under player's control
-     * 2. Update the maze for the movement
-     * 3. Control the speed of the movement of Jerry
-     */
-    private void PlayerMove(){
-        Jerry.move();
-        updatedGridPane(Jerry, JerryJerry);
-        pauser(Jerry);
-    }
-
-    /**
-     * Computer movement in the maze
-     * 1. Tom moves under computer's control
-     * 2. Update the maze for the movement
-     * 3. Control the speed of the movement of Tom
-     */
-    private void ComputerMove(){
-        pauser(Tom);
-        Tom.MoveWithShortestPath();
-        updatedGridPane(Tom, TomTom);
-
-    }
-
-    public static void makeGUI(String[] args) {
-        launch(args);
     }
 
 }
