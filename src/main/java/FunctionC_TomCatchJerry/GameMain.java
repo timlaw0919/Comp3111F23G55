@@ -4,17 +4,6 @@ import FunctionA_CreateMaze.Cell;
 import FunctionA_CreateMaze.MazeGenerator;
 import FunctionA_CreateMaze.MazeLoader;
 import FunctionB_ShortestPath.AStarAlgorithm;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Spinner;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 import static FunctionA_CreateMaze.CSVOutput.outputCSVFile;
 
@@ -24,12 +13,7 @@ public class GameMain {
     public static int[][] maze = newMaze();       // Maze
     public static Character Tom = new Character();      // Computer
     public static Character Jerry = new Character();    // Player
-    public static AStarAlgorithm shortestPath = new AStarAlgorithm(Tom.getLocation(), Jerry.getLocation());    // Algorithm for finding shortest Path
-
-//    public static void main(String[] args) {
-//
-//        GameMazeGUI.makeGUI(args);
-//    }
+    public static AStarAlgorithm shortestPath = new AStarAlgorithm(Tom.location, Jerry.location);    // Algorithm for finding shortest Path
 
     /**
      * Generate a new maze before the game starts

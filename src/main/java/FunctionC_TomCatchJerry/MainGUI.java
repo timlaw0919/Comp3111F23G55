@@ -3,28 +3,28 @@ package FunctionC_TomCatchJerry;
 import FunctionB_ShortestPath.AStarAlgorithm;
 import Main.BigMainGUI;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import static FunctionC_TomCatchJerry.GameMain.*;
-import java.io.IOException;
-import java.util.ArrayList;
 
-import static FunctionC_TomCatchJerry.GameMazeGUI.*;
+import java.io.IOException;
+
+import static FunctionC_TomCatchJerry.GameMain.*;
 public class MainGUI extends Application {
+    /**
+     * Initialize of the speed value of different speed level
+     */
     enum Speed {
         FAST(150),
         MODERATE(200),
         SLOW(250);
-        ;
         public final int value;
         Speed(int i) {
             this.value = i;
@@ -97,9 +97,9 @@ public class MainGUI extends Application {
         start.setOnAction(actionEvent -> {
             mazeSize = mazeLength.getValue();
             maze = newMaze();
-            Tom.setSpeed(Speed.getValue().value-20);
-            Jerry.setSpeed(Speed.getValue().value);
-            shortestPath = new AStarAlgorithm(Tom.getLocation(), Jerry.getLocation());
+            Tom.speed = (Speed.getValue().value-20);
+            Jerry.speed = (Speed.getValue().value);
+            shortestPath = new AStarAlgorithm(Tom.location, Jerry.location);
             GameMazeGUI gameMazeGUI = new GameMazeGUI();
             gameMazeGUI.start(stage);
         });
@@ -117,8 +117,5 @@ public class MainGUI extends Application {
         stage.setScene(startPage);
         stage.setTitle("Game Main Menu");
         stage.show();
-    }
-    public static void gameStart(String[] args) {
-        launch(args);
     }
 }
