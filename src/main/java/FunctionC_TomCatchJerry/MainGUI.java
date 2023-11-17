@@ -1,6 +1,7 @@
 package FunctionC_TomCatchJerry;
 
 import FunctionB_ShortestPath.AStarAlgorithm;
+import Main.BigMainGUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -52,6 +53,10 @@ public class MainGUI extends Application {
         sizeOfMaze.setLayoutX(65);
         sizeOfMaze.setLayoutY(128);
 
+        Button backTestingMenuButton = new Button("Back to Testing Menu");
+        backTestingMenuButton.setLayoutX(0);
+        backTestingMenuButton.setLayoutY(275);
+
         Button info = new Button("?");
         info.setAlignment(javafx.geometry.Pos.CENTER);
         info.setLayoutX(261.0);
@@ -78,7 +83,7 @@ public class MainGUI extends Application {
         movingSpeed.setLayoutX(55);
         movingSpeed.setLayoutY(162);
         Pane pane = new Pane();
-        pane.getChildren().addAll(jerry_view,tom_view,start,mazeLength,title,sizeOfMaze,Speed,movingSpeed,info);
+        pane.getChildren().addAll(jerry_view,tom_view,start,mazeLength,title,sizeOfMaze,Speed,movingSpeed,info, backTestingMenuButton);
 
         info.setOnAction(actionEvent -> {
             InfoGUI infoGUI = new InfoGUI();
@@ -99,8 +104,18 @@ public class MainGUI extends Application {
             gameMazeGUI.start(stage);
         });
 
+        backTestingMenuButton.setOnAction(actionEvent -> {
+            BigMainGUI bigMainGUI = new BigMainGUI();
+            try {
+                bigMainGUI.start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         Scene startPage = new Scene(pane,300,300);
         stage.setScene(startPage);
+        stage.setTitle("Game Main Menu");
         stage.show();
     }
     public static void gameStart(String[] args) {

@@ -69,8 +69,7 @@ public class AStarAlgorithm {
     // Generate Path
     public List<int[]> pathGeneratorByAStar(){
         List<int[]> path = new ArrayList<>(); //The final shortest path
-        List<Node> expandedNode = new ArrayList<>(); // The nodes that are expanded (Only if the node is first time expands,
-        // then it may be the shortest path)
+        List<Node> expandedNode = new ArrayList<>(); // The nodes that are expanded (Only if the node is first time expands, then it may be the shortest path)
         List<Node> frontier = new ArrayList<>(); // The potential candidates for expansion
 
         Node tomNode = new Node(tomLocation, null, calculateDistance(tomLocation), 0);
