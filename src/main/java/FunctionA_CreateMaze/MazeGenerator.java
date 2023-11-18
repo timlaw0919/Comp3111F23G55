@@ -203,11 +203,4 @@ public class MazeGenerator {
         return maze;
     }
 
-    public Cell getEntryPoint() {
-        return EntryPoint;
-    }
-
-    public Cell getExitPoint() {
-        return ExitPoint;
-    }
 }
