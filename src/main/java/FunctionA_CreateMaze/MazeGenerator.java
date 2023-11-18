@@ -22,7 +22,6 @@ public class MazeGenerator {
         this.rows = rows;
         this.cols = cols;
         this.maze = new Cell[rows][cols];
-//        initializeMaze();
     }
 
     private void EntryPointGenerator(){
@@ -204,11 +203,4 @@ public class MazeGenerator {
         return maze;
     }
 
-    public Cell getEntryPoint() {
-        return EntryPoint;
-    }
-
-    public Cell getExitPoint() {
-        return ExitPoint;
-    }
 }

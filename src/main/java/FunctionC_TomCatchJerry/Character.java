@@ -1,75 +1,36 @@
 package FunctionC_TomCatchJerry;
 
-import FunctionC_TomCatchJerry.constant.DirectionState;
-
-import static FunctionC_TomCatchJerry.GameMain.*;
-import static FunctionC_TomCatchJerry.constant.DirectionState.*;
+import static FunctionC_TomCatchJerry.GameMain.maze;
+import static FunctionC_TomCatchJerry.GameMain.shortestPath;
 
 public class Character {
 
-//    private DirectionState direction;   // Moving direction
     public int newCol;
     public int newRow;
-    private int lastPos;                // Previous Location (index)
+    public int lastPos;                // Previous Location (index)
     public int[] location;             // Current location (Coordinates)
-    private boolean Game_state;         // Current Game state
-    private int speed;                  // Speed of the moving character
+    public boolean Game_state;         // Current Game state
+    public int speed;                  // Speed of the moving character
 
+    /**
+     * Initialize all the attributes
+     */
     public Character() {
-//        direction = UNMOVE;
         newRow = 0;
         newCol = 0;
         location = new int[]{0, 0};
         Game_state = false;
-        speed = 50;
+        speed = 0;
         lastPos = toIndex(location);
     }
 
     /**
      * Player controls the direction of the moving object using keyboard
-     * 1. Store the previous location to repaint it into path
-     * 2. Update the new location
-     * 3. Reset the direction to 0 for ensuring that no movement exists when no input is received
-     * 4. Update the new location to the algorithm for calculating the newest shortest path
+     * 1. Check whether the new location is valid for moving
+     * 2. Store the previous location
+     * 3. Update the new location
+     * 4. Update the current location to the algorithm for calculating the new shortest path between Tom and Jerry
      */
-//    public void move(){
-//
-//        switch (direction) {
-//            case UNMOVE -> {
-//                return;
-//            }
-//            case UPWARD -> {
-//                if (IsWithinBoundary(location[0] - 1)
-//                        && IsPath(location[0]-1, location[1])) {
-//                    lastPos = toIndex(location);
-//                    location[0] -= 1;
-//                }
-//            }
-//            case DOWNWARD -> {
-//                if (IsWithinBoundary(location[0] + 1)
-//                        && IsPath(location[0]+1, location[1])) {
-//                    lastPos = toIndex(location);
-//                    location[0] += 1;
-//                }
-//            }
-//            case LEFT -> {
-//                if (IsWithinBoundary(location[1] - 1)
-//                        && IsPath(location[0], location[1]-1)) {
-//                    lastPos = toIndex(location);
-//                    location[1] -= 1;
-//                }
-//            }
-//            case RIGHT -> {
-//                if (IsWithinBoundary(location[1] + 1)
-//                        && IsPath(location[0], location[1]+1)) {
-//                    lastPos = toIndex(location);
-//                    location[1] += 1;
-//                }
-//            }
-//        }
-//        direction = UNMOVE;     // Reset the direction when there is no input received
-//        shortestPath.changeJerryLocation(location);     // Update Jerry's location to find the newest shortest path
-//    }
     public void move(){
         if (IsWithinBoundary(location[0]+newRow)
                 && IsWithinBoundary(location[1]+newCol)
@@ -99,7 +60,7 @@ public class Character {
 
     /**
      * Check whether the new coordinate of the location is valid in maze
-     * @param coordinate The x/y coordinate of the location
+     * @param coordinate The coordinate of the row/column of the location
      * @return true when the index is valid in maze
      */
     public boolean IsWithinBoundary(int coordinate){
@@ -108,62 +69,34 @@ public class Character {
 
     /**
      * Check whether the new location is valid for the object to move
-     * @param row The x-coordinate of the new location
-     * @param col The y-coordinate of the new location
+     * @param row The row value of the new location
+     * @param col The column value of the new location
      * @return true if the location is not a BLOCK
      */
     public boolean IsPath(int row, int col){
         return maze[row][col] != 1;
     }
 
-    public void setLocation(int x, int y){
-        location[0] = x;
-        location[1] = y;
-    }
-
-//    public void setDirection(DirectionState direction){
-//        this.direction = direction;
-//    }
-//
-//    public DirectionState getDirection(){
-//        return direction;
-//    }
-
-    public int[] getLocation() {
-        return location;
-    }
-
-    public int getLastPos() {
-        return lastPos;
-    }
-
+    /**
+     * Convert the 2D location to 1D index
+     * @param location A int array storing the row and column value of a location
+     * @return the index value in 1D
+     */
     public static int toIndex(int[] location){
         return maze.length*location[0]+location[1];
     }
 
-    public void setGame_state(boolean game_state) {
-        Game_state = game_state;
-    }
-
-    public boolean getGame_state() {
-        return Game_state;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
+    /**
+     * Store the current location and then reset the character's location back to spawn point
+     * @param row The row value of the spawn point
+     * @param col The column value of the spawn point
+     */
     public void reset(int row, int col){
         lastPos = toIndex(location);
         location[0] = row;
         location[1] = col;
         newRow = 0;
         newCol = 0;
-//        direction = UNMOVE;
         Game_state = false;
     }
 
