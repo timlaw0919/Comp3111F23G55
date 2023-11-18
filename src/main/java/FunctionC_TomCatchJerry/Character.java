@@ -38,7 +38,7 @@ public class Character {
             lastPos = toIndex(location);
             location[0] += newRow;
             location[1] += newCol;
-            shortestPath.changeJerryLocation(location);
+            shortestPath.changeLocation(location, 1);
         }
     }
 
@@ -54,7 +54,7 @@ public class Character {
         if (IsPath(loc[0],loc[1])) {
             lastPos = toIndex(location);;
             location = loc;
-            shortestPath.changeTomLocation(location);
+            shortestPath.changeLocation(location, 0);
         }
     }
 
