@@ -13,7 +13,7 @@ public class GameMain {
     public static int[][] maze = newMaze();       // Maze
     public static Character Tom = new Character();      // Computer
     public static Character Jerry = new Character();    // Player
-    public static AStarAlgorithm shortestPath = new AStarAlgorithm(Tom.location, Jerry.location);    // Algorithm for finding shortest Path
+    public static AStarAlgorithm shortestPath = new AStarAlgorithm(Tom.location, Jerry.location, "maze_map.csv");    // Algorithm for finding shortest Path
 
     /**
      * Generate a new maze before the game starts

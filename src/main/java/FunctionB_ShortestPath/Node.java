@@ -5,7 +5,7 @@ import java.util.List;
 public class Node {
     public final int[] currentPosition;
     public final Node parent;
-    private final int forwardCost;
+    public final int forwardCost;
     public final int backwardCost;
     public final int totalCost;
 
