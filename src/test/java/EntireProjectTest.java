@@ -1,3 +1,4 @@
+import FunctionA_CreateMaze.constant.CellState;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,11 +10,24 @@ class EntireProjectTest {
     // Big Main GUI
 
 
-    // Function A (CellState)
+    // Function A (CellState)//
 
 
     // Function A (Cell)
+    @Test
+    void Cell(){
+        Cell test = new Cell(0,0, CellState.BLOCK);
+        assertEquals(0, test.row);
+        assertEquals(0, test.col);
+        assertEquals(CellState.BLOCK, test.value);
+    }
 
+    @Test void CellEquals(){
+        Cell cell1 = new Cell(0,0, CellState.BLOCK);
+        Cell cell2 = new Cell(0,0, CellState.PATH);
+        boolean test = cell1.equals(cell2);
+        assertTrue(test);
+    }
 
     // Function A (CSVOutput)
 
@@ -22,7 +36,57 @@ class EntireProjectTest {
 
 
     // Function A (MazeGenerator)
+    void MazeGenerator(){
 
+    }
+
+    void EntryPointGenerator(){
+
+    }
+
+    void initializeMaze(){
+
+    }
+
+    void generateMaze(){
+
+    }
+
+    void checkValidNeighbors(){
+
+    }
+
+    void getValidNeighbors(){
+
+    }
+
+    void cellOnGrid(){
+
+    }
+
+    void cellOnEdge(){
+
+    }
+
+    void cellOnCorner(){
+
+    }
+
+    void checkIfEntryPoint(){
+
+    }
+
+    void checkIfExitPoint(){
+
+    }
+
+    void CellOnOppositeEdge(){
+
+    }
+
+    void getMaze(){
+
+    }
 
     // Function A (MazeGUI)
 
