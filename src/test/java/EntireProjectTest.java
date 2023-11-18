@@ -1,5 +1,11 @@
 import FunctionA_CreateMaze.constant.CellState;
+import FunctionC_TomCatchJerry.Character;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import org.junit.jupiter.api.Test;
+
+import static javafx.scene.input.KeyCode.*;
+import static javafx.scene.input.KeyEvent.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import FunctionA_CreateMaze.*;
@@ -9,6 +15,7 @@ import FunctionC_TomCatchJerry.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.jar.JarEntry;
 
 class EntireProjectTest {
     // Big Main GUI
@@ -197,10 +204,80 @@ class EntireProjectTest {
 
 
     // Function C (Character)
+    @Test
+    void Character(){
+        Character character = new Character(); // Target Function
+        assertEquals(0,character.newRow);
+        assertEquals(0,character.newCol);
+        assertArrayEquals(new int[]{0, 0}, character.location);
+        assertEquals(0,character.lastPos);
+        assertEquals(0,character.speed);
+        assertFalse(character.Game_state);
+    }
 
+    @Test
+    void move(){
+        GameMain.mazeSize = 30;
+        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        Character character = new Character();
+        character.move();
+    }
+
+    @Test
+    void moveWithShortestPath(){
+        AStarAlgorithm aStarAlgorithm1 = new AStarAlgorithm(new int[]{7,6}, new int[]{1,0}, "maze_map_for_unit_testing.csv");
+    }
+    @Test
+    void IsWithinBoundary(){
+        GameMain.mazeSize = 30;
+        Character character = new Character();
+        character.location = new int[]{5,100};
+        assertTrue(character.IsWithinBoundary(character.location[0])); // Target Function
+        assertFalse(character.IsWithinBoundary(character.location[1])); // Target Function
+    }
+
+    @Test
+    void IsPath(){
+        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        Character character = new Character();
+        assertFalse(character.IsPath(7,2)); // Target Function
+        assertTrue(character.IsPath(3,10)); // Target Function
+    }
+    @Test
+    void toIndex(){
+        GameMain.mazeSize = 30;
+        int[] location = new int[]{12,24};
+        assertEquals(384, Character.toIndex(location)); // Target Function
+    }
+    @Test
+    void reset(){
+        Character character = new Character();
+        int row = 21;
+        int col = 29;
+        character.location = new int[]{2,0};
+        character.reset(row,col); // Target Function
+        assertEquals(60,character.lastPos);
+        assertArrayEquals(new int[]{21,29},character.location);
+        assertEquals(0,character.newRow);
+        assertEquals(0,character.newCol);
+        assertFalse(character.Game_state);
+    }
 
     // Function C (CheckEndGame)
-
+    @Test
+    void isEndGame(){
+        GameMain.Tom.location = new int[]{2,0};
+        CheckEndGame checkEndGame = new CheckEndGame(); // Target Function
+        assertEquals(60,checkEndGame.ExitPoint);
+        assertFalse(checkEndGame.isEndGame());
+        GameMain.Jerry.location = new int[]{2,0};
+        assertTrue(checkEndGame.isEndGame()); // Target Function
+        GameMain.Tom.Game_state = false;
+        GameMain.Jerry.Game_state = false;
+        GameMain.Tom.location = new int[]{14,7};
+        GameMain.Jerry.location = new int[]{14,7};
+        assertTrue(checkEndGame.isEndGame()); // Target Function
+    }
 
     // Function C (GameMain)
 
@@ -212,8 +289,35 @@ class EntireProjectTest {
 
 
     // Function C (KeyBoardListener)
+    @Test
+    void KeyBoardListener(){
+        assertEquals(GameMain.Jerry,new KeyBoardListener(GameMain.Jerry).player);
+    }
+    @Test
+    void keyPress(){
+        KeyBoardListener keyBoardListener = new KeyBoardListener(GameMain.Jerry);
+        KeyEvent w = new KeyEvent(KEY_PRESSED, "","",W,false,false,false,false);
+        KeyEvent a = new KeyEvent(KEY_PRESSED, "","",A,false,false,false,false);
+        KeyEvent s = new KeyEvent(KEY_PRESSED, "","",S,false,false,false,false);
+        KeyEvent d = new KeyEvent(KEY_PRESSED, "","",D,false,false,false,false);
+        KeyEvent q = new KeyEvent(KEY_PRESSED, "","",Q,false,false,false,false);
+        keyBoardListener.keyPressed(w); // Target Function
+        assertEquals(-1,GameMain.Jerry.newRow);
+        assertEquals(0,GameMain.Jerry.newCol);
+        keyBoardListener.keyPressed(a); // Target Function
+        assertEquals(0,GameMain.Jerry.newRow);
+        assertEquals(-1,GameMain.Jerry.newCol);
+        keyBoardListener.keyPressed(s); // Target Function
+        assertEquals(1,GameMain.Jerry.newRow);
+        assertEquals(0,GameMain.Jerry.newCol);
+        keyBoardListener.keyPressed(d); // Target Function
+        assertEquals(0,GameMain.Jerry.newRow);
+        assertEquals(1,GameMain.Jerry.newCol);
+        keyBoardListener.keyPressed(q); // Target Function
+        assertEquals(0,GameMain.Jerry.newRow);
+        assertEquals(1,GameMain.Jerry.newCol);
 
-
+    }
     // Function C (MainGUI)
 
 }
