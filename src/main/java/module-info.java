@@ -12,6 +12,5 @@ module tomandjerryinmazegame.tomandjerryinmazegame {
     exports FunctionA_CreateMaze.constant;
     exports FunctionB_ShortestPath;
     exports FunctionC_TomCatchJerry;
-    exports FunctionC_TomCatchJerry.constant;
     exports Main;
 }
