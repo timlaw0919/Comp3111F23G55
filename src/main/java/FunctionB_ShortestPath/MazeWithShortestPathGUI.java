@@ -71,9 +71,4 @@ public class MazeWithShortestPathGUI extends Application {
         primaryStage.setTitle("Maze With Shortest Path GUI");
         primaryStage.show();
     }
-
-    public static void makeGUI(String[] args) {
-        launch(args);
-    }
-
 }

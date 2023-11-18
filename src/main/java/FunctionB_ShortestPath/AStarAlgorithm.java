@@ -29,7 +29,7 @@ public class AStarAlgorithm {
     public boolean checkExplored (List<Node> listOfNode, int[] temp){
         if (!listOfNode.isEmpty()){
             for (Node node : listOfNode){
-                if (node.getCurrentPosition()[0] == temp[0] && node.getCurrentPosition()[1] == temp[1]){
+                if (node.currentPosition[0] == temp[0] && node.currentPosition[1] == temp[1]){
                     return true;
                 }
             }
@@ -50,11 +50,11 @@ public class AStarAlgorithm {
         List<Node> neighbor = new ArrayList<>();
         int[][] fourDirection = {{0,1}, {1,0}, {0,-1}, {-1,0}};
         for (int[] direction : fourDirection){
-            int[] temp = Arrays.copyOf(currentNode.getCurrentPosition(), currentNode.getCurrentPosition().length);
+            int[] temp = Arrays.copyOf(currentNode.currentPosition, currentNode.currentPosition.length);
             temp[0] += direction[0];
             temp[1] += direction[1];
             if (checkValidNode(expandedNode, frontier, temp)){
-                neighbor.add(new Node(temp, currentNode, (Math.abs(temp[0] - this.jerryLocation[0]) + Math.abs(temp[1] - this.jerryLocation[1])), currentNode.getBackwardCost() + 1));
+                neighbor.add(new Node(temp, currentNode, (Math.abs(temp[0] - this.jerryLocation[0]) + Math.abs(temp[1] - this.jerryLocation[1])), currentNode.backwardCost + 1));
             }
         }
         return neighbor;
@@ -74,8 +74,8 @@ public class AStarAlgorithm {
             int minimumTotalCost = 10000;
             int index = -1;
             for (Node temp : frontier){
-                if (temp.getTotalCost() < minimumTotalCost) {
-                    minimumTotalCost = temp.getTotalCost();
+                if (temp.totalCost < minimumTotalCost) {
+                    minimumTotalCost = temp.totalCost;
                     index = frontier.indexOf(temp);
                 }
             }
@@ -84,13 +84,13 @@ public class AStarAlgorithm {
             frontier.remove(index);
 
             // Reach the goal state, add the path coordinate
-            if (current.getCurrentPosition()[0] == jerryLocation[0] && current.getCurrentPosition()[1] == jerryLocation[1]){
+            if (current.currentPosition[0] == jerryLocation[0] && current.currentPosition[1] == jerryLocation[1]){
                 Node temp = current;
-                while (temp.getParent() != null) {
-                    path.add(temp.getCurrentPosition());
-                    temp = temp.getParent();
+                while (temp.parent != null) {
+                    path.add(temp.currentPosition);
+                    temp = temp.parent;
                 }
-                path.add(temp.getCurrentPosition());
+                path.add(temp.currentPosition);
                 break;
             }
 
@@ -115,7 +115,7 @@ public class AStarAlgorithm {
             List<Node> neighbor = findNeighbor(new Node(this.tomLocation, null, 0, 0), temp, temp);
             // Some movable cell near Tom
             if (!neighbor.isEmpty()) {
-                return neighbor.get(0).getCurrentPosition();
+                return neighbor.get(0).currentPosition;
             }
             // Tom is surrounded by barrier
             else {
