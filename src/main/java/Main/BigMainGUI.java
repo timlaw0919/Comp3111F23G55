@@ -1,6 +1,8 @@
 package Main;
 
 import FunctionA_CreateMaze.*;
+import FunctionB_ShortestPath.AStarAlgorithm;
+import FunctionB_ShortestPath.CSVOutputForGUI;
 import FunctionB_ShortestPath.MazeWithShortestPathGUI;
 import FunctionC_TomCatchJerry.MainGUI;
 import javafx.application.Application;
@@ -15,6 +17,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.io.IOException;
+
+import static FunctionA_CreateMaze.CSVOutput.outputCSVFile;
 
 public class BigMainGUI extends Application {
     @Override
@@ -89,7 +93,14 @@ public class BigMainGUI extends Application {
         functionAButton.setOnAction(actionEvent -> {
             FunctionA_CreateMaze.MazeGUI mazeGUI = new MazeGUI();
             try {
-                FunctionA_CreateMaze.Main.main();
+                int rows = 30; // Number of rows in the maze
+                int cols = 30; // Number of columns in the maze
+                // Generator the maze
+                MazeGenerator mazeGenerator = new MazeGenerator(rows, cols);
+                mazeGenerator.generateMaze();
+                // Output the maze as csv file
+                Cell[][] maze = mazeGenerator.getMaze();
+                outputCSVFile(maze, "maze_map.csv");
                 mazeGUI.start(stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -98,7 +109,24 @@ public class BigMainGUI extends Application {
         functionBButton.setOnAction(actionEvent -> {
             MazeWithShortestPathGUI mazeWithShortestPathGUI = new MazeWithShortestPathGUI();
             try {
-                FunctionB_ShortestPath.Main.main();
+                int[] tomLocation = {0,0};
+                int[] jerryLocation = {0,0};
+                int[][] maze = MazeLoader.loadMazeFromCSV("maze_map.csv");
+                for (int i = 0; i < 30; i++){
+                    for (int j = 0; j < 30; j++){
+                        if (maze[i][j] == 2) {
+                            jerryLocation[0] = i;
+                            jerryLocation[1] = j;
+                        }
+                        if (maze[i][j] == 3) {
+                            tomLocation[0] = i;
+                            tomLocation[1] = j;
+                        }
+                    }
+                }
+                AStarAlgorithm obj1 = new AStarAlgorithm(tomLocation, jerryLocation, "maze_map.csv");
+                CSVOutputForGUI.outputCSVFile(obj1.pathGeneratorByAStar(), "maze_map_with_path.csv");
+                FunctionB_ShortestPath.CSVOutput.outputCSVFile(obj1.pathGeneratorByAStar(), "path_coordinates.csv");
                 mazeWithShortestPathGUI.start(stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);

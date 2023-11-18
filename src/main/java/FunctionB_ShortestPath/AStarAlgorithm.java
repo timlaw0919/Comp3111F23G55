@@ -7,12 +7,13 @@ import java.util.*;
 public class AStarAlgorithm {
     public int[] tomLocation;
     public int[] jerryLocation;
-    private final int[][] maze = MazeLoader.loadMazeFromCSV("maze_map.csv");
+    public final int[][] maze;
 
     // Constructor
-    public AStarAlgorithm(int[] tomLocation, int[] jerryLocation){
+    public AStarAlgorithm(int[] tomLocation, int[] jerryLocation, String maze){
         this.tomLocation = tomLocation;
         this.jerryLocation = jerryLocation;
+        this.maze = MazeLoader.loadMazeFromCSV(maze);
     }
 
     public int[] changeLocation(int[] location, int who){
