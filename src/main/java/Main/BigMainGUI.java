@@ -1,6 +1,6 @@
 package Main;
-
 import FunctionA_CreateMaze.*;
+import static FunctionA_CreateMaze.CSVOutput.outputCSVFile;
 import FunctionB_ShortestPath.AStarAlgorithm;
 import FunctionB_ShortestPath.CSVOutputForGUI;
 import FunctionB_ShortestPath.MazeWithShortestPathGUI;
@@ -18,7 +18,12 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-import static FunctionA_CreateMaze.CSVOutput.outputCSVFile;
+/**
+ * The BigMainGUI class is the main entry point for the G55 Tom and Jerry Maze Game Testing Menu.
+ * It extends the Application class from JavaFX and provides the GUI functionality for the testing menu.
+ * The testing menu allows users to generate a new maze, display the shortest path in the maze, play the game, and exit the application by clicking the corresponding button.
+ * Users can test different functions related to maze generation, shortest path finding, and playing the game.
+ */
 
 public class BigMainGUI extends Application {
     @Override

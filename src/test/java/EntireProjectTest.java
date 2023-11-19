@@ -1,11 +1,9 @@
 import FunctionA_CreateMaze.constant.CellState;
 import Main.BigMainGUI;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
@@ -23,7 +21,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.mockito.Mockito;
 
 import FunctionC_TomCatchJerry.Character;
 import javafx.scene.input.KeyEvent;
