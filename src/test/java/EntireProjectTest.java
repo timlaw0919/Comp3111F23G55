@@ -468,12 +468,14 @@ public class EntireProjectTest extends ApplicationTest {
             gameMazeGUI.start(stage);
         });
         WaitForAsyncUtils.waitForFxEvents();
-
         FxAssert.verifyThat("Home", NodeMatchers.isNotNull());
         clickOn("Home", MouseButton.PRIMARY); // Target Function
     }
+
     @Test
     public void testSceneOnKeyPress(){
+        GameMain.mazeSize = 30;
+        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
         GameMazeGUI gameMazeGUI = new GameMazeGUI();
         Platform.runLater(() -> {
             Stage stage = new Stage();
@@ -481,7 +483,26 @@ public class EntireProjectTest extends ApplicationTest {
         });
         WaitForAsyncUtils.waitForFxEvents();
         press(A); // Target Function
+        assertArrayEquals(new int[]{21,28},GameMain.Jerry.location);
+    }
 
+    @Test
+    public void testRestartButton() throws InterruptedException {
+        GameMain.mazeSize = 30;
+        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        GameMain.Jerry.Game_state = false;
+        GameMain.Tom.Game_state = false;
+        GameMazeGUI gameMazeGUI = new GameMazeGUI();
+        Platform.runLater(() -> {
+            Stage stage = new Stage();
+            gameMazeGUI.start(stage);
+        });
+        WaitForAsyncUtils.waitForFxEvents();
+        press(A);
+        sleep(1600);
+        assertTrue(GameMain.Tom.Game_state);
+        FxAssert.verifyThat("Restart", NodeMatchers.isNotNull());
+        clickOn("Restart", MouseButton.PRIMARY); // Target Function
     }
 
     // Function C (InfoGUI)

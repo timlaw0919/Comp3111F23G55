@@ -73,8 +73,6 @@ public class GameMazeGUI extends Application {
         }
         updatedGridPane(Tom,TomTom);
         updatedGridPane(Jerry,JerryJerry);
-//        Tom.setSpeed(200);  // Set the speed of Tom
-//        Jerry.setSpeed(200);    // Set the speed of Jerry
     }
 
     /**
@@ -181,7 +179,9 @@ public class GameMazeGUI extends Application {
 //        Computer starts moving when player starts to play
             scene.setOnKeyPressed(keyEvent -> {;
                 JerryMove.keyPressed(keyEvent);
-                if (Computer.getState() == Thread.State.NEW) Computer.start();
+                if (Computer.getState() == Thread.State.NEW) {
+                    Computer.start();
+                }
             });
         };
         startGame.run();
