@@ -32,14 +32,14 @@ import static java.lang.Thread.sleep;
 
 public class GameMazeGUI extends Application {
 
-    private static final int CELL_SIZE = 15;
-    private int entryIndex = 0;
-    private int exitIndex = 0;
-    GridPane gridPane = new GridPane();
-    List<Rectangle> cells = new ArrayList<>();
-    ImagePattern TomTom = new ImagePattern(new Image("file:tom.png"));
-    ImagePattern JerryJerry = new ImagePattern(new Image("file:Jerry.png"));
-    ImagePattern block = new ImagePattern(new Image("file:block.jpg"));
+    public static final int CELL_SIZE = 15;
+    public int entryIndex = 0;
+    public int exitIndex = 0;
+    public GridPane gridPane = new GridPane();
+    public List<Rectangle> cells = new ArrayList<>();
+    public ImagePattern TomTom = new ImagePattern(new Image("file:tom.png"));
+    public ImagePattern JerryJerry = new ImagePattern(new Image("file:Jerry.png"));
+    public ImagePattern block = new ImagePattern(new Image("file:block.jpg"));
 
     /**
      * Set up the scene of the maze and the spawn point of Jerry and Tom
@@ -153,7 +153,9 @@ public class GameMazeGUI extends Application {
                         e.printStackTrace();
                     }
                 }
-                if (Jerry.Game_state)  J_Win.setVisible(true);
+                if (Jerry.Game_state)  {
+                    J_Win.setVisible(true);
+                }
             });
 
             Thread Computer = new Thread(() -> {
@@ -171,7 +173,9 @@ public class GameMazeGUI extends Application {
                         e.printStackTrace();
                     }
                 }
-                if (Tom.Game_state) T_Win.setVisible(true);
+                if (Tom.Game_state) {
+                    T_Win.setVisible(true);
+                }
             });
             Player.start();
 //        Computer starts moving when player starts to play
