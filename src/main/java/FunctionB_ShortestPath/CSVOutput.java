@@ -1,14 +1,19 @@
 package FunctionB_ShortestPath;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
-import java.util.*;
-import java.io.*;
+
+/**
+ * The CSVOutput class is to output a CSV file containing the shortest path coordinates.
+ */
 
 public class CSVOutput {
+    /**
+     * Output a CSV file containing the shortest path coordinates.
+     * @param path The shortest path that explores by A Star Algorithm
+     * @param filename The file name of output
+     */
     public static void outputCSVFile(List<int[]> path, String filename) {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {

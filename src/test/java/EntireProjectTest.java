@@ -1,6 +1,7 @@
 import FunctionA_CreateMaze.constant.CellState;
 import Main.BigMainGUI;
 import javafx.application.Platform;
+
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -41,28 +42,21 @@ public class EntireProjectTest extends ApplicationTest {
     }
 
     @Test
-    public void bigMainGUI(){
+    public void bigMainGUIButton() {
         FxAssert.verifyThat("#welcomeLabel", NodeMatchers.isNotNull());
         FxAssert.verifyThat("#welcomeLabel", LabeledMatchers.hasText("Welcome to G55 Tom and Jerry Maze Game Testing Menu!"));
-    }
-
-    @Test
-    public void bigMainGUIFunctionAButton() {
         FxAssert.verifyThat("Test Function A", NodeMatchers.isNotNull());
-        clickOn("Test Function A", MouseButton.PRIMARY);
-    }
-
-    @Test
-    public void bigMainGUIFunctionBButton() {
+        clickOn("Test Function A", MouseButton.PRIMARY); //Target Function
+        FxAssert.verifyThat("Back to Testing Menu", NodeMatchers.isNotNull());
+        clickOn("Back to Testing Menu", MouseButton.PRIMARY);
         FxAssert.verifyThat("Test Function B", NodeMatchers.isNotNull());
-        clickOn("Test Function B", MouseButton.PRIMARY);
+        clickOn("Test Function B", MouseButton.PRIMARY);  //Target Function
+        FxAssert.verifyThat("Back to Testing Menu", NodeMatchers.isNotNull());
+        clickOn("Back to Testing Menu", MouseButton.PRIMARY);
+        FxAssert.verifyThat("Test Function C", NodeMatchers.isNotNull());
+        clickOn("Test Function C", MouseButton.PRIMARY);  //Target Function
     }
 
-    @Test
-    public void bigMainGUIFunctionCButton() {
-        FxAssert.verifyThat("Test Function C", NodeMatchers.isNotNull());
-        clickOn("Test Function C", MouseButton.PRIMARY);
-    }
 
     // Function A (CellState)//
 
@@ -251,7 +245,7 @@ public class EntireProjectTest extends ApplicationTest {
                 check = false;
                 break;
             }
-            else if(! line1.equalsIgnoreCase(line2)) {
+            else if(! line1.equals(line2)) {
                 check = false;
                 break;
             }
@@ -277,7 +271,7 @@ public class EntireProjectTest extends ApplicationTest {
                 check = false;
                 break;
             }
-            else if(! line1.equalsIgnoreCase(line2)) {
+            else if(! line1.equals(line2)) {
                 check = false;
                 break;
             }
