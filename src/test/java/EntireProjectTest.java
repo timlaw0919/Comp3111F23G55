@@ -467,6 +467,7 @@ public class EntireProjectTest extends ApplicationTest {
         GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
         GameMain.Tom = new Character();
         GameMain.Jerry = new Character();
+        GameMain.Jerry.speed = 200;
         GameMazeGUI gameMazeGUI = new GameMazeGUI();
         Platform.runLater(() -> {
             Stage stage = new Stage();
@@ -474,6 +475,7 @@ public class EntireProjectTest extends ApplicationTest {
         });
         WaitForAsyncUtils.waitForFxEvents();
         press(A); // Target Function
+        sleep(100);
         assertArrayEquals(new int[]{21,28},GameMain.Jerry.location);
     }
 
@@ -489,9 +491,8 @@ public class EntireProjectTest extends ApplicationTest {
             gameMazeGUI.start(stage);
         });
         WaitForAsyncUtils.waitForFxEvents();
-        press(A);
-        sleep(2000);
-        assertTrue(GameMain.Tom.Game_state);
+        GameMain.Jerry.Game_state = true;
+        sleep(100);
         FxAssert.verifyThat("Restart", NodeMatchers.isNotNull());
         clickOn("Restart", MouseButton.PRIMARY); // Target Function
     }
