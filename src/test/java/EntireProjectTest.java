@@ -472,11 +472,11 @@ public class EntireProjectTest extends ApplicationTest {
     }
 
     @Test
-    public void testRestartButton() throws InterruptedException {
+    public void testRestartButton() {
         GameMain.mazeSize = 30;
         GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
-        GameMain.Jerry.Game_state = false;
-        GameMain.Tom.Game_state = false;
+        GameMain.Jerry = new Character();
+        GameMain.Tom = new Character();
         GameMazeGUI gameMazeGUI = new GameMazeGUI();
         Platform.runLater(() -> {
             Stage stage = new Stage();
@@ -484,7 +484,7 @@ public class EntireProjectTest extends ApplicationTest {
         });
         WaitForAsyncUtils.waitForFxEvents();
         press(A);
-        sleep(1600);
+        sleep(2000);
         assertTrue(GameMain.Tom.Game_state);
         FxAssert.verifyThat("Restart", NodeMatchers.isNotNull());
         clickOn("Restart", MouseButton.PRIMARY); // Target Function
