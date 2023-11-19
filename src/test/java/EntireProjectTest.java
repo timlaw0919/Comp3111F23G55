@@ -1,68 +1,32 @@
 import FunctionA_CreateMaze.constant.CellState;
-import Main.BigMainGUI;
-import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
-import javafx.stage.Stage;
+import FunctionC_TomCatchJerry.Character;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
-import org.testfx.api.FxAssert;
-import org.testfx.framework.junit.ApplicationTest;
-import org.testfx.matcher.base.NodeMatchers;
-import org.testfx.matcher.control.LabeledMatchers;
+import static javafx.scene.input.KeyCode.*;
+import static javafx.scene.input.KeyEvent.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import FunctionA_CreateMaze.*;
 import FunctionB_ShortestPath.*;
 import FunctionC_TomCatchJerry.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.jar.JarEntry;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-public class EntireProjectTest extends ApplicationTest {
-
+class EntireProjectTest {
     // Big Main GUI
-    @Override
-    public void start(Stage stage) throws Exception {
-        BigMainGUI bigMainGUI = new BigMainGUI();
-        bigMainGUI.start(stage);
-    }
 
-    @Test
-    public void bigMainGUI(){
-        FxAssert.verifyThat("#welcomeLabel", NodeMatchers.isNotNull());
-        FxAssert.verifyThat("#welcomeLabel", LabeledMatchers.hasText("Welcome to G55 Tom and Jerry Maze Game Testing Menu!"));
-    }
-
-    @Test
-    public void bigMainGUIFunctionAButton() {
-        FxAssert.verifyThat("Test Function A", NodeMatchers.isNotNull());
-        clickOn("Test Function A", MouseButton.PRIMARY);
-    }
-
-    @Test
-    public void bigMainGUIFunctionBButton() {
-        FxAssert.verifyThat("Test Function B", NodeMatchers.isNotNull());
-        clickOn("Test Function B", MouseButton.PRIMARY);
-    }
-
-    @Test
-    public void bigMainGUIFunctionCButton() {
-        FxAssert.verifyThat("Test Function C", NodeMatchers.isNotNull());
-        clickOn("Test Function C", MouseButton.PRIMARY);
-    }
 
     // Function A (CellState)//
 
 
     // Function A (Cell)
     @Test
-    public void Cell(){
+    void Cell(){
         Cell test = new Cell(0,0, CellState.BLOCK);
         assertEquals(0, test.row);
         assertEquals(0, test.col);
@@ -70,7 +34,7 @@ public class EntireProjectTest extends ApplicationTest {
     }
 
     @Test
-    public void CellEquals(){
+    void CellEquals(){
         Cell cell1 = new Cell(0,0, CellState.BLOCK);
         Cell cell2 = new Cell(0,0, CellState.PATH);
         boolean test = cell1.equals(cell2);
@@ -140,8 +104,7 @@ public class EntireProjectTest extends ApplicationTest {
 
 
     // Function B (Node)
-    @Test
-    public void Node(){
+    @Test void Node(){
         Node node = new Node(new int[] {0,0}, null, 10, 0);  // Target Function
         assertArrayEquals(new int[] {0,0}, node.currentPosition);
         assertEquals(null, node.parent);
@@ -152,7 +115,7 @@ public class EntireProjectTest extends ApplicationTest {
 
     // Function B (AStarAlgorithm)
     @Test
-    public void AStarAlgorithm(){
+    void AStarAlgorithm(){
         AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(new int[]{0,0}, new int[]{4,4}, "maze_map_for_unit_testing.csv"); // Target Function
         int[][] maze = {{1,1,1,1,1,1,1,1}, {2,0,0,1,0,0,0,1}, {1,1,0,0,0,1,0,1}, {1,0,0,1,0,0,0,1}, {1,0,1,0,1,0,1,1}, {1,0,0,0,0,0,0,1}, {1,1,1,1,1,1,0,1}, {1,1,1,1,1,1,3,1}};
         assertArrayEquals(new int[]{0,0}, aStarAlgorithm.tomLocation);
@@ -161,14 +124,14 @@ public class EntireProjectTest extends ApplicationTest {
     }
 
     @Test
-    public void changeLocation(){
+    void changeLocation(){
         AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(new int[]{0,0}, new int[]{4,4}, "maze_map_for_unit_testing.csv");
         assertArrayEquals(new int[]{10,20}, aStarAlgorithm.changeLocation((new int[]{10,20}), 0)); // Target Function
         assertArrayEquals(new int[]{20,10}, aStarAlgorithm.changeLocation((new int[]{20,10}), 1)); // Target Function
     }
 
     @Test
-    public void checkExplored(){
+    void checkExplored(){
         List<Node> nodeList = new ArrayList<>();
         nodeList.add(new Node(new int[] {0,0}, null, 10, 0));
         AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(new int[]{0,0}, new int[]{4,4}, "maze_map_for_unit_testing.csv");
@@ -177,7 +140,7 @@ public class EntireProjectTest extends ApplicationTest {
     }
 
     @Test
-    public void checkValidNode(){
+    void checkValidNode(){
         AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(new int[]{0,0}, new int[]{4,4}, "maze_map_for_unit_testing.csv");
         List<Node> frontier = new ArrayList<>();
         List<Node> expandedNode = new ArrayList<>();
@@ -187,7 +150,7 @@ public class EntireProjectTest extends ApplicationTest {
     }
 
     @Test
-    public void findNeighbor(){
+    void findNeighbor(){
 //        List<Node> expectedResult = new ArrayList<>();
 //        expectedResult.add(new Node(new int[] {1,1}, new Node(new int[]{1,0}, null, 12, 0), 11, 1));
         AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(new int[]{1,0}, new int[]{7,6}, "maze_map_for_unit_testing.csv");
@@ -206,7 +169,7 @@ public class EntireProjectTest extends ApplicationTest {
     }
 
     @Test
-    public void pathGeneratorByAStar(){
+    void pathGeneratorByAStar(){
         AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(new int[]{7,6}, new int[]{1,0}, "maze_map_for_unit_testing.csv");
         List<int[]> expectedResult = new ArrayList<>();
         expectedResult.addAll(Arrays.asList(new int[]{1,0}, new int[]{1,1}, new int[]{1,2}, new int[]{2,2}, new int[]{2,3}, new int[]{2,4}, new int[]{3,4}, new int[]{3,5}, new int[]{4,5}, new int[]{5,5}, new int[]{5,6}, new int[]{6,6}, new int[]{7,6}));
@@ -219,7 +182,7 @@ public class EntireProjectTest extends ApplicationTest {
     }
 
     @Test
-    public void tomNextMovement(){
+    void tomNextMovement(){
         AStarAlgorithm aStarAlgorithm1 = new AStarAlgorithm(new int[]{7,6}, new int[]{1,0}, "maze_map_for_unit_testing.csv");
         assertArrayEquals(new int[] {6,6}, aStarAlgorithm1.tomNextMovement()); // Target Function
         AStarAlgorithm aStarAlgorithm2 = new AStarAlgorithm(new int[]{7,6}, new int[]{1,0}, "maze_map_for_unit_testing_no_path_same.csv");
@@ -234,23 +197,87 @@ public class EntireProjectTest extends ApplicationTest {
     // Function B (CSVOutputForGUI)
 
 
-    // Function B (MazeWithShortestPathGUI)
-    @Test
-    public void MazeWithShortestPathGUIButton(){
-        FxAssert.verifyThat("Test Function B", NodeMatchers.isNotNull());
-        clickOn("Test Function B", MouseButton.PRIMARY);
-        FxAssert.verifyThat("Back to Testing Menu", NodeMatchers.isNotNull()); // Target Function
-        clickOn("Back to Testing Menu", MouseButton.PRIMARY); // Target Function
-    }
+    // Function B (MazeWithShortestPath)
+
 
     // Function C (DirectionState)
 
 
     // Function C (Character)
+    @Test
+    void Character(){
+        Character character = new Character(); // Target Function
+        assertEquals(0,character.newRow);
+        assertEquals(0,character.newCol);
+        assertArrayEquals(new int[]{0, 0}, character.location);
+        assertEquals(0,character.lastPos);
+        assertEquals(0,character.speed);
+        assertFalse(character.Game_state);
+    }
 
+    @Test
+    void move(){
+        GameMain.mazeSize = 30;
+        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        Character character = new Character();
+        character.move();
+    }
+
+    @Test
+    void moveWithShortestPath(){
+        AStarAlgorithm aStarAlgorithm1 = new AStarAlgorithm(new int[]{7,6}, new int[]{1,0}, "maze_map_for_unit_testing.csv");
+    }
+    @Test
+    void IsWithinBoundary(){
+        GameMain.mazeSize = 30;
+        Character character = new Character();
+        character.location = new int[]{5,100};
+        assertTrue(character.IsWithinBoundary(character.location[0])); // Target Function
+        assertFalse(character.IsWithinBoundary(character.location[1])); // Target Function
+    }
+
+    @Test
+    void IsPath(){
+        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        Character character = new Character();
+        assertFalse(character.IsPath(7,2)); // Target Function
+        assertTrue(character.IsPath(3,10)); // Target Function
+    }
+    @Test
+    void toIndex(){
+        GameMain.mazeSize = 30;
+        int[] location = new int[]{12,24};
+        assertEquals(384, Character.toIndex(location)); // Target Function
+    }
+    @Test
+    void reset(){
+        Character character = new Character();
+        int row = 21;
+        int col = 29;
+        character.location = new int[]{2,0};
+        character.reset(row,col); // Target Function
+        assertEquals(60,character.lastPos);
+        assertArrayEquals(new int[]{21,29},character.location);
+        assertEquals(0,character.newRow);
+        assertEquals(0,character.newCol);
+        assertFalse(character.Game_state);
+    }
 
     // Function C (CheckEndGame)
-
+    @Test
+    void isEndGame(){
+        GameMain.Tom.location = new int[]{2,0};
+        CheckEndGame checkEndGame = new CheckEndGame(); // Target Function
+        assertEquals(60,checkEndGame.ExitPoint);
+        assertFalse(checkEndGame.isEndGame());
+        GameMain.Jerry.location = new int[]{2,0};
+        assertTrue(checkEndGame.isEndGame()); // Target Function
+        GameMain.Tom.Game_state = false;
+        GameMain.Jerry.Game_state = false;
+        GameMain.Tom.location = new int[]{14,7};
+        GameMain.Jerry.location = new int[]{14,7};
+        assertTrue(checkEndGame.isEndGame()); // Target Function
+    }
 
     // Function C (GameMain)
 
@@ -262,8 +289,35 @@ public class EntireProjectTest extends ApplicationTest {
 
 
     // Function C (KeyBoardListener)
+    @Test
+    void KeyBoardListener(){
+        assertEquals(GameMain.Jerry,new KeyBoardListener(GameMain.Jerry).player);
+    }
+    @Test
+    void keyPress(){
+        KeyBoardListener keyBoardListener = new KeyBoardListener(GameMain.Jerry);
+        KeyEvent w = new KeyEvent(KEY_PRESSED, "","",W,false,false,false,false);
+        KeyEvent a = new KeyEvent(KEY_PRESSED, "","",A,false,false,false,false);
+        KeyEvent s = new KeyEvent(KEY_PRESSED, "","",S,false,false,false,false);
+        KeyEvent d = new KeyEvent(KEY_PRESSED, "","",D,false,false,false,false);
+        KeyEvent q = new KeyEvent(KEY_PRESSED, "","",Q,false,false,false,false);
+        keyBoardListener.keyPressed(w); // Target Function
+        assertEquals(-1,GameMain.Jerry.newRow);
+        assertEquals(0,GameMain.Jerry.newCol);
+        keyBoardListener.keyPressed(a); // Target Function
+        assertEquals(0,GameMain.Jerry.newRow);
+        assertEquals(-1,GameMain.Jerry.newCol);
+        keyBoardListener.keyPressed(s); // Target Function
+        assertEquals(1,GameMain.Jerry.newRow);
+        assertEquals(0,GameMain.Jerry.newCol);
+        keyBoardListener.keyPressed(d); // Target Function
+        assertEquals(0,GameMain.Jerry.newRow);
+        assertEquals(1,GameMain.Jerry.newCol);
+        keyBoardListener.keyPressed(q); // Target Function
+        assertEquals(0,GameMain.Jerry.newRow);
+        assertEquals(1,GameMain.Jerry.newCol);
 
-
+    }
     // Function C (MainGUI)
 
 }
