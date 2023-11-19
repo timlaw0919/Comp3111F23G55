@@ -2,10 +2,7 @@ package FunctionA_CreateMaze;
 
 import FunctionA_CreateMaze.constant.CellState;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
 
 
 public class MazeGenerator {
@@ -92,7 +89,7 @@ public class MazeGenerator {
         int numNeighboringZeros = 0;
         for (int col = cell.col-1; col < cell.col+2; col++) {
             for (int row = cell.row-1; row < cell.row+2; row++) {
-                if (cellOnGrid(row, col) && !cell.equals(maze[row][col]) && maze[row][col].visited) {
+                if (cellOnGrid(row, col) && !cell.equals(maze[row][col]) && maze[row][col].value==CellState.PATH) {
                     numNeighboringZeros++;
                 }
             }
