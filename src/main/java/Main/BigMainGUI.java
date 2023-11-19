@@ -40,6 +40,7 @@ public class BigMainGUI extends Application {
         box.setArcWidth(50);
 
         Label welcomeLabel = new Label("Welcome to G55 Tom and Jerry Maze Game Testing Menu!");
+        welcomeLabel.setId("welcomeLabel");
         welcomeLabel.setFont(new Font("Jokerman", 20));
         welcomeLabel.setTextFill(Color.web("#e61c1c"));
         welcomeLabel.setLayoutX(10);

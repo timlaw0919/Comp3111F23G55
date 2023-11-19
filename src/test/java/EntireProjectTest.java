@@ -1,25 +1,68 @@
 import FunctionA_CreateMaze.constant.CellState;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import Main.BigMainGUI;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseButton;
+import javafx.stage.Stage;
+
+import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.testfx.api.FxAssert;
+import org.testfx.framework.junit.ApplicationTest;
+import org.testfx.matcher.base.NodeMatchers;
+import org.testfx.matcher.control.LabeledMatchers;
 
 import FunctionA_CreateMaze.*;
 import FunctionB_ShortestPath.*;
 import FunctionC_TomCatchJerry.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class EntireProjectTest {
-    // Big Main GUI
+import static org.junit.jupiter.api.Assertions.*;
 
+public class EntireProjectTest extends ApplicationTest {
+
+    // Big Main GUI
+    @Override
+    public void start(Stage stage) throws Exception {
+        BigMainGUI bigMainGUI = new BigMainGUI();
+        bigMainGUI.start(stage);
+    }
+
+    @Test
+    public void bigMainGUI(){
+        FxAssert.verifyThat("#welcomeLabel", NodeMatchers.isNotNull());
+        FxAssert.verifyThat("#welcomeLabel", LabeledMatchers.hasText("Welcome to G55 Tom and Jerry Maze Game Testing Menu!"));
+    }
+
+    @Test
+    public void bigMainGUIFunctionAButton() {
+        FxAssert.verifyThat("Test Function A", NodeMatchers.isNotNull());
+        clickOn("Test Function A", MouseButton.PRIMARY);
+    }
+
+    @Test
+    public void bigMainGUIFunctionBButton() {
+        FxAssert.verifyThat("Test Function B", NodeMatchers.isNotNull());
+        clickOn("Test Function B", MouseButton.PRIMARY);
+    }
+
+    @Test
+    public void bigMainGUIFunctionCButton() {
+        FxAssert.verifyThat("Test Function C", NodeMatchers.isNotNull());
+        clickOn("Test Function C", MouseButton.PRIMARY);
+    }
 
     // Function A (CellState)//
 
 
     // Function A (Cell)
     @Test
-    void Cell(){
+    public void Cell(){
         Cell test = new Cell(0,0, CellState.BLOCK);
         assertEquals(0, test.row);
         assertEquals(0, test.col);
@@ -27,7 +70,7 @@ class EntireProjectTest {
     }
 
     @Test
-    void CellEquals(){
+    public void CellEquals(){
         Cell cell1 = new Cell(0,0, CellState.BLOCK);
         Cell cell2 = new Cell(0,0, CellState.PATH);
         boolean test = cell1.equals(cell2);
@@ -97,7 +140,8 @@ class EntireProjectTest {
 
 
     // Function B (Node)
-    @Test void Node(){
+    @Test
+    public void Node(){
         Node node = new Node(new int[] {0,0}, null, 10, 0);  // Target Function
         assertArrayEquals(new int[] {0,0}, node.currentPosition);
         assertEquals(null, node.parent);
@@ -108,7 +152,7 @@ class EntireProjectTest {
 
     // Function B (AStarAlgorithm)
     @Test
-    void AStarAlgorithm(){
+    public void AStarAlgorithm(){
         AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(new int[]{0,0}, new int[]{4,4}, "maze_map_for_unit_testing.csv"); // Target Function
         int[][] maze = {{1,1,1,1,1,1,1,1}, {2,0,0,1,0,0,0,1}, {1,1,0,0,0,1,0,1}, {1,0,0,1,0,0,0,1}, {1,0,1,0,1,0,1,1}, {1,0,0,0,0,0,0,1}, {1,1,1,1,1,1,0,1}, {1,1,1,1,1,1,3,1}};
         assertArrayEquals(new int[]{0,0}, aStarAlgorithm.tomLocation);
@@ -117,14 +161,14 @@ class EntireProjectTest {
     }
 
     @Test
-    void changeLocation(){
+    public void changeLocation(){
         AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(new int[]{0,0}, new int[]{4,4}, "maze_map_for_unit_testing.csv");
         assertArrayEquals(new int[]{10,20}, aStarAlgorithm.changeLocation((new int[]{10,20}), 0)); // Target Function
         assertArrayEquals(new int[]{20,10}, aStarAlgorithm.changeLocation((new int[]{20,10}), 1)); // Target Function
     }
 
     @Test
-    void checkExplored(){
+    public void checkExplored(){
         List<Node> nodeList = new ArrayList<>();
         nodeList.add(new Node(new int[] {0,0}, null, 10, 0));
         AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(new int[]{0,0}, new int[]{4,4}, "maze_map_for_unit_testing.csv");
@@ -133,7 +177,7 @@ class EntireProjectTest {
     }
 
     @Test
-    void checkValidNode(){
+    public void checkValidNode(){
         AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(new int[]{0,0}, new int[]{4,4}, "maze_map_for_unit_testing.csv");
         List<Node> frontier = new ArrayList<>();
         List<Node> expandedNode = new ArrayList<>();
@@ -143,7 +187,7 @@ class EntireProjectTest {
     }
 
     @Test
-    void findNeighbor(){
+    public void findNeighbor(){
 //        List<Node> expectedResult = new ArrayList<>();
 //        expectedResult.add(new Node(new int[] {1,1}, new Node(new int[]{1,0}, null, 12, 0), 11, 1));
         AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(new int[]{1,0}, new int[]{7,6}, "maze_map_for_unit_testing.csv");
@@ -162,7 +206,7 @@ class EntireProjectTest {
     }
 
     @Test
-    void pathGeneratorByAStar(){
+    public void pathGeneratorByAStar(){
         AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(new int[]{7,6}, new int[]{1,0}, "maze_map_for_unit_testing.csv");
         List<int[]> expectedResult = new ArrayList<>();
         expectedResult.addAll(Arrays.asList(new int[]{1,0}, new int[]{1,1}, new int[]{1,2}, new int[]{2,2}, new int[]{2,3}, new int[]{2,4}, new int[]{3,4}, new int[]{3,5}, new int[]{4,5}, new int[]{5,5}, new int[]{5,6}, new int[]{6,6}, new int[]{7,6}));
@@ -175,7 +219,7 @@ class EntireProjectTest {
     }
 
     @Test
-    void tomNextMovement(){
+    public void tomNextMovement(){
         AStarAlgorithm aStarAlgorithm1 = new AStarAlgorithm(new int[]{7,6}, new int[]{1,0}, "maze_map_for_unit_testing.csv");
         assertArrayEquals(new int[] {6,6}, aStarAlgorithm1.tomNextMovement()); // Target Function
         AStarAlgorithm aStarAlgorithm2 = new AStarAlgorithm(new int[]{7,6}, new int[]{1,0}, "maze_map_for_unit_testing_no_path_same.csv");
@@ -190,8 +234,14 @@ class EntireProjectTest {
     // Function B (CSVOutputForGUI)
 
 
-    // Function B (MazeWithShortestPath)
-
+    // Function B (MazeWithShortestPathGUI)
+    @Test
+    public void MazeWithShortestPathGUIButton(){
+        FxAssert.verifyThat("Test Function B", NodeMatchers.isNotNull());
+        clickOn("Test Function B", MouseButton.PRIMARY);
+        FxAssert.verifyThat("Back to Testing Menu", NodeMatchers.isNotNull()); // Target Function
+        clickOn("Back to Testing Menu", MouseButton.PRIMARY); // Target Function
+    }
 
     // Function C (DirectionState)
 
