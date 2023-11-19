@@ -368,8 +368,8 @@ public class EntireProjectTest extends ApplicationTest {
     public void isEndGame(){
         GameMain.mazeSize = 30;
         GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
-        GameMain.Jerry.Game_state = false;
-        GameMain.Tom.Game_state = false;
+        GameMain.Jerry = new Character();
+        GameMain.Tom = new Character();
         GameMain.Tom.location = new int[]{2,0};
         CheckEndGame checkEndGame = new CheckEndGame(); // Target Function
         assertEquals(60,checkEndGame.ExitPoint);
@@ -398,6 +398,8 @@ public class EntireProjectTest extends ApplicationTest {
     public void setGridPane(){
         GameMain.mazeSize = 30;
         GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        GameMain.Jerry = new Character();
+        GameMain.Tom = new Character();
         GameMazeGUI gameMazeGUI = new GameMazeGUI();
         gameMazeGUI.SetGridPane();  // Target Function
         assertEquals(GameMain.mazeSize*GameMain.mazeSize,gameMazeGUI.cells.size());
@@ -415,6 +417,8 @@ public class EntireProjectTest extends ApplicationTest {
     public void updateGridPane(){
         GameMain.mazeSize = 30;
         GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        GameMain.Jerry = new Character();
+        GameMain.Tom = new Character();
         GameMazeGUI gameMazeGUI = new GameMazeGUI();
         gameMazeGUI.SetGridPane();
         GameMain.Jerry.lastPos = 0;
@@ -461,6 +465,8 @@ public class EntireProjectTest extends ApplicationTest {
     public void testSceneOnKeyPress(){
         GameMain.mazeSize = 30;
         GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        GameMain.Tom = new Character();
+        GameMain.Jerry = new Character();
         GameMazeGUI gameMazeGUI = new GameMazeGUI();
         Platform.runLater(() -> {
             Stage stage = new Stage();
@@ -556,9 +562,9 @@ public class EntireProjectTest extends ApplicationTest {
         MainGUI.Speed fast = MainGUI.Speed.FAST;
         MainGUI.Speed moderate = MainGUI.Speed.MODERATE;
         MainGUI.Speed slow = MainGUI.Speed.SLOW;
-        assertEquals(150,fast.value);
-        assertEquals(200,moderate.value);
-        assertEquals(250,slow.value);
+        assertEquals(150,fast.value);   // Target Function
+        assertEquals(200,moderate.value);   // Target Function
+        assertEquals(250,slow.value);   // Target Function
     }
 
     @Test

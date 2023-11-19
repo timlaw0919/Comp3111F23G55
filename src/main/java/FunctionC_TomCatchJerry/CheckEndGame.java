@@ -14,11 +14,9 @@ public class CheckEndGame {
     public boolean isEndGame(){
         if (toIndex(Jerry.location) == ExitPoint) {
             Jerry.Game_state = true;
-            System.out.println("Player Wins!");
         }
         else if (toIndex(Jerry.location) == toIndex(Tom.location)) {
             Tom.Game_state = true;
-            System.out.println("Computer Wins!");
         }
         return (Jerry.Game_state && !Tom.Game_state) ||
                 (!Jerry.Game_state && Tom.Game_state);
