@@ -243,7 +243,7 @@ public class EntireProjectTest extends ApplicationTest {
                 check = false;
                 break;
             }
-            else if(! line1.equalsIgnoreCase(line2)) {
+            else if(! line1.equals(line2)) {
                 check = false;
                 break;
             }
@@ -269,7 +269,7 @@ public class EntireProjectTest extends ApplicationTest {
                 check = false;
                 break;
             }
-            else if(! line1.equalsIgnoreCase(line2)) {
+            else if(! line1.equals(line2)) {
                 check = false;
                 break;
             }
