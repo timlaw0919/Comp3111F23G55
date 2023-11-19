@@ -126,7 +126,7 @@ public class BigMainGUI extends Application {
                     }
                 }
                 AStarAlgorithm obj1 = new AStarAlgorithm(tomLocation, jerryLocation, "maze_map.csv");
-                CSVOutputForGUI.outputCSVFile(obj1.pathGeneratorByAStar(), "maze_map_with_path.csv");
+                CSVOutputForGUI.outputCSVFile(obj1.pathGeneratorByAStar(), "maze_map_with_path.csv", "maze_map.csv");
                 FunctionB_ShortestPath.CSVOutput.outputCSVFile(obj1.pathGeneratorByAStar(), "path_coordinates.csv");
                 mazeWithShortestPathGUI.start(stage);
             } catch (Exception e) {

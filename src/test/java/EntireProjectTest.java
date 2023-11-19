@@ -234,10 +234,56 @@ public class EntireProjectTest extends ApplicationTest {
     }
 
     // Function B (CSVOutput)
+    @Test
+    public void CSVOutput() throws IOException{
+        AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(new int[] {7,6}, new int[] {1,0}, "maze_map_for_unit_testing.csv");
+        FunctionB_ShortestPath.CSVOutput.outputCSVFile(aStarAlgorithm.pathGeneratorByAStar(), "path_coordinates.csv");
 
+        BufferedReader reader1 = new BufferedReader(new FileReader("path_coordinates.csv"));
+        BufferedReader reader2 = new BufferedReader(new FileReader("maze_map_testing_CSVOutput_expected.csv"));
+        String line1 = reader1.readLine();
+        String line2 = reader2.readLine();
+        boolean check = true;
+        while (line1 != null || line2 != null) {
+            if(line1 == null || line2 == null) {
+                check = false;
+                break;
+            }
+            else if(! line1.equalsIgnoreCase(line2)) {
+                check = false;
+                break;
+            }
+            line1 = reader1.readLine();
+            line2 = reader2.readLine();
+        }
+        assertTrue(check);
+    }
 
     // Function B (CSVOutputForGUI)
+    @Test
+    public void CSVOutputForGUI() throws IOException{
+        AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(new int[] {7,6}, new int[] {1,0}, "maze_map_for_unit_testing.csv");
+        CSVOutputForGUI.outputCSVFile(aStarAlgorithm.pathGeneratorByAStar(), "maze_map_with_path.csv", "maze_map_for_unit_testing.csv"); // Target Function
 
+        BufferedReader reader1 = new BufferedReader(new FileReader("maze_map_with_path.csv"));
+        BufferedReader reader2 = new BufferedReader(new FileReader("maze_map_testing_CSVOutputForGUI_expected.csv"));
+        String line1 = reader1.readLine();
+        String line2 = reader2.readLine();
+        boolean check = true;
+        while (line1 != null || line2 != null) {
+            if(line1 == null || line2 == null) {
+                check = false;
+                break;
+            }
+            else if(! line1.equalsIgnoreCase(line2)) {
+                check = false;
+                break;
+            }
+            line1 = reader1.readLine();
+            line2 = reader2.readLine();
+        }
+        assertTrue(check);
+    }
 
     // Function B (MazeWithShortestPathGUI)
     @Test

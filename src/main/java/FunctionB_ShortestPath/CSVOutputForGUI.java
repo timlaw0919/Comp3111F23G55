@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class CSVOutputForGUI {
-    public static void outputCSVFile(List<int[]> path, String filename) {
-        int[][] maze = MazeLoader.loadMazeFromCSV("maze_map.csv");
-        try (FileWriter writer = new FileWriter(filename)) {
+    public static void outputCSVFile(List<int[]> path, String outputFilename, String inputFilename) {
+        int[][] maze = MazeLoader.loadMazeFromCSV(inputFilename);
+        try (FileWriter writer = new FileWriter(outputFilename)) {
             for (int i = 0; i < maze.length ; i++) {
                 StringBuilder sb = new StringBuilder();
                 for (int j = 0; j < maze[0].length; j++) {
