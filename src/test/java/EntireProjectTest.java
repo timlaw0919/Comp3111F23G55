@@ -1,19 +1,12 @@
 import FunctionA_CreateMaze.constant.CellState;
 import Main.BigMainGUI;
-import com.sun.tools.javac.Main;
 import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Order;
 import org.testfx.api.FxAssert;
-import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.LabeledMatchers;
@@ -302,8 +295,6 @@ public class EntireProjectTest extends ApplicationTest {
         FxAssert.verifyThat("Back to Testing Menu", NodeMatchers.isNotNull()); // Target Function
         clickOn("Back to Testing Menu", MouseButton.PRIMARY); // Target Function
     }
-
-    // Function C (DirectionState)
 
 
     // Function C (Character)
