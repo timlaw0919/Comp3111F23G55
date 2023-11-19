@@ -21,7 +21,7 @@ public class MainGUI extends Application {
     /**
      * Initialize of the speed value of different speed level
      */
-    enum Speed {
+    public enum Speed {
         FAST(150),
         MODERATE(200),
         SLOW(250);

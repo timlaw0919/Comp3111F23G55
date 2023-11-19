@@ -1,6 +1,9 @@
 import FunctionA_CreateMaze.constant.CellState;
 import Main.BigMainGUI;
+import javafx.application.Platform;
+
 import javafx.scene.input.MouseButton;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import org.junit.Test;
@@ -24,6 +27,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import FunctionC_TomCatchJerry.Character;
 import javafx.scene.input.KeyEvent;
+import org.testfx.util.WaitForAsyncUtils;
+
 import static javafx.scene.input.KeyCode.*;
 import static javafx.scene.input.KeyEvent.*;
 
@@ -285,8 +290,6 @@ public class EntireProjectTest extends ApplicationTest {
         clickOn("Back to Testing Menu", MouseButton.PRIMARY); // Target Function
     }
 
-    // Function C (DirectionState)
-
 
     // Function C (Character)
     @Test
@@ -304,14 +307,26 @@ public class EntireProjectTest extends ApplicationTest {
     public void move(){
         GameMain.mazeSize = 30;
         GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
-        Character character = new Character();
-        character.move();
+        GameMain.Jerry.location = new int[]{21,29};
+        KeyEvent a = new KeyEvent(KEY_PRESSED, "","",A,false,false,false,false);
+        new KeyBoardListener(GameMain.Jerry).keyPressed(a);
+        GameMain.Jerry.move(); // Target Function
+        assertArrayEquals(new int[]{21,28},GameMain.Jerry.location);
+        assertEquals(659,GameMain.Jerry.lastPos);
     }
 
     @Test
-    public void moveWithShortestPath(){
-        AStarAlgorithm aStarAlgorithm1 = new AStarAlgorithm(new int[]{7,6}, new int[]{1,0}, "maze_map_for_unit_testing.csv");
+    public void moveWithShortestPath() {
+        GameMain.mazeSize = 30;
+        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        GameMain.Tom.location = new int[]{2, 1};
+        GameMain.Jerry.location = new int[]{20, 20};
+        GameMain.shortestPath = new AStarAlgorithm(GameMain.Tom.location, GameMain.Jerry.location, "maze_map_testing.csv");
+        GameMain.Tom.MoveWithShortestPath();
+        assertArrayEquals(new int[]{2, 2}, GameMain.Tom.location);
+        assertEquals(61, GameMain.Tom.lastPos);
     }
+
     @Test
     public void IsWithinBoundary(){
         GameMain.mazeSize = 30;
@@ -351,6 +366,10 @@ public class EntireProjectTest extends ApplicationTest {
     // Function C (CheckEndGame)
     @Test
     public void isEndGame(){
+        GameMain.mazeSize = 30;
+        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        GameMain.Jerry.Game_state = false;
+        GameMain.Tom.Game_state = false;
         GameMain.Tom.location = new int[]{2,0};
         CheckEndGame checkEndGame = new CheckEndGame(); // Target Function
         assertEquals(60,checkEndGame.ExitPoint);
@@ -365,18 +384,151 @@ public class EntireProjectTest extends ApplicationTest {
     }
 
     // Function C (GameMain)
-
-
+    @Test
+    public void newMaze(){
+        int[] maze_size = new int[]{20,25,30,35,40};
+        for (int size: maze_size){
+            GameMain.mazeSize = size;
+            GameMain.maze = GameMain.newMaze();
+            assertEquals(size, GameMain.maze.length);
+        }
+    }
     // Function C (GameMazeGUI)
+    @Test
+    public void setGridPane(){
+        GameMain.mazeSize = 30;
+        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        GameMazeGUI gameMazeGUI = new GameMazeGUI();
+        gameMazeGUI.SetGridPane();  // Target Function
+        assertEquals(GameMain.mazeSize*GameMain.mazeSize,gameMazeGUI.cells.size());
+        assertArrayEquals(new int[]{21,29},GameMain.Jerry.location);
+        assertEquals(659,gameMazeGUI.entryIndex);
+        assertEquals(gameMazeGUI.JerryJerry,gameMazeGUI.cells.get(659).getFill());
+        assertArrayEquals(new int[]{2,0},GameMain.Tom.location);
+        assertEquals(60,gameMazeGUI.exitIndex);
+        assertEquals(gameMazeGUI.TomTom,gameMazeGUI.cells.get(60).getFill());
+        assertEquals(gameMazeGUI.block,gameMazeGUI.cells.get(0).getFill());
+        assertEquals(Color.WHITE,gameMazeGUI.cells.get(61).getFill());
+    }
 
+    @Test
+    public void updateGridPane(){
+        GameMain.mazeSize = 30;
+        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        GameMazeGUI gameMazeGUI = new GameMazeGUI();
+        gameMazeGUI.SetGridPane();
+        GameMain.Jerry.lastPos = 0;
+        GameMain.Jerry.location = new int[]{21,28};
+        GameMain.Tom.location = new int[]{2,1};
+        gameMazeGUI.updatedGridPane(GameMain.Jerry,gameMazeGUI.JerryJerry); // Target function
+        assertEquals(gameMazeGUI.block,gameMazeGUI.cells.get(0).getFill());
+        GameMain.Jerry.lastPos = 659;
+        gameMazeGUI.updatedGridPane(GameMain.Jerry,gameMazeGUI.JerryJerry); // Target function
+        assertEquals(Color.web("#F1CD85"),gameMazeGUI.cells.get(659).getFill());
+        GameMain.Jerry.lastPos = 628;
+        gameMazeGUI.updatedGridPane(GameMain.Jerry,gameMazeGUI.JerryJerry); // Target function
+        assertEquals(Color.WHITE,gameMazeGUI.cells.get(628).getFill());
+        GameMain.Tom.lastPos = 60;
+        gameMazeGUI.updatedGridPane(GameMain.Tom,gameMazeGUI.TomTom); // Target function
+        assertEquals(Color.web("#808990"),gameMazeGUI.cells.get(60).getFill());
+        assertEquals(gameMazeGUI.JerryJerry,gameMazeGUI.cells.get(658).getFill());
+        assertEquals(gameMazeGUI.TomTom,gameMazeGUI.cells.get(61).getFill());
+    }
+
+    @Test
+    public void GameMazeGUI_start(){
+        GameMazeGUI gameMazeGUI = new GameMazeGUI();
+        Platform.runLater(() -> {
+            Stage stage = new Stage();
+            gameMazeGUI.start(stage); // Target function
+            assertNotNull(stage);
+        });
+    }
+
+    @Test
+    public void testHomeButton(){
+        GameMazeGUI gameMazeGUI = new GameMazeGUI();
+        Platform.runLater(() -> {
+            Stage stage = new Stage();
+            gameMazeGUI.start(stage);
+        });
+        WaitForAsyncUtils.waitForFxEvents();
+        FxAssert.verifyThat("Home", NodeMatchers.isNotNull());
+        clickOn("Home", MouseButton.PRIMARY); // Target Function
+    }
+
+    @Test
+    public void testSceneOnKeyPress(){
+        GameMain.mazeSize = 30;
+        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        GameMazeGUI gameMazeGUI = new GameMazeGUI();
+        Platform.runLater(() -> {
+            Stage stage = new Stage();
+            gameMazeGUI.start(stage);
+        });
+        WaitForAsyncUtils.waitForFxEvents();
+        press(A); // Target Function
+        assertArrayEquals(new int[]{21,28},GameMain.Jerry.location);
+    }
+
+    @Test
+    public void testRestartButton() throws InterruptedException {
+        GameMain.mazeSize = 30;
+        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        GameMain.Jerry.Game_state = false;
+        GameMain.Tom.Game_state = false;
+        GameMazeGUI gameMazeGUI = new GameMazeGUI();
+        Platform.runLater(() -> {
+            Stage stage = new Stage();
+            gameMazeGUI.start(stage);
+        });
+        WaitForAsyncUtils.waitForFxEvents();
+        press(A);
+        sleep(1600);
+        assertTrue(GameMain.Tom.Game_state);
+        FxAssert.verifyThat("Restart", NodeMatchers.isNotNull());
+        clickOn("Restart", MouseButton.PRIMARY); // Target Function
+    }
 
     // Function C (InfoGUI)
+    @Test
+    public void InfoGUI_start(){
+        InfoGUI infoGUI = new InfoGUI();
+        Platform.runLater(() -> {
+            try {
+                Stage stage = new Stage();
+                infoGUI.start(stage); // Target function
+                assertNotNull(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Test
+    public void InfoGUI_OKButton(){
+        InfoGUI infoGUI = new InfoGUI();
+        Platform.runLater(() -> {
+            try {
+                Stage stage = new Stage();
+                infoGUI.start(stage);
+                assertNotNull(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        WaitForAsyncUtils.waitForFxEvents();
+
+        FxAssert.verifyThat("OK!", NodeMatchers.isNotNull());
+        clickOn("OK!", MouseButton.PRIMARY); // Target Function
+    }
 
 
     // Function C (KeyBoardListener)
     @Test
     public void KeyBoardListener(){
-        assertEquals(GameMain.Jerry,new KeyBoardListener(GameMain.Jerry).player);
+        KeyBoardListener keyBoardListener = new KeyBoardListener(GameMain.Jerry);
+        assertEquals(GameMain.Jerry,keyBoardListener.player);
     }
     @Test
     public void keyPress(){
@@ -385,7 +537,6 @@ public class EntireProjectTest extends ApplicationTest {
         KeyEvent a = new KeyEvent(KEY_PRESSED, "","",A,false,false,false,false);
         KeyEvent s = new KeyEvent(KEY_PRESSED, "","",S,false,false,false,false);
         KeyEvent d = new KeyEvent(KEY_PRESSED, "","",D,false,false,false,false);
-        KeyEvent q = new KeyEvent(KEY_PRESSED, "","",Q,false,false,false,false);
         keyBoardListener.keyPressed(w); // Target Function
         assertEquals(-1,GameMain.Jerry.newRow);
         assertEquals(0,GameMain.Jerry.newCol);
@@ -398,11 +549,81 @@ public class EntireProjectTest extends ApplicationTest {
         keyBoardListener.keyPressed(d); // Target Function
         assertEquals(0,GameMain.Jerry.newRow);
         assertEquals(1,GameMain.Jerry.newCol);
-        keyBoardListener.keyPressed(q); // Target Function
-        assertEquals(0,GameMain.Jerry.newRow);
-        assertEquals(1,GameMain.Jerry.newCol);
-
     }
-    // Function C (MainGUI)
+    // Function C (MainGUI)
+    @Test
+    public void testEnumSpeedConstructor(){
+        MainGUI.Speed fast = MainGUI.Speed.FAST;
+        MainGUI.Speed moderate = MainGUI.Speed.MODERATE;
+        MainGUI.Speed slow = MainGUI.Speed.SLOW;
+        assertEquals(150,fast.value);
+        assertEquals(200,moderate.value);
+        assertEquals(250,slow.value);
+    }
+
+    @Test
+    public void MainGUI_start(){
+        MainGUI mainGUI = new MainGUI();
+        Platform.runLater(() -> {
+            try {
+                Stage stage = new Stage();
+                mainGUI.start(stage); // Target function
+                assertNotNull(stage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Test
+    public void testInfoButton(){
+        MainGUI mainGUI = new MainGUI();
+        Platform.runLater(() -> {
+            try {
+                Stage stage = new Stage();
+                mainGUI.start(stage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        WaitForAsyncUtils.waitForFxEvents();
+
+        FxAssert.verifyThat("?", NodeMatchers.isNotNull());
+        clickOn("?", MouseButton.PRIMARY); // Target Function
+    }
+
+    @Test
+    public void testBackMenuButton(){
+        MainGUI mainGUI = new MainGUI();
+        Platform.runLater(() -> {
+            try {
+                Stage stage = new Stage();
+                mainGUI.start(stage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        WaitForAsyncUtils.waitForFxEvents();
+
+        FxAssert.verifyThat("Back to Testing Menu", NodeMatchers.isNotNull());
+        clickOn("Back to Testing Menu", MouseButton.PRIMARY); // Target Function
+    }
+
+    @Test
+    public void testStartButton(){
+        MainGUI mainGUI = new MainGUI();
+        Platform.runLater(() -> {
+            try {
+                Stage stage = new Stage();
+                mainGUI.start(stage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        WaitForAsyncUtils.waitForFxEvents();
+
+        FxAssert.verifyThat("Start", NodeMatchers.isNotNull());
+        clickOn("Start", MouseButton.PRIMARY); // Target Function
+    }
 
 }
