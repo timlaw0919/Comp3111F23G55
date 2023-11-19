@@ -313,14 +313,26 @@ public class EntireProjectTest extends ApplicationTest {
     public void move(){
         GameMain.mazeSize = 30;
         GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
-        Character character = new Character();
-        character.move();
+        GameMain.Jerry.location = new int[]{21,29};
+        KeyEvent a = new KeyEvent(KEY_PRESSED, "","",A,false,false,false,false);
+        new KeyBoardListener(GameMain.Jerry).keyPressed(a);
+        GameMain.Jerry.move(); // Target Function
+        assertArrayEquals(new int[]{21,28},GameMain.Jerry.location);
+        assertEquals(659,GameMain.Jerry.lastPos);
     }
 
     @Test
-    public void moveWithShortestPath(){
-        AStarAlgorithm aStarAlgorithm1 = new AStarAlgorithm(new int[]{7,6}, new int[]{1,0}, "maze_map_for_unit_testing.csv");
+    public void moveWithShortestPath() {
+        GameMain.mazeSize = 30;
+        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        GameMain.Tom.location = new int[]{2, 1};
+        GameMain.Jerry.location = new int[]{20, 20};
+        GameMain.shortestPath = new AStarAlgorithm(GameMain.Tom.location, GameMain.Jerry.location, "maze_map_testing.csv");
+        GameMain.Tom.MoveWithShortestPath();
+        assertArrayEquals(new int[]{2, 2}, GameMain.Tom.location);
+        assertEquals(61, GameMain.Tom.lastPos);
     }
+
     @Test
     public void IsWithinBoundary(){
         GameMain.mazeSize = 30;
