@@ -7,7 +7,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import org.controlsfx.tools.Platform;
+//import org.controlsfx.tools.Platform;
 import org.junit.Before;
 import org.junit.Test;
 import org.testfx.api.FxAssert;
@@ -91,8 +91,12 @@ public class EntireProjectTest extends ApplicationTest {
         // test two cell equal base on same row and col
         Cell cell1 = new Cell(0,0, CellState.BLOCK);
         Cell cell2 = new Cell(0,0, CellState.PATH);
-        boolean test = cell1.equals(cell2);     // Target Function
-        assertTrue(test);
+        Cell cell3 = new Cell(0,1,CellState.BLOCK);
+
+        // Target Function
+        assertTrue(cell1.equals(cell2));            // valid (Cell with same row/col)
+        assertFalse(cell1.equals(cell3));           // invalid (Cell with different row/col)
+        assertFalse(cell1.equals(new Object()));    // invalid (not Cell)
     }
 
     // Function A (CSVOutput)
