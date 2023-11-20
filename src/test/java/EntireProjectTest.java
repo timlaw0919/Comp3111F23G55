@@ -210,16 +210,20 @@ public class EntireProjectTest extends ApplicationTest {
         Cell[][] maze = mazeGenerator.getMaze();
 
         // Add neighboring cells (up, down, left, right)
-        if (row > 0 && maze[row - 1][col].value!=CellState.BLOCK){
+        if (row > 0){
+            if (maze[row - 1][col].value!=CellState.BLOCK)
                 neighbors.add(maze[row - 1][col]);
         }
-        if (row < maze.length - 1 && maze[row + 1][col].value!=CellState.BLOCK){
+        if (row < maze.length - 1){
+            if (maze[row + 1][col].value!=CellState.BLOCK)
                 neighbors.add(maze[row + 1][col]);
         }
-        if (col > 0 && maze[row][col-1].value!=CellState.BLOCK){
+        if (col > 0){
+            if (maze[row][col-1].value!=CellState.BLOCK)
                 neighbors.add(maze[row][col - 1]);
         }
-        if (col < maze[0].length - 1 && maze[row][col+1].value!=CellState.BLOCK){
+        if (col < maze[0].length - 1){
+            if (maze[row][col+1].value!=CellState.BLOCK)
                 neighbors.add(maze[row][col + 1]);
         }
 
@@ -228,6 +232,7 @@ public class EntireProjectTest extends ApplicationTest {
     }
 
     @Test
+    @RepeatedTest(50)
     public void generateMazeTest(){
         // test EXIT is generated on the edge + the generated 30*30 maze have multiple paths
         MazeGenerator mazeGenerator1 = new MazeGenerator(30,30);
