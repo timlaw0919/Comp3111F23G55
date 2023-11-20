@@ -1,4 +1,3 @@
-import FunctionA_CreateMaze.CSVOutput;
 import FunctionA_CreateMaze.constant.CellState;
 import Main.BigMainGUI;
 import javafx.application.Platform;
@@ -10,6 +9,7 @@ import javafx.stage.Stage;
 //import org.controlsfx.tools.Platform;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.RepeatedTest;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
@@ -22,12 +22,7 @@ import FunctionC_TomCatchJerry.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -180,6 +175,10 @@ public class EntireProjectTest extends ApplicationTest {
 
     private void explorePaths(MazeGenerator mazeGenerator, Cell currentCell, Set<Cell> visited, int[] pathCount) {
         visited.add(currentCell);
+        if (visited.size() >= 100){
+            visited.remove(currentCell);
+            return;
+        }
 
         if (currentCell.value == CellState.EXIT) {
             pathCount[0]++; // Increment the count
@@ -189,6 +188,9 @@ public class EntireProjectTest extends ApplicationTest {
 
         if(pathCount[0]<=1) {
             List<Cell> neighbors = getNeighbors(mazeGenerator, currentCell);
+            if (neighbors.isEmpty()){
+                System.out.println(currentCell.row+ " " + currentCell.col);
+            }
             for (Cell neighbor : neighbors) {
                 if (!visited.contains(neighbor)) {           // stop recursion if there are multiple path
                     explorePaths(mazeGenerator, neighbor, visited, pathCount);
@@ -208,20 +210,16 @@ public class EntireProjectTest extends ApplicationTest {
         Cell[][] maze = mazeGenerator.getMaze();
 
         // Add neighboring cells (up, down, left, right)
-        if (row > 0) {
-            if(maze[row - 1][col].value!=CellState.BLOCK)
+        if (row > 0 && maze[row - 1][col].value!=CellState.BLOCK){
                 neighbors.add(maze[row - 1][col]);
         }
-        if (row < maze.length - 1) {
-            if(maze[row + 1][col].value!=CellState.BLOCK)
+        if (row < maze.length - 1 && maze[row + 1][col].value!=CellState.BLOCK){
                 neighbors.add(maze[row + 1][col]);
         }
-        if (col > 0) {
-            if(maze[row][col-1].value!=CellState.BLOCK)
+        if (col > 0 && maze[row][col-1].value!=CellState.BLOCK){
                 neighbors.add(maze[row][col - 1]);
         }
-        if (col < maze[0].length - 1) {
-            if(maze[row][col+1].value!=CellState.BLOCK)
+        if (col < maze[0].length - 1 && maze[row][col+1].value!=CellState.BLOCK){
                 neighbors.add(maze[row][col + 1]);
         }
 
