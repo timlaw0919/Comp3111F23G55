@@ -268,13 +268,13 @@ public class EntireProjectTest extends ApplicationTest {
 
         // Test valid neighbors
         assertTrue(mazeGenerator.checkValidNeighbors(maze[1][1])); // (1, 1) should be a valid neighbor                                     // Target Function
-        //assertTrue(mazeGenerator.checkValidNeighbors(maze[2][1])); // (2, 1) should be a valid neighbor
-        //assertTrue(mazeGenerator.checkValidNeighbors(maze[1][3])); // (1, 3) should be a valid neighbor
+        assertTrue(mazeGenerator.checkValidNeighbors(maze[2][1])); // (2, 1) should be a valid neighbor
+        assertTrue(mazeGenerator.checkValidNeighbors(maze[1][3])); // (1, 3) should be a valid neighbor
 
         // Test invalid neighbors
         assertFalse(mazeGenerator.checkValidNeighbors(mazeGenerator.EntryPoint)); // EntryPoint should be an invalid neighbor (EntryPoint)  // Target Function
-        //assertFalse(mazeGenerator.checkValidNeighbors(maze[2][2])); // (1, 1) should be an invalid neighbor (numNeighboringZeros>=4)
-        //assertFalse(mazeGenerator.checkValidNeighbors(maze[0][0])); // (0, 0) should be an invalid neighbor (on Edge)
+        assertFalse(mazeGenerator.checkValidNeighbors(maze[2][2])); // (1, 1) should be an invalid neighbor (numNeighboringZeros>=4)
+        assertFalse(mazeGenerator.checkValidNeighbors(maze[0][0])); // (0, 0) should be an invalid neighbor (on Edge)
 
         mazeGenerator.generateMaze();
         assertFalse(mazeGenerator.checkValidNeighbors(mazeGenerator.ExitPoint)); // EntryPoint should be an invalid neighbor (visited)      // Target Function
@@ -375,51 +375,51 @@ public class EntireProjectTest extends ApplicationTest {
             // test cell on opposite edge of ENTRY
             assertTrue(mazeGenerator.checkIfExitPoint(maze[maze.length-1][3]));     // Target Function
             // test cell on other 3 edges
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[0][3]));
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[7][maze.length-1]));
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[7][0]));
-//            // test cell of interior
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[3][9]));
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[0][3]));
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[7][maze.length-1]));
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[7][0]));
+            // test cell of interior
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[3][9]));
         }
         else if (mazeGenerator.EntryPoint.row==maze.length-1) {
             // Target Function
             // test cell on opposite edge of ENTRY
             assertTrue(mazeGenerator.checkIfExitPoint(maze[0][3]));                 // Target Function
             // test cell on other 3 edges
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[maze.length-1][3]));
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[7][maze.length-1]));
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[7][0]));
-//            // test cell of interior
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[3][9]));
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[maze.length-1][3]));
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[7][maze.length-1]));
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[7][0]));
+            // test cell of interior
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[3][9]));
         }
         else if (mazeGenerator.EntryPoint.col==0) {
             // Target Function
             // test cell on opposite edge of ENTRY
             assertTrue(mazeGenerator.checkIfExitPoint(maze[7][maze.length-1]));     // Target Function
             // test cell on other 3 edges
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[maze.length-1][3]));
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[0][3]));
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[7][0]));
-//            // test cell of interior
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[3][9]));
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[maze.length-1][3]));
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[0][3]));
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[7][0]));
+            // test cell of interior
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[3][9]));
         }
         else if (mazeGenerator.EntryPoint.col==maze.length-1) {
             // Target Function
             // test cell on opposite edge of ENTRY
             assertTrue(mazeGenerator.checkIfExitPoint(maze[7][0]));                 // Target Function
             // test cell on other 3 edges
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[maze.length-1][3]));
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[0][3]));
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[7][maze.length-1]));
-//            // test cell of interior
-//            assertFalse(mazeGenerator.checkIfExitPoint(maze[3][9]));
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[maze.length-1][3]));
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[0][3]));
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[7][maze.length-1]));
+            // test cell of interior
+            assertFalse(mazeGenerator.checkIfExitPoint(maze[3][9]));
         }
 
-//        // Test if EXIT is found
-//        mazeGenerator.generateMaze();
-//        // Target Function
-//        assertTrue(mazeGenerator.checkIfExitPoint(mazeGenerator.ExitPoint));
-//        assertFalse(mazeGenerator.checkIfExitPoint(maze[3][9]));
+        // Test if EXIT is found
+        mazeGenerator.generateMaze();
+        // Target Function
+        assertTrue(mazeGenerator.checkIfExitPoint(mazeGenerator.ExitPoint));
+        assertFalse(mazeGenerator.checkIfExitPoint(maze[3][9]));
 
     }
 
@@ -430,15 +430,15 @@ public class EntireProjectTest extends ApplicationTest {
         Cell[][] maze = mazeGenerator.getMaze();
 
         assertTrue(mazeGenerator.CellOnOppositeEdge(maze[0][2],maze[maze.length-1][5]));                // valid (up and bottom)        //Target Function
-//        assertTrue(mazeGenerator.CellOnOppositeEdge(maze[2][0],maze[5][maze.length-1]));                // valid (left and right)
+        assertTrue(mazeGenerator.CellOnOppositeEdge(maze[2][0],maze[5][maze.length-1]));                // valid (left and right)
 
         assertFalse(mazeGenerator.CellOnOppositeEdge(maze[maze.length-1][2],maze[maze.length-1][5]));   // invalid (same edge)          //Target Function
-//        assertFalse(mazeGenerator.CellOnOppositeEdge(maze[0][2],maze[5][0]));                           // invalid (up and left)
-//        assertFalse(mazeGenerator.CellOnOppositeEdge(maze[0][2],maze[5][maze.length-1]));               // invalid (up and right)
-//        assertFalse(mazeGenerator.CellOnOppositeEdge(maze[maze.length-1][2],maze[5][0]));               // invalid (bottom and left)
-//        assertFalse(mazeGenerator.CellOnOppositeEdge(maze[maze.length-1][2],maze[5][maze.length-1]));   // invalid (bottom and right)
-//        assertFalse(mazeGenerator.CellOnOppositeEdge(maze[3][3],maze[1][4]));                           // invalid (inside and inside)
-//        assertFalse(mazeGenerator.CellOnOppositeEdge(maze[0][3],maze[1][4]));                           // invalid (edge and inside)
+        assertFalse(mazeGenerator.CellOnOppositeEdge(maze[0][2],maze[5][0]));                           // invalid (up and left)
+        assertFalse(mazeGenerator.CellOnOppositeEdge(maze[0][2],maze[5][maze.length-1]));               // invalid (up and right)
+        assertFalse(mazeGenerator.CellOnOppositeEdge(maze[maze.length-1][2],maze[5][0]));               // invalid (bottom and left)
+        assertFalse(mazeGenerator.CellOnOppositeEdge(maze[maze.length-1][2],maze[5][maze.length-1]));   // invalid (bottom and right)
+        assertFalse(mazeGenerator.CellOnOppositeEdge(maze[3][3],maze[1][4]));                           // invalid (inside and inside)
+        assertFalse(mazeGenerator.CellOnOppositeEdge(maze[0][3],maze[1][4]));                           // invalid (edge and inside)
     }
 
     @Test
@@ -810,25 +810,37 @@ public class EntireProjectTest extends ApplicationTest {
 
     @Test
     public void GameMazeGUI_start(){
-        GameMazeGUI gameMazeGUI = new GameMazeGUI();
-        Platform.runLater(() -> {
-            Stage stage = new Stage();
-            gameMazeGUI.start(stage); // Target function
-            assertNotNull(stage);
-        });
-    }
-
-    @Test
-    public void testHomeButton(){
-        GameMazeGUI gameMazeGUI = new GameMazeGUI();
+        GameMain.mazeSize = 30;
+        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+        GameMain.Jerry = new Character();
+        GameMain.Tom = new Character();
+        GameMazeGUI gameMazeGUI = new GameMazeGUI(); // Target Function
         Platform.runLater(() -> {
             Stage stage = new Stage();
             gameMazeGUI.start(stage);
         });
         WaitForAsyncUtils.waitForFxEvents();
+        GameMain.Jerry.Game_state = true;
+        sleep(1000);
+        FxAssert.verifyThat("Restart", NodeMatchers.isNotNull());
+        clickOn("Restart", MouseButton.PRIMARY); // Target Function
+
+        sleep(100);
         FxAssert.verifyThat("Home", NodeMatchers.isNotNull());
         clickOn("Home", MouseButton.PRIMARY); // Target Function
     }
+
+//    @Test
+//    public void testHomeButton(){
+//        GameMazeGUI gameMazeGUI = new GameMazeGUI();
+//        Platform.runLater(() -> {
+//            Stage stage = new Stage();
+//            gameMazeGUI.start(stage);
+//        });
+//        WaitForAsyncUtils.waitForFxEvents();
+//        FxAssert.verifyThat("Home", NodeMatchers.isNotNull());
+//        clickOn("Home", MouseButton.PRIMARY); // Target Function
+//    }
 
     @Test
     public void testSceneOnKeyPress(){
@@ -848,23 +860,23 @@ public class EntireProjectTest extends ApplicationTest {
         assertArrayEquals(new int[]{21,28},GameMain.Jerry.location);
     }
 
-    @Test
-    public void testRestartButton() {
-        GameMain.mazeSize = 30;
-        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
-        GameMain.Jerry = new Character();
-        GameMain.Tom = new Character();
-        GameMazeGUI gameMazeGUI = new GameMazeGUI();
-        Platform.runLater(() -> {
-            Stage stage = new Stage();
-            gameMazeGUI.start(stage);
-        });
-        WaitForAsyncUtils.waitForFxEvents();
-        GameMain.Jerry.Game_state = true;
-        sleep(1000);
-        FxAssert.verifyThat("Restart", NodeMatchers.isNotNull());
-        clickOn("Restart", MouseButton.PRIMARY); // Target Function
-    }
+//    @Test
+//    public void testRestartButton() {
+//        GameMain.mazeSize = 30;
+//        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
+//        GameMain.Jerry = new Character();
+//        GameMain.Tom = new Character();
+//        GameMazeGUI gameMazeGUI = new GameMazeGUI();
+//        Platform.runLater(() -> {
+//            Stage stage = new Stage();
+//            gameMazeGUI.start(stage);
+//        });
+//        WaitForAsyncUtils.waitForFxEvents();
+//        GameMain.Jerry.Game_state = true;
+//        sleep(1000);
+//        FxAssert.verifyThat("Restart", NodeMatchers.isNotNull());
+//        clickOn("Restart", MouseButton.PRIMARY); // Target Function
+//    }
 
     // Function C (InfoGUI)
     @Test
