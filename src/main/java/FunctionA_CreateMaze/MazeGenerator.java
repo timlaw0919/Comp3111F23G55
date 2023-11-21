@@ -2,10 +2,7 @@ package FunctionA_CreateMaze;
 
 import FunctionA_CreateMaze.constant.CellState;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
 
 
 public class MazeGenerator {
@@ -22,10 +19,9 @@ public class MazeGenerator {
         this.rows = rows;
         this.cols = cols;
         this.maze = new Cell[rows][cols];
-//        initializeMaze();
     }
 
-    private void EntryPointGenerator(){
+    public void EntryPointGenerator(){
         do {
             int randomNumber = random.nextInt(100);
             if (randomNumber % 4 == 0) {
@@ -54,7 +50,7 @@ public class MazeGenerator {
     }
 
     // Initialize the maze grid with cells
-    private void initializeMaze() {
+    public void initializeMaze() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 maze[i][j] = new Cell(i, j, CellState.BLOCK);
@@ -89,11 +85,11 @@ public class MazeGenerator {
 
     }
 
-    private boolean checkValidNeighbors(Cell cell){
+    public boolean checkValidNeighbors(Cell cell){
         int numNeighboringZeros = 0;
         for (int col = cell.col-1; col < cell.col+2; col++) {
             for (int row = cell.row-1; row < cell.row+2; row++) {
-                if (cellOnGrid(row, col) && !cell.equals(maze[row][col]) && maze[row][col].visited) {
+                if (cellOnGrid(row, col) && !cell.equals(maze[row][col]) && maze[row][col].value==CellState.PATH) {
                     numNeighboringZeros++;
                 }
             }
@@ -103,7 +99,7 @@ public class MazeGenerator {
     }
 
     // Get unvisited neighboring cells of a given cell
-    private List<Cell> getValidNeighbors(Cell cell) {
+    public List<Cell> getValidNeighbors(Cell cell) {
         int row = cell.row;
         int col = cell.col;
         List<Cell> neighbors = new ArrayList<>();
@@ -169,24 +165,24 @@ public class MazeGenerator {
     }
 
 
-    private Boolean cellOnGrid(int row, int col) {
+    public Boolean cellOnGrid(int row, int col) {
         return row >= 0 && col >= 0 && row < rows && col < cols;
     }
 
-    private Boolean cellOnEdge(Cell cell){
+    public Boolean cellOnEdge(Cell cell){
         return (cell.row == 0 || cell.col == 0 || cell.row == rows-1 || cell.col == cols-1);
     }
 
-    private Boolean cellOnCorner(Cell cell){
+    public Boolean cellOnCorner(Cell cell){
         return ((cell.row==0 && cell.col==0) || (cell.row==0 && cell.col==cols-1) ||
                 (cell.row==rows-1 && cell.col==0) || (cell.row==rows-1 && cell.col==cols-1));
     }
 
-    private Boolean checkIfEntryPoint(Cell cell){
+    public Boolean checkIfEntryPoint(Cell cell){
         return (EntryPoint.equals(cell));
     }
 
-    private Boolean checkIfExitPoint(Cell cell){
+    public Boolean checkIfExitPoint(Cell cell){
         if(foundEnd)
             return (ExitPoint.equals(cell));
         else
@@ -194,7 +190,7 @@ public class MazeGenerator {
 
     }
 
-    private Boolean CellOnOppositeEdge(Cell cell_1, Cell cell_2){
+    public Boolean CellOnOppositeEdge(Cell cell_1, Cell cell_2){
         return ((cell_1.row==0 && cell_2.row==rows-1) || (cell_1.col==0 && cell_2.col==cols-1) ||
                 (cell_1.row==rows-1 && cell_2.row==0) || (cell_1.col==cols-1 && cell_2.col==0));
 
@@ -204,11 +200,4 @@ public class MazeGenerator {
         return maze;
     }
 
-    public Cell getEntryPoint() {
-        return EntryPoint;
-    }
-
-    public Cell getExitPoint() {
-        return ExitPoint;
-    }
 }

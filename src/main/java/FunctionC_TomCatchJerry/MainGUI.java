@@ -99,7 +99,7 @@ public class MainGUI extends Application {
             maze = newMaze();
             Tom.speed = (Speed.getValue().value-20);
             Jerry.speed = (Speed.getValue().value);
-            shortestPath = new AStarAlgorithm(Tom.location, Jerry.location);
+            shortestPath = new AStarAlgorithm(Tom.location, Jerry.location, "maze_map.csv");
             GameMazeGUI gameMazeGUI = new GameMazeGUI();
             gameMazeGUI.start(stage);
         });
