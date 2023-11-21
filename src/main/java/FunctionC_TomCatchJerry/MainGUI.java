@@ -30,6 +30,11 @@ public class MainGUI extends Application {
             this.value = i;
         }
     }
+
+    /**
+     * Build the GUI of the main page
+     * @param stage Set up the scene for the main page of the game
+     */
     @Override
     public void start(Stage stage) throws IOException {
         Image jerry = new Image("file:CatchesJerry.png");

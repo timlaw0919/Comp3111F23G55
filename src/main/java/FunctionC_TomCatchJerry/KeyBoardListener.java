@@ -15,14 +15,14 @@ public class KeyBoardListener extends KeyAdapter{
     }
 
     /**
-     * Turns the inputs from the keyboard to following step of the moving object
+     * Get the inputs from the keyboard to update the direction of the moving object
      * @param e The input received from the keyboard
      */
     public void keyPressed(KeyEvent e){
         switch(e.getCode()){
             case W:	    // Upward
-                player.newCol = 0; //player.location[1];
-                player.newRow = -1; //player.location[0]-1;
+                player.newCol = 0;
+                player.newRow = -1;
                 break;
             case A:	    // Left
                 player.newCol = -1;

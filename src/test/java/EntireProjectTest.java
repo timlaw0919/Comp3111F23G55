@@ -691,7 +691,7 @@ public class EntireProjectTest extends ApplicationTest {
         GameMain.Tom.location = new int[]{2, 1};
         GameMain.Jerry.location = new int[]{20, 20};
         GameMain.shortestPath = new AStarAlgorithm(GameMain.Tom.location, GameMain.Jerry.location, "maze_map_testing.csv");
-        GameMain.Tom.MoveWithShortestPath();
+        GameMain.Tom.MoveWithShortestPath(); // Target Function
         assertArrayEquals(new int[]{2, 2}, GameMain.Tom.location);
         assertEquals(61, GameMain.Tom.lastPos);
     }

@@ -9,6 +9,8 @@ public class CheckEndGame {
 
     /**
      * Check whether the game is finished
+     * If Jerry locates at exit point, Jerry wins
+     * If Jerry has the same location with Tom, Tom wins
      * @return true if either Tom or Jerry wins the game
      */
     public boolean isEndGame(){

@@ -13,6 +13,7 @@ public class Character {
     public int speed;                  // Speed of the moving character
 
     /**
+     * Constructor of Character
      * Initialize all the attributes
      */
     public Character() {
@@ -27,9 +28,11 @@ public class Character {
     /**
      * Player controls the direction of the moving object using keyboard
      * 1. Check whether the new location is valid for moving
-     * 2. Store the previous location
-     * 3. Update the new location
-     * 4. Update the current location to the algorithm for calculating the new shortest path between Tom and Jerry
+     *  1.1 If valid,
+     *      1.1.1 Store the previous location
+     *      1.1.2 Update the new location
+     *      1.1.3 Update the current location to the algorithm for calculating the new shortest path between Tom and Jerry
+     *  1.2 If invalid, location remains unchanged
      */
     public void move(){
         if (IsWithinBoundary(location[0]+newRow)
@@ -43,11 +46,13 @@ public class Character {
     }
 
     /**
-     * Computer controls the movement of the moving object using algorithm
+     * Computer controls the movement of the moving object using algorithm from function B
      * 1. Get the current NEXT shortest path
      * 2. Check whether the next step is valid
-     * 3. Update the last position and the current location
-     * 4. Update Tom's Location to find the newest shortest path
+     *  2.1 If valid,
+     *     2.1.1 Update the last position and the current location
+     *     2.1.2 Update Tom's Location to the algorithm to find the newest shortest path
+     *  2.2 If invalid, location remains unchanged
      */
     public void MoveWithShortestPath(){
         int[] loc = shortestPath.tomNextMovement();
@@ -61,7 +66,7 @@ public class Character {
     /**
      * Check whether the new coordinate of the location is valid in maze
      * @param coordinate The coordinate of the row/column of the location
-     * @return true when the index is valid in maze
+     * @return true if the coordinate is non-negative and within the maze size
      */
     public boolean IsWithinBoundary(int coordinate){
         return coordinate >= 0 && coordinate < maze.length;
@@ -71,15 +76,15 @@ public class Character {
      * Check whether the new location is valid for the object to move
      * @param row The row value of the new location
      * @param col The column value of the new location
-     * @return true if the location is not a BLOCK
+     * @return true if the location on the maze is not a BLOCK
      */
     public boolean IsPath(int row, int col){
         return maze[row][col] != 1;
     }
 
     /**
-     * Convert the 2D location to 1D index
-     * @param location A int array storing the row and column value of a location
+     * Convert the 2D location to 1D index based on the length of the maze
+     * @param location An int array storing the row and column value of a location
      * @return the index value in 1D
      */
     public static int toIndex(int[] location){
@@ -87,7 +92,12 @@ public class Character {
     }
 
     /**
-     * Store the current location and then reset the character's location back to spawn point
+     * Reset the status of the character when the game is restarted
+     * 1. Store the current location to last position
+     * 2. Reset the character's location back to spawn point
+     * 3. Reset the newRow and newCol to 0 indicating no movement exists
+     * 4. Set the game state to false
+     * The value of lastPos and location is used to update the game maze interface
      * @param row The row value of the spawn point
      * @param col The column value of the spawn point
      */

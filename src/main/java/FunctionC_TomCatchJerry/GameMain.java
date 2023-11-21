@@ -16,7 +16,9 @@ public class GameMain {
     public static AStarAlgorithm shortestPath = new AStarAlgorithm(Tom.location, Jerry.location, "maze_map.csv");    // Algorithm for finding shortest Path
 
     /**
-     * Generate a new maze before the game starts
+     * Generate a new maze according to the mazeSize before the game starts
+     * The row and column value of the maze depends on the value of the mazeSize
+     * Remarks: Assign a preferred value to mazeSize before generating the new maze
      * @return The maze which is newly generated
      */
     public static int[][] newMaze(){

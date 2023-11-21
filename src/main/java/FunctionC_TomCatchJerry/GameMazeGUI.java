@@ -42,7 +42,8 @@ public class GameMazeGUI extends Application {
     public ImagePattern block = new ImagePattern(new Image("file:block.jpg"));
 
     /**
-     * Set up the scene of the maze and the spawn point of Jerry and Tom
+     * Set up the scene of the maze and store the spawn point of Jerry and Tom to their location respectively
+     * Update the grid pane after initialising the location of Tom and Jerry
      */
     public void SetGridPane() {
         // Populate the GridPane with rectangles representing the maze cells
@@ -76,7 +77,13 @@ public class GameMazeGUI extends Application {
     }
 
     /**
-     * Update the appearance of the maze to show the object movement
+     * Update the interface of the maze game to show the object movement
+     * Fill the grid where the character located with the corresponding image
+     * Repaint the last position of the character back to the original color of that grid
+     * If the lastPos is an BLOCK, do nothing
+     * Else if the lastPos is entry point, fill the grid with #F1CD85
+     * Else if the lastPos is exit point, fill the grid with #808990
+     * Else, fill the grid with white color which refers to a path
      * @param c The character moving on the maze
      * @param imagePattern The image which represents the corresponding character on the maze
      */
@@ -185,6 +192,7 @@ public class GameMazeGUI extends Application {
             });
         };
         startGame.run();
+//      Function of restart button
         EventHandler handler = event -> {
             T_Win.setVisible(false);
             J_Win.setVisible(false);
@@ -197,7 +205,7 @@ public class GameMazeGUI extends Application {
         };
         reT.setOnAction(handler);
         reJ.setOnAction(handler);
-
+//      Function of Home button
         home.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
