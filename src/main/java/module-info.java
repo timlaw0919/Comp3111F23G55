@@ -6,6 +6,7 @@ module tomandjerryinmazegame.tomandjerryinmazegame {
     requires org.kordamp.bootstrapfx.core;
     requires java.desktop;
     requires javafx.media;
+    requires org.testfx;
 
     opens tomandjerryinmazegame.tomandjerryinmazegame to javafx.fxml;
     exports FunctionA_CreateMaze;

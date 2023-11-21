@@ -10,9 +10,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.scene.layout.StackPane;
 
-import java.io.IOException;
+/**
+ * The MazeWithShortestPathGUI class is a JavaFX application that displays a maze with the shortest path highlighted.
+ * It loads the maze data from a CSV file (read by Function A's MazeLoader), creates a graphical representation of the maze, and colors the cells.
+ * The class provides a GUI interface with a GridPane to hold the maze cells and a button to navigate back to the testing menu.
+ *
+ * @see FunctionB_ShortestPath.AStarAlgorithm
+ * @see FunctionA_CreateMaze.MazeLoader
+ * @see Main.BigMainGUI
+ */
 
 public class MazeWithShortestPathGUI extends Application {
     private static final int CELL_SIZE = 10;

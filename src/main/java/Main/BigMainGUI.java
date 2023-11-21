@@ -1,6 +1,6 @@
 package Main;
-
 import FunctionA_CreateMaze.*;
+import static FunctionA_CreateMaze.CSVOutput.outputCSVFile;
 import FunctionB_ShortestPath.AStarAlgorithm;
 import FunctionB_ShortestPath.CSVOutputForGUI;
 import FunctionB_ShortestPath.MazeWithShortestPathGUI;
@@ -18,7 +18,12 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-import static FunctionA_CreateMaze.CSVOutput.outputCSVFile;
+/**
+ * The BigMainGUI class is the main entry point for the G55 Tom and Jerry Maze Game Testing Menu.
+ * It extends the Application class from JavaFX and provides the GUI functionality for the testing menu.
+ * The testing menu allows users to generate a new maze, display the shortest path in the maze, play the game, and exit the application by clicking the corresponding button.
+ * Users can test different functions related to maze generation, shortest path finding, and playing the game.
+ */
 
 public class BigMainGUI extends Application {
     @Override
@@ -40,6 +45,7 @@ public class BigMainGUI extends Application {
         box.setArcWidth(50);
 
         Label welcomeLabel = new Label("Welcome to G55 Tom and Jerry Maze Game Testing Menu!");
+        welcomeLabel.setId("welcomeLabel");
         welcomeLabel.setFont(new Font("Jokerman", 20));
         welcomeLabel.setTextFill(Color.web("#e61c1c"));
         welcomeLabel.setLayoutX(10);
@@ -125,7 +131,7 @@ public class BigMainGUI extends Application {
                     }
                 }
                 AStarAlgorithm obj1 = new AStarAlgorithm(tomLocation, jerryLocation, "maze_map.csv");
-                CSVOutputForGUI.outputCSVFile(obj1.pathGeneratorByAStar(), "maze_map_with_path.csv");
+                CSVOutputForGUI.outputCSVFile(obj1.pathGeneratorByAStar(), "maze_map_with_path.csv", "maze_map.csv");
                 FunctionB_ShortestPath.CSVOutput.outputCSVFile(obj1.pathGeneratorByAStar(), "path_coordinates.csv");
                 mazeWithShortestPathGUI.start(stage);
             } catch (Exception e) {
