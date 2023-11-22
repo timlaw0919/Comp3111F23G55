@@ -93,10 +93,7 @@ public class MainGUI extends Application {
         info.setOnAction(actionEvent -> {
             InfoGUI infoGUI = new InfoGUI();
             try {
-                infoGUI.start(stage);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+                infoGUI.start(stage);} catch (Exception e) {throw new RuntimeException(e);}
         });
 
         start.setOnAction(actionEvent -> {
@@ -112,10 +109,7 @@ public class MainGUI extends Application {
         backTestingMenuButton.setOnAction(actionEvent -> {
             BigMainGUI bigMainGUI = new BigMainGUI();
             try {
-                bigMainGUI.start(stage);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+                bigMainGUI.start(stage);} catch (Exception e) {throw new RuntimeException(e);}
         });
 
         Scene startPage = new Scene(pane,300,300);

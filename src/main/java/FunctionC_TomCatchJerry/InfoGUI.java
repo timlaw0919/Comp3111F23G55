@@ -149,10 +149,7 @@ public class InfoGUI extends Application {
         okButton.setOnAction(actionEvent -> {
             MainGUI mainGUI = new MainGUI();
             try {
-                mainGUI.start(stage);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+                mainGUI.start(stage);} catch (IOException e) {throw new RuntimeException(e);}
         });
 
         Scene startPage = new Scene(root,300,300);

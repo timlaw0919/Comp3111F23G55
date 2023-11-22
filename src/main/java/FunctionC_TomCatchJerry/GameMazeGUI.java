@@ -153,10 +153,7 @@ public class GameMazeGUI extends Application {
                     Jerry.move();
                     updatedGridPane(Jerry, JerryJerry);
                     try {
-                        sleep(Jerry.speed);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                        sleep(Jerry.speed);} catch (InterruptedException e) {e.printStackTrace();}
                 }
                 if (Jerry.Game_state)  {
                     J_Win.setVisible(true);
@@ -165,18 +162,12 @@ public class GameMazeGUI extends Application {
 
             Thread Computer = new Thread(() -> {
                 try {
-                    sleep(1500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                    sleep(1500);} catch (InterruptedException e) {throw new RuntimeException(e);}
                 while (!endGame.isEndGame()){
                     Tom.MoveWithShortestPath();
                     updatedGridPane(Tom, TomTom);
                     try {
-                        sleep(Tom.speed);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                        sleep(Tom.speed);} catch (InterruptedException e) {e.printStackTrace();}
                 }
                 if (Tom.Game_state) {
                     T_Win.setVisible(true);
@@ -212,10 +203,7 @@ public class GameMazeGUI extends Application {
                 mediaPlayer.stop();
                 Tom.Game_state = true;
                 try {
-                    sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                    sleep(500);} catch (InterruptedException e) {throw new RuntimeException(e);}
 
                 Tom = new Character();
                 Jerry = new Character();
@@ -224,10 +212,7 @@ public class GameMazeGUI extends Application {
                 MainGUI mainGUI = new MainGUI();
                 Stage mainStage = new Stage();
                 try {
-                    mainGUI.start(mainStage);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                    mainGUI.start(mainStage);} catch (IOException e) {throw new RuntimeException(e);}
             }
         });
 

@@ -107,10 +107,7 @@ public class BigMainGUI extends Application {
                 // Output the maze as csv file
                 Cell[][] maze = mazeGenerator.getMaze();
                 outputCSVFile(maze, "maze_map.csv");
-                mazeGUI.start(stage);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+                mazeGUI.start(stage);} catch (Exception e) {throw new RuntimeException(e);}
         });
         functionBButton.setOnAction(actionEvent -> {
             MazeWithShortestPathGUI mazeWithShortestPathGUI = new MazeWithShortestPathGUI();
@@ -133,18 +130,12 @@ public class BigMainGUI extends Application {
                 AStarAlgorithm obj1 = new AStarAlgorithm(tomLocation, jerryLocation, "maze_map.csv");
                 CSVOutputForGUI.outputCSVFile(obj1.pathGeneratorByAStar(), "maze_map_with_path.csv", "maze_map.csv");
                 FunctionB_ShortestPath.CSVOutput.outputCSVFile(obj1.pathGeneratorByAStar(), "path_coordinates.csv");
-                mazeWithShortestPathGUI.start(stage);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+                mazeWithShortestPathGUI.start(stage);} catch (Exception e) {throw new RuntimeException(e);}
         });
         functionCButton.setOnAction(actionEvent -> {
             FunctionC_TomCatchJerry.MainGUI mainGUI = new MainGUI();
             try {
-                mainGUI.start(stage);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+                mainGUI.start(stage);} catch (IOException e) {throw new RuntimeException(e);}
         });
         exitButton.setOnAction(actionEvent -> System.exit(0));
 

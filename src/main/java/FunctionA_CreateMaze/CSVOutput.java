@@ -27,9 +27,7 @@ public class CSVOutput {
                 writer.write(sb.toString());
                 writer.write(System.lineSeparator());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) {e.printStackTrace();}
     }
 
 }

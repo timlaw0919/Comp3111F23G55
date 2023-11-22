@@ -1,6 +1,7 @@
 import FunctionA_CreateMaze.CSVOutput;
 import FunctionA_CreateMaze.constant.CellState;
 import Main.BigMainGUI;
+import com.sun.javafx.event.EventQueue;
 import javafx.application.Platform;
 
 import javafx.scene.input.MouseButton;
@@ -10,6 +11,7 @@ import javafx.stage.Stage;
 //import org.controlsfx.tools.Platform;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
@@ -26,6 +28,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 import static FunctionA_CreateMaze.CSVOutput.outputCSVFile;
+import static javafx.beans.binding.Bindings.when;
 import static org.junit.jupiter.api.Assertions.*;
 
 import FunctionC_TomCatchJerry.Character;
@@ -34,6 +37,8 @@ import org.testfx.util.WaitForAsyncUtils;
 
 import static javafx.scene.input.KeyCode.*;
 import static javafx.scene.input.KeyEvent.*;
+
+import static org.mockito.Mockito.*;
 
 public class EntireProjectTest extends ApplicationTest {
 
@@ -85,7 +90,7 @@ public class EntireProjectTest extends ApplicationTest {
         assertFalse(cell1.equals(new Object()));    // invalid (not Cell)                       // Target Function
     }
 
-    // Function A (CSVOutput)
+     //Function A (CSVOutput)
     @Test
     public void CSVOutputTestA() throws IOException{
         // test have success CSVOutput - readable file
@@ -109,7 +114,7 @@ public class EntireProjectTest extends ApplicationTest {
     }
 
 
-    // Function A (MazeGenerator)
+     //Function A (MazeGenerator)
     @Test
     public void MazeGenerator(){
         // test mazeGenerator constructor
@@ -502,7 +507,7 @@ public class EntireProjectTest extends ApplicationTest {
 
     }
 
-    // Function B (Node)
+     //Function B (Node)
     @Test
     public void Node(){
         Node node = new Node(new int[] {0,0}, null, 10, 0);  // Target Function
@@ -830,18 +835,6 @@ public class EntireProjectTest extends ApplicationTest {
         clickOn("Home", MouseButton.PRIMARY); // Target Function
     }
 
-//    @Test
-//    public void testHomeButton(){
-//        GameMazeGUI gameMazeGUI = new GameMazeGUI();
-//        Platform.runLater(() -> {
-//            Stage stage = new Stage();
-//            gameMazeGUI.start(stage);
-//        });
-//        WaitForAsyncUtils.waitForFxEvents();
-//        FxAssert.verifyThat("Home", NodeMatchers.isNotNull());
-//        clickOn("Home", MouseButton.PRIMARY); // Target Function
-//    }
-
     @Test
     public void testSceneOnKeyPress(){
         GameMain.mazeSize = 30;
@@ -860,24 +853,6 @@ public class EntireProjectTest extends ApplicationTest {
         assertArrayEquals(new int[]{21,28},GameMain.Jerry.location);
     }
 
-//    @Test
-//    public void testRestartButton() {
-//        GameMain.mazeSize = 30;
-//        GameMain.maze = MazeLoader.loadMazeFromCSV("maze_map_testing.csv");
-//        GameMain.Jerry = new Character();
-//        GameMain.Tom = new Character();
-//        GameMazeGUI gameMazeGUI = new GameMazeGUI();
-//        Platform.runLater(() -> {
-//            Stage stage = new Stage();
-//            gameMazeGUI.start(stage);
-//        });
-//        WaitForAsyncUtils.waitForFxEvents();
-//        GameMain.Jerry.Game_state = true;
-//        sleep(1000);
-//        FxAssert.verifyThat("Restart", NodeMatchers.isNotNull());
-//        clickOn("Restart", MouseButton.PRIMARY); // Target Function
-//    }
-
     // Function C (InfoGUI)
     @Test
     public void InfoGUI_start(){
@@ -895,25 +870,6 @@ public class EntireProjectTest extends ApplicationTest {
         FxAssert.verifyThat("OK!", NodeMatchers.isNotNull());
         clickOn("OK!", MouseButton.PRIMARY); // Target Function
     }
-
-//    @Test
-//    public void InfoGUI_OKButton(){
-//        InfoGUI infoGUI = new InfoGUI();
-//        Platform.runLater(() -> {
-//            try {
-//                Stage stage = new Stage();
-//                infoGUI.start(stage);
-//                assertNotNull(stage);
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//        WaitForAsyncUtils.waitForFxEvents();
-//
-//        FxAssert.verifyThat("OK!", NodeMatchers.isNotNull());
-//        clickOn("OK!", MouseButton.PRIMARY); // Target Function
-//    }
-
 
     // Function C (KeyBoardListener)
     @Test
@@ -941,16 +897,6 @@ public class EntireProjectTest extends ApplicationTest {
         assertEquals(0,GameMain.Jerry.newRow);
         assertEquals(1,GameMain.Jerry.newCol);
     }
-    // Function C (MainGUI)
-//    @Test
-//    public void testEnumSpeedConstructor(){
-//        MainGUI.Speed fast = MainGUI.Speed.FAST;
-//        MainGUI.Speed moderate = MainGUI.Speed.MODERATE;
-//        MainGUI.Speed slow = MainGUI.Speed.SLOW;
-//        assertEquals(150,fast.value);   // Target Function
-//        assertEquals(200,moderate.value);   // Target Function
-//        assertEquals(250,slow.value);   // Target Function
-//    }
 
     @Test
     public void MainGUI_start(){
@@ -976,56 +922,4 @@ public class EntireProjectTest extends ApplicationTest {
         FxAssert.verifyThat("Start", NodeMatchers.isNotNull());
         clickOn("Start", MouseButton.PRIMARY); // Target Function
     }
-
-//    @Test
-//    public void testInfoButton(){
-//        MainGUI mainGUI = new MainGUI();
-//        Platform.runLater(() -> {
-//            try {
-//                Stage stage = new Stage();
-//                mainGUI.start(stage);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//        WaitForAsyncUtils.waitForFxEvents();
-//
-//        FxAssert.verifyThat("?", NodeMatchers.isNotNull());
-//        clickOn("?", MouseButton.PRIMARY); // Target Function
-//    }
-
-//    @Test
-//    public void testBackMenuButton(){
-//        MainGUI mainGUI = new MainGUI();
-//        Platform.runLater(() -> {
-//            try {
-//                Stage stage = new Stage();
-//                mainGUI.start(stage);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//        WaitForAsyncUtils.waitForFxEvents();
-//
-//        FxAssert.verifyThat("Back to Testing Menu", NodeMatchers.isNotNull());
-//        clickOn("Back to Testing Menu", MouseButton.PRIMARY); // Target Function
-//    }
-
-//    @Test
-//    public void testStartButton(){
-//        MainGUI mainGUI = new MainGUI();
-//        Platform.runLater(() -> {
-//            try {
-//                Stage stage = new Stage();
-//                mainGUI.start(stage);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//        WaitForAsyncUtils.waitForFxEvents();
-//
-//        FxAssert.verifyThat("Start", NodeMatchers.isNotNull());
-//        clickOn("Start", MouseButton.PRIMARY); // Target Function
-//    }
-
 }

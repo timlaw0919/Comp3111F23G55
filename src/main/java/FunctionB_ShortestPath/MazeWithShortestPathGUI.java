@@ -66,10 +66,7 @@ public class MazeWithShortestPathGUI extends Application {
         backTestingMenuButton.setOnAction(actionEvent -> {
             BigMainGUI bigMainGUI = new BigMainGUI();
             try {
-                bigMainGUI.start(primaryStage);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+                bigMainGUI.start(primaryStage);} catch (Exception e) {throw new RuntimeException(e);}
         });
 
         // Create the scene and set it on the stage

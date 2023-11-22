@@ -32,9 +32,7 @@ public class MazeLoader {
                 }
                 rowCount++;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) {e.printStackTrace();}
 
         return maze;
     }
