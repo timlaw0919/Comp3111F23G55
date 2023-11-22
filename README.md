@@ -2,6 +2,19 @@
 
 ![image](https://github.com/timlaw0919/Comp3111F23G55/assets/144464604/e9ac81d5-6199-448c-ad82-53700afdddf9)
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+User Guideline:
+1. Setting before running the code
+   - Go to File -> Project Structure -> Click "+" Button
+     - Search testfx, choose testfx-core with version 4.0.16-alpha and add
+     - Search testfx, choose testfx-junit with version 4.0.15-alpha and add
+     - Search loadui, choose testFx with version 3.1.2 and add
+2. Testing the software through GUI
+   - Open BigMainGUI.java within the Main package
+   - Click the 'Run' Button
+3. Test the line coverage
+   - Go to Run -> Edit Configuration -> the original text should show -ea just change it to --add-exports=javafx.graphics/com.sun.javafx.application=org.testfx -> Click apply
+   - Click the "Run Coverage" Button with the newly VM
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Code Explanation
