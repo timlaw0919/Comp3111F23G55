@@ -37,8 +37,6 @@ public class CSVOutput {
                 j++;
             }
             writer.write(" -> End");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) {e.printStackTrace();}
     }
 }
