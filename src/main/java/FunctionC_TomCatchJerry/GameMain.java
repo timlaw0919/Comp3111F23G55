@@ -8,6 +8,9 @@ import FunctionB_ShortestPath.AStarAlgorithm;
 import static FunctionA_CreateMaze.CSVOutput.outputCSVFile;
 
 
+/**
+ * GameMain class is used to initialize game objects before game starts.
+ */
 public class GameMain {
     public static int mazeSize = 30;
     public static int[][] maze = newMaze();       // Maze

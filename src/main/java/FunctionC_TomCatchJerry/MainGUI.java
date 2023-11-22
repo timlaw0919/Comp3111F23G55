@@ -17,6 +17,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 import static FunctionC_TomCatchJerry.GameMain.*;
+
+/**
+ * MainGUI is the interface for the player to choose the features of the game.
+ */
 public class MainGUI extends Application {
     /**
      * Initialize of the speed value of different speed level

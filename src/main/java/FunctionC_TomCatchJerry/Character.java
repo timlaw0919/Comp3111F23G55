@@ -3,6 +3,9 @@ package FunctionC_TomCatchJerry;
 import static FunctionC_TomCatchJerry.GameMain.maze;
 import static FunctionC_TomCatchJerry.GameMain.shortestPath;
 
+/**
+ * Character class is used to record and update the location of an instance according to the key pressing or algorithm.
+ */
 public class Character {
 
     public int newCol;

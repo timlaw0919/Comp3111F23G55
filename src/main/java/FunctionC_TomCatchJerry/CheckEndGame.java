@@ -4,6 +4,9 @@ import static FunctionC_TomCatchJerry.Character.toIndex;
 import static FunctionC_TomCatchJerry.GameMain.Jerry;
 import static FunctionC_TomCatchJerry.GameMain.Tom;
 
+/**
+ * CheckEndGame class is to update the game state of character and check whether a game is ended.
+ */
 public class CheckEndGame {
     public final int ExitPoint = toIndex(Tom.location);
 

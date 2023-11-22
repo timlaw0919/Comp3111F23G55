@@ -30,6 +30,14 @@ import static FunctionC_TomCatchJerry.GameMain.*;
 import static java.lang.Thread.sleep;
 
 
+/**
+ * GameMazeGUI class sets up the interface and the background music for the game.
+ * The maze of initial state will be set up in SetGridPane method.
+ * When the game is started, each character (Tom and Jerry) is worked with its own thread.
+ * Multithreading ensures that Tom and Jerry can move simultaneously with different speeds.
+ * The updated movement of the character is shown on the screen by updateGridPane method.
+ * Interactions with the player are achieved by message display and the button.
+ */
 public class GameMazeGUI extends Application {
 
     public static final int CELL_SIZE = 15;
@@ -102,7 +110,13 @@ public class GameMazeGUI extends Application {
     }
 
     /**
-     * Build up the GUI for the maze game
+     * Build up the GUI for the maze game.
+     * Multithreading allows different events can work on different characters concurrently.
+     * The game interface has to update once the character's movement is finished.
+     * The thread should keep track on the game state. When the game is ended, no further actions on the corresponding characters are allowed.
+     * Home button always exist on the GUI. The game is forced to terminate if the game does not ended yet.
+     * The restart button and the end game message will only appear when the game ends.
+     * Reset the status of all characters and the game interface as initial state.
      * @param primaryStage The stage shown on the screen
      */
     @Override

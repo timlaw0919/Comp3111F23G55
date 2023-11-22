@@ -16,7 +16,8 @@ import java.io.IOException;
 
 public class InfoGUI extends Application {
     /**
-     * Build the GUI for the Info page of the game
+     * Build the GUI for the Info page of the game.
+     * Game rule is shown on this page.
      * @param stage Set the scene of the Info page of the maze game
      */
     public void start(Stage stage) throws Exception {

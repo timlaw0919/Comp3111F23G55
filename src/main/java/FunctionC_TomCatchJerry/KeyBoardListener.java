@@ -4,6 +4,9 @@ import javafx.scene.input.KeyEvent;
 
 import java.awt.event.KeyAdapter;
 
+/**
+ * KeyBoardListener class is used to update the direction of the specific moving object according to the input received from key press by player.
+ */
 public class KeyBoardListener extends KeyAdapter{
     public Character player;
 
