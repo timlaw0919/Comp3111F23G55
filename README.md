@@ -13,7 +13,7 @@ User Guideline:
    - Open BigMainGUI.java within the Main package
    - Click the 'Run' Button
 3. Test the line coverage
-   - Go to Run -> Edit Configuration -> the original text should show -ea just change it to --add-exports=javafx.graphics/com.sun.javafx.application=org.testfx -> Click apply
+   - Go to Run -> Edit Configuration -> the original text should show -ea just change it to "--add-exports=javafx.graphics/com.sun.javafx.application=org.testfx" -> Click apply
    - Click the "Run Coverage" Button with the newly VM
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
