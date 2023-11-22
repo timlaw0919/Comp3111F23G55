@@ -4,7 +4,18 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * The MazeLoader class output the int array version of the maze which is loaded from the CSV file created by CSVOutput class
+ *
+ * @see CSVOutput
+ */
 public class MazeLoader {
+    /**
+     * Loads a maze from a CSV file.
+     *
+     * @param filePath The path of the CSV file to load.
+     * @return A 2D array representing the loaded maze.
+     */
     public static int[][] loadMazeFromCSV(String filePath) {
         int[][] maze = null;
 

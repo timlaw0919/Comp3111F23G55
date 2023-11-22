@@ -11,11 +11,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-
+/**
+ * The MazeGUI class represents a graphical user interface for displaying a maze and return button to Testing Menu.
+ */
 public class MazeGUI extends Application {
 
     private static final int CELL_SIZE = 10;
 
+    /**
+     * Starts the maze GUI.
+     *
+     * @param primaryStage The primary stage to display the GUI.
+     */
     @Override
     public void start(Stage primaryStage) {
         // Load the maze data from the CSV file
