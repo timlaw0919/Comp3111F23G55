@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * InfoGUI is the interface for game rule
+ */
 public class InfoGUI extends Application {
     /**
      * Build the GUI for the Info page of the game.
