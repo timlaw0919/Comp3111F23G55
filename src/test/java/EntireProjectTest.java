@@ -55,7 +55,7 @@ public class EntireProjectTest extends ApplicationTest {
                 throw new RuntimeException(e);
             }
         });
-        sleep(1000);
+        sleep(3000);
         FxAssert.verifyThat("Test Function A", NodeMatchers.isNotNull());
         clickOn("Test Function A", MouseButton.PRIMARY); //Target Function
         FxAssert.verifyThat("Back to Testing Menu", NodeMatchers.isNotNull());
@@ -480,7 +480,7 @@ public class EntireProjectTest extends ApplicationTest {
                 throw new RuntimeException(e);
             }
         });
-        sleep(1000);
+        sleep(3000);
         FxAssert.verifyThat("Back to Testing Menu", NodeMatchers.isNotNull()); // Target Function
         clickOn("Back to Testing Menu", MouseButton.PRIMARY); // Target Function
     }
@@ -659,7 +659,7 @@ public class EntireProjectTest extends ApplicationTest {
                 throw new RuntimeException(e);
             }
         });
-        sleep(1000);
+        sleep(3000);
         FxAssert.verifyThat("Back to Testing Menu", NodeMatchers.isNotNull()); // Target Function
         clickOn("Back to Testing Menu", MouseButton.PRIMARY); // Target Function
     }
@@ -826,7 +826,7 @@ public class EntireProjectTest extends ApplicationTest {
         });
         WaitForAsyncUtils.waitForFxEvents();
         GameMain.Jerry.Game_state = true;
-        sleep(1000);
+        sleep(3000);
         FxAssert.verifyThat("Restart", NodeMatchers.isNotNull());
         clickOn("Restart", MouseButton.PRIMARY); // Target Function
 
@@ -849,7 +849,7 @@ public class EntireProjectTest extends ApplicationTest {
         });
         WaitForAsyncUtils.waitForFxEvents();
         press(A); // Target Function
-        sleep(1000);
+        sleep(3000);
         assertArrayEquals(new int[]{21,28},GameMain.Jerry.location);
     }
 
@@ -866,7 +866,7 @@ public class EntireProjectTest extends ApplicationTest {
                 throw new RuntimeException(e);
             }
         });
-        sleep(1000);
+        sleep(3000);
         FxAssert.verifyThat("OK!", NodeMatchers.isNotNull());
         clickOn("OK!", MouseButton.PRIMARY); // Target Function
     }
@@ -910,7 +910,7 @@ public class EntireProjectTest extends ApplicationTest {
                 throw new RuntimeException(e);
             }
         });
-        sleep(1000);
+        sleep(3000);
         FxAssert.verifyThat("?", NodeMatchers.isNotNull());
         clickOn("?", MouseButton.PRIMARY); // Target Function
         FxAssert.verifyThat("OK!", NodeMatchers.isNotNull());
