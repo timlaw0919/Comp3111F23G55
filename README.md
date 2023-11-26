@@ -17,7 +17,8 @@ User Guideline:
    - Click the "Run Coverage" Button with the new VM
   
 Remark:
-If the above setting is done but the program cannot run properly, please make sure that all the libraries are added as below in File -> Project Structure
+1. If after opening BigMainGUI.java but the 'Run' Button is not clickable, please change the folder name from "Comp3111F23G55" to "Comp3111F23G55__" and then reopen the folder.
+2. If the above setting is done but the program cannot run properly, please make sure that all the libraries are added as below in File -> Project Structure
 ![image](https://github.com/timlaw0919/Comp3111F23G55/assets/144464604/eac0352a-5a5b-4b8d-a5c1-db5822550bb1)
 ![image](https://github.com/timlaw0919/Comp3111F23G55/assets/144464604/9dc54c68-c8d9-4d0e-acfd-599144739db0)
 
