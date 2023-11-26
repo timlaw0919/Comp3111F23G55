@@ -5,15 +5,16 @@
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 User Guideline:
 1. Setting before running the code
-   - Go to File -> Project Structure -> Click "+" Button
-     - Search testfx, choose testfx-core with version 4.0.16-alpha and add
-     - Search testfx, choose testfx-junit with version 4.0.15-alpha and add
-     - Search loadui, choose testFx with version 3.1.2 and add
+   - Go to File -> Project Structure -> Click "+" Button -> From Maven
+     - Search testfx, choose "org.testfx:testfx-core:4.0.16-alpha" and add
+     - Search testfx, choose "org.testfx:testfx-junit:4.0.15-alpha" and add
+     - Search loadui, choose "org.loadui:testFx:3.1.2" and add
 2. Testing the software through GUI
    - Open BigMainGUI.java within the Main package
    - Click the 'Run' Button with the VM is -ea
 3. Test the line coverage
-   - Go to Run -> Edit Configuration -> the original text should show -ea just change it to "--add-exports=javafx.graphics/com.sun.javafx.application=org.testfx" -> Click apply
+   - Open EntireProjectTest.java
+   - Go to Run -> Edit Configuration -> Click "+" Button -> In Class's right hand side, choose class "Entire Project Test" -> the original text should show -ea just change it to "--add-exports=javafx.graphics/com.sun.javafx.application=org.testfx" -> If no '-ea' word, please click Modify Option and Add VM, then redo the previous step -> Click apply
    - Click the "Run Coverage" Button with the new VM
   
 Remark:
