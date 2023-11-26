@@ -155,10 +155,13 @@ public class EntireProjectTest extends ApplicationTest {
     public void EntryPointGeneratorTest(){
         // test ENTRY is generated on the edge
         mazeGenerator.initializeMaze();
-        mazeGenerator.EntryPointGenerator();    // Target Function
+        mazeGenerator.EntryPointGenerator(0);    // Target Function
         assertNotNull(mazeGenerator.EntryPoint);
         boolean test  = mazeGenerator.cellOnEdge(mazeGenerator.EntryPoint);
         assertTrue(test);
+        mazeGenerator.EntryPointGenerator(1);    // Target Function
+        mazeGenerator.EntryPointGenerator(2);    // Target Function
+        mazeGenerator.EntryPointGenerator(3);    // Target Function
     }
 
     public boolean checkExplored (List<Node> listOfNode, int[] temp){
@@ -302,7 +305,6 @@ public class EntireProjectTest extends ApplicationTest {
         maze[1][2].value = CellState.PATH;
         maze[1][3].value = CellState.PATH;
         maze[2][1].value = CellState.PATH;
-
 
         // Test Cell at (1, 1)
         Cell cell11 = maze[1][1];
