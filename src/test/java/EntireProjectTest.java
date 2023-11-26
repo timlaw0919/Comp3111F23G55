@@ -38,8 +38,6 @@ import org.testfx.util.WaitForAsyncUtils;
 import static javafx.scene.input.KeyCode.*;
 import static javafx.scene.input.KeyEvent.*;
 
-import static org.mockito.Mockito.*;
-
 public class EntireProjectTest extends ApplicationTest {
 
     // Big Main GUI
