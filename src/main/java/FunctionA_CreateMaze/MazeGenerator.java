@@ -37,9 +37,14 @@ public class MazeGenerator {
     /**
      * Generates the entry point of the maze.
      */
-    public void EntryPointGenerator(){
+    public void EntryPointGenerator(Integer testRandomNumber){
         do {
-            int randomNumber = random.nextInt(100);
+            int randomNumber;
+            if(testRandomNumber != null) {
+                randomNumber = testRandomNumber;
+            } else {
+                randomNumber = random.nextInt(100);
+            }
             if (randomNumber % 4 == 0) {
                 // Set EntryPoint at left edge
                 EntryPoint = maze[random.nextInt(rows)][0];
@@ -75,7 +80,7 @@ public class MazeGenerator {
             }
         }
         // Get the Random EntryPoint
-        EntryPointGenerator();
+        EntryPointGenerator(null);
     }
 
     /**
