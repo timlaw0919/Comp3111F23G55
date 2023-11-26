@@ -11,10 +11,15 @@ User Guideline:
      - Search loadui, choose testFx with version 3.1.2 and add
 2. Testing the software through GUI
    - Open BigMainGUI.java within the Main package
-   - Click the 'Run' Button
+   - Click the 'Run' Button with the VM is -ea
 3. Test the line coverage
    - Go to Run -> Edit Configuration -> the original text should show -ea just change it to "--add-exports=javafx.graphics/com.sun.javafx.application=org.testfx" -> Click apply
-   - Click the "Run Coverage" Button with the newly VM
+   - Click the "Run Coverage" Button with the new VM
+  
+Remark:
+If the above setting is done but the program cannot run properly, please make sure that all the libraries are added as below in File -> Project Structure
+![image](https://github.com/timlaw0919/Comp3111F23G55/assets/144464604/eac0352a-5a5b-4b8d-a5c1-db5822550bb1)
+![image](https://github.com/timlaw0919/Comp3111F23G55/assets/144464604/9dc54c68-c8d9-4d0e-acfd-599144739db0)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Code Explanation
